@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="840.0" styleClass="container" stylesheets="@../static/css/loading.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Loading..." />
+      <ImageView fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" styleClass="icon">
+         <image>
+            <Image url="@../static/icons/placeholder_icon.png" />
+         </image>
+      </ImageView>
+      <ProgressBar prefWidth="200.0" progress="0.0" styleClass="loading-bar" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="subtitle" text="Tip: Lorem ipsum dolor sit amet." />
+   </children>
+</VBox>
