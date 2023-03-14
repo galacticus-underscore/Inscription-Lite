@@ -11,7 +11,7 @@
       <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Next up:" />
       <ImageView fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../static/icons/placeholder_icon.png" />
+            <Image url="@../static/icons/player%201%20icon.jpg" />
          </image>
       </ImageView>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="subtitle" text="Player 1" />
