@@ -13,6 +13,6 @@
          <VBox.margin>
             <Insets top="32.0" />
          </VBox.margin></Button>
-      <Button mnemonicParsing="false" styleClass="menu-button" text="Quit" />
+      <Button mnemonicParsing="false" styleClass="menu-button" text="Quit" onMouseClicked="#close" />
    </children>
 </VBox>

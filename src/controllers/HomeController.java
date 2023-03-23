@@ -1,6 +1,7 @@
 package controllers;
 import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,6 +22,10 @@ public class HomeController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        System.out.println("test");
+    }
+
+    @FXML 
+    protected void close(MouseEvent e) throws IOException {
+        Platform.exit();
     }
 }
