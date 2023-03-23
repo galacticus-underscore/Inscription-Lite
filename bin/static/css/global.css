@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Shadows+Into+Light+Two&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Lato&family=Shadows+Into+Light+Two&display=swap');
 
 .container {
     width: 840px;
@@ -25,6 +25,24 @@
     -fx-font-family: "Shadows Into Light Two", cursive;
     font-size: 24px;
     -fx-font-size: 24px;
+    fill: white;
+    -fx-fill: white;
+}
+
+.header {
+    font-family: "Anton", sans-serif;
+    -fx-font-family: "Anton", sans-serif;
+    font-size: 32px;
+    -fx-font-size: 32px;
+    fill: white;
+    -fx-fill: white;
+}
+
+.text {
+    font-family: "Lato", sans-serif;
+    -fx-font-family: "Lato", sans-serif;
+    font-size: 12px;
+    -fx-font-size: 12px;
     fill: white;
     -fx-fill: white;
 }

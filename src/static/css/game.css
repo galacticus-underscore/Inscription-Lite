@@ -1,0 +1,20 @@
+@import "global.css";
+
+.container {
+    -fx-spacing: 0px;
+}
+
+.event-history {
+    width: 210px;
+    -fx-pref-width: 210px;
+    background-color: #421D14;
+    -fx-background-color: #421D14;
+    -fx-alignment: top-left;
+    -fx-spacing: 24px;
+}
+
+.game-container {
+    width: 630px;
+    -fx-pref-width: 630px;
+    -fx-alignment: top-right;
+}
