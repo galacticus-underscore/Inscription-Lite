@@ -5,10 +5,10 @@
 }
 
 .event-history {
-    width: 210px;
+    width: 25%;
     -fx-pref-width: 210px;
-    background-color: #421D14;
-    -fx-background-color: #421D14;
+    background-color: #5D372E;
+    -fx-background-color: #5D372E;
     -fx-alignment: top-left;
     -fx-spacing: 24px;
 }
