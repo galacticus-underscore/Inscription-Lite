@@ -8,17 +8,17 @@ public class Avatar implements SigilAffectable {
     private int blood_count = 0;
     private ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
 
-    private String card_data;
+    private String card_data_path;
     private Stack<Card> deck = new Stack<Card>();
     private ArrayList<Card> hand = new ArrayList<Card>();
-    private Card[] slots = new Card[5];
+    private Card[] slots = new Card[4];
     private Stack<Card> pile = new Stack<Card>();
 
     private ArrayList<Card> shuffler = new ArrayList<Card>();
     private Card summoned;
 
     public Avatar(String p) {
-        this.card_data = p;
+        this.card_data_path = p;
     }
 
     public void changeHealth(int hp) {
@@ -40,7 +40,7 @@ public class Avatar implements SigilAffectable {
     }
 
     public void readCardData() {
-        System.out.println("Rendered card data from " + this.card_data);
+        System.out.println("Rendered card data from " + this.card_data_path);
     }
 
     public void shuffle() {
@@ -57,18 +57,9 @@ public class Avatar implements SigilAffectable {
 
     public void draw() {
         this.hand.add(this.deck.pop());
-        new Event(Types.DRAW, "Avatar drew a card");
     }
 
-    public void faceUp() {
-        this.hand.forEach((card) -> {card.faceUp();});
-    }
-
-    public void faceDown() {
-        this.hand.forEach((card) -> {card.faceDown();});
-    }
-
-    public void summonChar(int hand_pos, int slot_pos) throws BloodCountException{
+    public void summonChar(int hand_pos, int slot_pos) throws BloodCountException {
         summoned = this.hand.get(hand_pos);
         if (summoned.getCost() > this.blood_count) {
             throw new BloodCountException();
@@ -78,11 +69,9 @@ public class Avatar implements SigilAffectable {
             this.hand.remove(hand_pos);
             this.blood_count -= summoned.getCost();   
         }
-
-        new Event(Types.SUMMON_CHAR, "Avatar summoned a character on location");
     }
 
-    public void summonSigil(int hand_pos, int slot_pos) throws BloodCountException{
+    public void summonSigil(int hand_pos, int slot_pos) throws BloodCountException {
         summoned = this.hand.get(hand_pos);
         if (summoned.getCost() > this.blood_count) {
             throw new BloodCountException();
@@ -92,8 +81,6 @@ public class Avatar implements SigilAffectable {
             this.hand.remove(hand_pos);
             this.blood_count -= summoned.getCost();
         }
-
-        new Event(Types.SUMMON_SIGIL, "Avatar summoned a sigil on location");
     }
 
     public void discard(int slot_pos) {
@@ -102,7 +89,7 @@ public class Avatar implements SigilAffectable {
     }
 
     public void sacrifice(int slot_pos) {
-        discard(slot_pos);
+        this.discard(slot_pos);
         this.blood_count += 1;
     }
 

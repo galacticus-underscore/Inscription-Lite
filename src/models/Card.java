@@ -14,12 +14,4 @@ public class Card {
     public int getCost() {
         return cost;
     }
-
-    public void faceUp() {
-        rendered_face = Faces.TOP;
-    }
-
-    public void faceDown() {
-        rendered_face = Faces.BOTTOM;
-    }
 }

@@ -1,37 +1,36 @@
-package models;
-public class Event {
-    private Types type;
-    private String description;
-    private SigilAffectable source;
-    private SigilAffectable target;
+// package models;
 
-    public Event(Types t, String d) {
-        this.type = t;
-        this.description = d;
-        Session.addEvent(this);
-    }
+// import java.util.HashMap;
 
-    public Event(Types t, String d, SigilAffectable s, SigilAffectable tg) {
-        this.type = t;
-        this.description = d;
-        this.source = s;
-        this.target = tg;
-        Session.addEvent(this);
-    }
+// public class Event {
+//     private HashMap<String, String> event_data;
 
-    public Types getType() {
-        return this.type;
-    }
+//     public Event(HashMap<String, String> d) {
+//         this.event_data = d;
+//         Session.addEvent(this);
+//     }
 
-    public String getDescription() {
-        return this.description;
-    }
+//     public Event(Types t, String d, SigilAffectable s, SigilAffectable tg) {
+//         this.type = t;
+//         this.description = d;
+//         this.source = s;
+//         this.target = tg;
+//         Session.addEvent(this);
+//     }
 
-    public SigilAffectable getSource() {
-        return this.source;
-    }
+//     public Types getType() {
+//         return this.type;
+//     }
 
-    public SigilAffectable getTarget() {
-        return this.target;
-    }
-}
+//     public String getDescription() {
+//         return this.description;
+//     }
+
+//     public SigilAffectable getSource() {
+//         return this.source;
+//     }
+
+//     public SigilAffectable getTarget() {
+//         return this.target;
+//     }
+// }

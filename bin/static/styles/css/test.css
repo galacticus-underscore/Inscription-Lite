@@ -1,5 +1,6 @@
 .class {
-  color: blue;
+  color: violet;
+  -fx-color: violet;
 }
 
 /*# sourceMappingURL=test.css.map */

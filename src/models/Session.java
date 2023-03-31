@@ -1,59 +1,37 @@
 package models;
-import java.util.Stack;
+
+import java.util.PriorityQueue;
+import java.util.HashMap;
 
 public class Session {
-    private boolean is_active = false;
-    private Phases phase = Phases.P1;
-    private boolean turn_confirmed = false;
-
     private static Avatar[] avatars = {
         new Avatar("path_1"),
         new Avatar("path_2"),
     };
 
-    private static Stack<Event> event_history = new Stack<Event>();
+    private int turn_number = 0;
+    private Avatar playing_avatar = avatars[0];
+    private Avatar observing_avatar = avatars[1];
+    private static PriorityQueue<HashMap<String, String>> event_history = new PriorityQueue<HashMap<String, String>>();
 
-    private boolean condition = true;   // placeholder condition
-    private Avatar init;                // placeholder avatar
+    // placeholder avatar
+    private Avatar init;
 
-    private enum Phases {
-        P1(avatars[0], avatars[1]),
-        P2(avatars[1], avatars[0]),
-        A(null, null);
-    
-        private Avatar playing_avatar, observing_avatar;
-    
-        private Phases(Avatar a1, Avatar a2) {
-            this.playing_avatar = a1;
-            this.observing_avatar = a2;
-        }
-    
-        public Avatar getPlayingAvatar() {
-            return this.playing_avatar;
-        }
 
-        public Avatar getObservingAvatar() {
-            return this.observing_avatar;
-        }
+
+    public static HashMap<String, String> getLastEvent() {
+        return event_history.poll();
     }
 
-    public boolean getActivity() {
-        return this.is_active;
+    public static void addEvent(HashMap<String, String> event_data) {
+        event_history.add(event_data);
     }
 
-    public void setActivity(boolean a) {
-        this.is_active = a;
+    public static void clearHistory() {
+        event_history.clear();
     }
 
-    public static Event getLastEvent() {
-        return event_history.peek();
-    }
-
-    public static void addEvent(Event e) {
-        event_history.push(e);
-    }
-
-    public void render() {
+    public void initiate() {
         for (int i = 0; i >= 2; i++) {
             init = avatars[i];
             init.readCardData();
@@ -63,47 +41,28 @@ public class Session {
                 init.draw();
             }
         }
-
-        // game loop
-        while (is_active){
-            ;
-        }
     }
 
     public void nextPhase() {
-        App.renderView(Views.CONFIRM);
-
-        switch (this.phase) {
-            case P1:
-                this.phase = Phases.P2;
-            case P2:
-                this.phase = Phases.A;
-            case A:
-                this.phase = Phases.P1;
+        if (turn_number > 0) {
+            // TODO: generate attack sequence after phase change
         }
 
-        try {
-            this.phase.getPlayingAvatar().faceUp();
-            this.phase.getObservingAvatar().faceDown();
+        if (this.playing_avatar == avatars[0]) {
+            this.playing_avatar = avatars[1];
+            this.observing_avatar = avatars[0];
         }
-        catch (Exception e) {
-            ;   // will trigger in the attack (A) phase
-        }
-
-        // waits for the player to press the play button
-        while (!turn_confirmed) {
-            if (condition) {
-                turn_confirmed = true;
-                App.renderView(Views.GAME);
-            }
+        else {
+            this.playing_avatar = avatars[0];
+            this.observing_avatar = avatars[1];
+            this.turn_number += 1;
         }
     }
 
     public void close() {
-        this.is_active = false;
-        this.phase = Phases.P1;
+        this.playing_avatar = avatars[0];
+        this.observing_avatar = avatars[1];
         avatars[0].reset();
         avatars[1].reset();
-        App.renderView(Views.START);
     }
 }

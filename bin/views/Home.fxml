@@ -5,14 +5,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="840.0" styleClass="container" stylesheets="@../static/css/home.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="840.0" styleClass="container" stylesheets="@../static/styles/css/home.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeController">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Inscryption Lite" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="subtitle" text="Inspired by Revlver Digital’s “Inscryption” " />
-      <Button mnemonicParsing="false" styleClass="menu-button" text="Play" onMouseClicked="#startGame" >
+      <Button mnemonicParsing="false" onMouseClicked="#startGame" style="-fx-font-family: Anton;" styleClass="menu-button" text="Play">
          <VBox.margin>
             <Insets top="32.0" />
          </VBox.margin></Button>
-      <Button mnemonicParsing="false" styleClass="menu-button" text="Quit" onMouseClicked="#close" />
+      <Button mnemonicParsing="false" onMouseClicked="#close" style="-fx-font-family: Anton;" styleClass="menu-button" text="Quit" />
    </children>
 </VBox>

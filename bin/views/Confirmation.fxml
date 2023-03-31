@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="840.0" styleClass="container" stylesheets="@../static/css/confirmation.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="840.0" styleClass="container" stylesheets="@../static/styles/css/confirmation.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ConfirmController">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Next up:" />
       <ImageView fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
@@ -15,6 +15,6 @@
          </image>
       </ImageView>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="subtitle" text="Player 1" />
-      <Button mnemonicParsing="false" styleClass="confirm-button" text="Start" />
+      <Button mnemonicParsing="false" onMouseClicked="#startTurn" style="-fx-font-family: Anton;" styleClass="confirm-button" text="Start" />
    </children>
 </VBox>
