@@ -3,8 +3,8 @@
  * 
  * This model class represents the a player in the game. All the actions a
  * player can do is covered here: drawing, playing, discarding, etc. This class
- * is also in charge of reading and writing game data to and from the CSV files
- * that serve as the game's database.
+ * is also in charge of reading and writing session data to and from the CSV
+ * files that serve as the session's database.
  */
 
 package models;

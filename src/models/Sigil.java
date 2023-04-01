@@ -1,3 +1,10 @@
+/*
+ * Card.java
+ * 
+ * This model class serves as a template for all sigils that will be used
+ * accross the entire session.
+ */
+
 package models;
 
 import java.util.ArrayList;

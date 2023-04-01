@@ -17,7 +17,7 @@ public class HomeController {
     
     @FXML 
     protected void startGame(MouseEvent e) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("../views/Loading.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../views/Confirmation.fxml"));
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

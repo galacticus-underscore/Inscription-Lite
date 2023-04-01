@@ -1,3 +1,10 @@
+/*
+ * Test.java
+ * 
+ * The testing grounds for the model classes we made and some Java concepts we
+ * wanted to use in this project.
+ */
+
 package models;
 
 import java.util.ArrayList;
