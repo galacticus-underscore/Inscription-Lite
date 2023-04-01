@@ -4,17 +4,16 @@
     -fx-spacing: 0px;
 }
 
-.event-history {
-    width: 25%;
-    -fx-pref-width: 210px;
-    background-color: #5D372E;
-    -fx-background-color: #5D372E;
-    -fx-alignment: top-left;
-    -fx-spacing: 24px;
-}
-
-.game-container {
+.avatar-container {
     width: 630px;
     -fx-pref-width: 630px;
-    -fx-alignment: top-right;
+    height: 315px;
+    -fx-pref-height: 315px;
+}
+
+.avatar-icon {
+    width: 64px;
+    -fx-pref-width: 64px;
+    height: 64px;
+    -fx-pref-height: 64px;
 }
