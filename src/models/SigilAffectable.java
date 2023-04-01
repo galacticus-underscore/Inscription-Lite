@@ -1,7 +1,5 @@
 package models;
-import java.util.ArrayList;
 
-interface SigilAffectable {
-    public ArrayList<SigilEffect> getEffects();
+public interface SigilAffectable {
     public void addEffect(SigilEffect s);
 }

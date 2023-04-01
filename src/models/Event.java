@@ -1,21 +1,17 @@
+/*
+ * Event.java
+ * 
+ * This model interface serves as the template for every event that will be
+ * generated throughout a session. When an action happens in the game (e.g.,
+ * a player draws a card, a sigil is played, a character attacks), an event
+ * will be created before that action is executed. Events will be added to the
+ * event history directly after creation as anonymous subclasses of this
+ * interface. We did this to make future development easier, as updates to the
+ * game will inevitably add more kinds of events.
+ */
+
 package models;
 
-import models.enums.EventType;
-
-public abstract class Event {
-    protected EventType type;
-    protected Avatar cause;
-    
-    public Event(EventType t, Avatar a) {
-        this.type = t;
-        this.cause = a;
-    }
-
-    public EventType getType() {
-        return this.type;
-    }
-
-    public Avatar getCause() {
-        return this.cause;
-    }
+public interface Event {
+    public void replay();
 }

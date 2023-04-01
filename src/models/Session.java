@@ -1,3 +1,12 @@
+/*
+ * Session.java
+ * 
+ * This model class represents the game the users will be playing. It dictates
+ * the general flow of the game by initializing the avatars, tracking the moves
+ * made in the game, and facilitating the transfer of turns from one player to
+ * another.
+ */
+
 package models;
 
 import java.util.PriorityQueue;
@@ -8,50 +17,52 @@ public class Session {
         new Avatar("path_2"),
     };
 
-    public int turn_number = 0;
-    private Avatar playing_avatar = avatars[0];
-    private Avatar observing_avatar = avatars[1];
-    private static PriorityQueue<Event> event_history = new PriorityQueue<Event>();
+    private int p1_index, p2_index, turn_number = 0;
+    private Avatar playing_avatar, observing_avatar;
+    private PriorityQueue<Event> event_history = new PriorityQueue<Event>();
 
-    // placeholder avatar
-    private Avatar init;
+    public Session(int p1, int p2) {
+        this.p1_index = p1;
+        this.p2_index = p2;
+        this.playing_avatar = avatars[p1];
+        this.observing_avatar = avatars[p2];
 
-    public static Event getLastEvent() {
-        return event_history.poll();
+        this.playing_avatar.initialize();
+        this.observing_avatar.initialize();
     }
 
-    public static void addEvent(Event e) {
-        event_history.add(e);
+    public Avatar getPlayingAvatar() {
+        return this.playing_avatar;
     }
 
-    public static void clearHistory() {
-        event_history.clear();
+    public Avatar getObservingAvatar() {
+        return this.observing_avatar;
     }
 
-    public void initiate() {
-        for (int i = 0; i >= 2; i++) {
-            init = avatars[i];
-            init.readCardData();
-            init.shuffle();
-
-            for (int j = 0; j < 5; i++) {
-                init.draw();
-            }
-        }
+    public Event peekLastEvent() {
+        return this.event_history.peek();
     }
 
-    public void nextPhase() {
+    public Event pullLastEvent() {
+        return this.event_history.poll();
+    }
+
+    public void addEvent(Event e) {
+        this.event_history.add(e);
+    }
+
+    public void nextPlayer() {
         if (turn_number > 0) {
-            // TODO: generate attack sequence after phase change
+            this.playing_avatar.attack();
         }
 
-        if (this.playing_avatar == avatars[0]) {
-            this.playing_avatar = avatars[1];
-            this.observing_avatar = avatars[0];
+        if (this.playing_avatar == avatars[this.p1_index]) {
+            this.playing_avatar = avatars[this.p2_index];
+            this.observing_avatar = avatars[this.p1_index];
         }
         else {
-            this.playing_avatar = avatars[0];
-            this.observing_avatar = avatars[1];
+            this.playing_avatar = avatars[this.p1_index];
+            this.observing_avatar = avatars[this.p2_index];
             this.turn_number += 1;
         }
     }

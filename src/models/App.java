@@ -21,7 +21,7 @@ public class App {
     }
 
     public static void startSession() {
-        session = new Session();
+        session = new Session(0, 1);
     }
 
     public static void endSession() {

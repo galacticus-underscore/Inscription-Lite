@@ -1,6 +1,8 @@
 package models;
 import java.util.ArrayList;
 
+import models.exceptions.ZeroHealthException;
+
 public class Character extends Card implements SigilAffectable {
     private int health, attack;
     private ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
@@ -9,6 +11,10 @@ public class Character extends Card implements SigilAffectable {
         super(c);
         this.health = h;
         this.attack = a;
+    }
+
+    public int getHealth() {
+        return this.health;
     }
 
     public void changeHealth(int hp) {
@@ -25,11 +31,14 @@ public class Character extends Card implements SigilAffectable {
         this.effects.add(s);
     }
 
-    public void attack(Character c) {
-        c.changeHealth(-this.attack);
+    public void attack(int column) {
+        // if (App.getSession().getObservingAvatar().getCharInSlot(column) == null) {
+        //     ;
+        // }
+        // c.changeHealth(-this.attack);
     }
 
-    public void attack(Avatar a) {
+    public void attack(Avatar a) throws ZeroHealthException {
         a.changeHealth(-this.attack);
     }
 }
