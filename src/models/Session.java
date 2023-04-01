@@ -1,7 +1,6 @@
 package models;
 
 import java.util.PriorityQueue;
-import java.util.HashMap;
 
 public class Session {
     private static Avatar[] avatars = {
@@ -9,22 +8,20 @@ public class Session {
         new Avatar("path_2"),
     };
 
-    private int turn_number = 0;
+    public int turn_number = 0;
     private Avatar playing_avatar = avatars[0];
     private Avatar observing_avatar = avatars[1];
-    private static PriorityQueue<HashMap<String, String>> event_history = new PriorityQueue<HashMap<String, String>>();
+    private static PriorityQueue<Event> event_history = new PriorityQueue<Event>();
 
     // placeholder avatar
     private Avatar init;
 
-
-
-    public static HashMap<String, String> getLastEvent() {
+    public static Event getLastEvent() {
         return event_history.poll();
     }
 
-    public static void addEvent(HashMap<String, String> event_data) {
-        event_history.add(event_data);
+    public static void addEvent(Event e) {
+        event_history.add(e);
     }
 
     public static void clearHistory() {
@@ -57,12 +54,5 @@ public class Session {
             this.observing_avatar = avatars[1];
             this.turn_number += 1;
         }
-    }
-
-    public void close() {
-        this.playing_avatar = avatars[0];
-        this.observing_avatar = avatars[1];
-        avatars[0].reset();
-        avatars[1].reset();
     }
 }

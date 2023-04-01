@@ -1,4 +1,5 @@
 package models;
-interface SigilEffect {
+
+public interface SigilEffect {
     public void applyEffect();
 }

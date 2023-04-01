@@ -1,13 +1,31 @@
+// import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
- 
+
+import models.App;
+// import models.SigilEffect;
+
 public class Main extends Application {
 
     public static void main(String[] args) {
-        launch(args);
+        App backend = new App();
+
+        // ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
+
+        // effects.add(new SigilEffect() {
+        //     String output = "test successful";
+        //     public void applyEffect() {
+        //         System.out.println(output);
+        //     }
+        // });
+
+        // effects.get(0).applyEffect();
+
+        // launch(args);
     }
     
     @Override
@@ -21,5 +39,3 @@ public class Main extends Application {
         stage.show();
     }
 }
-
-// test

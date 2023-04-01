@@ -1,22 +1,24 @@
 package models;
+
 import java.util.ArrayList;
 
 public class Sigil {
-    private boolean applies_to_chars, applies_to_avatars;
+    private boolean atc, ata;
     private SigilEffect effect;
+    private static ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
 
-    public Sigil(boolean atc, boolean atv, SigilEffect e) {
-        applies_to_avatars = atc;
-        applies_to_avatars = atv;
-        effect = e;
+    public Sigil(boolean atc, boolean ata, int e) {
+        this.atc = atc;
+        this.ata = ata;
+        this.effect = effects.get(e);
     }
 
     public boolean appliesToChars() {
-        return applies_to_chars;
+        return this.atc;
     }
 
     public boolean appliesToAvatars() {
-        return applies_to_avatars;
+        return this.ata;
     }
 
     public SigilEffect getEffect() {
@@ -27,14 +29,12 @@ public class Sigil {
     public static void main(String[] args) throws Exception {
         ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
 
-        SigilEffect test = new SigilEffect() {
+        effects.add(new SigilEffect() {
             String output = "test successful";
             public void applyEffect() {
                 System.out.println(output);
             }
-        };
-
-        effects.add(test);
+        });
 
         effects.get(0).applyEffect();
     }

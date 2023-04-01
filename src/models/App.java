@@ -1,27 +1,30 @@
-// package models;
+/*
+ * App.java
+ * 
+ * This model class contains the highest-level methods used in this
+ * application. For now, its only task is to start and end sessions, which are
+ * objects that represent games that are being played.
+ */
 
-// import java.util.Stack;
+package models;
 
-// public class App {
-//     private static String view = Views.START.getPath();
-//     private static Stack<Views> view_history = new Stack<Views>();
-//     private static Session session = new Session();
+import models.exceptions.NullSessionException;
 
-//     public static void renderView(Views v) {
-//         view = v.getPath();
-//         view_history.push(v);
-//     }
-    
-//     public static void returnView() {
-//         view = view_history.pop().getPath();
-//     }
+public class App {
+    private static Session session;
 
-//     public static void startGame() {
-//         session.setActivity(true);
-//         session.render();
-//     }
+    public static Session getSession() throws NullSessionException {
+        if (session == null) {
+            throw new NullSessionException();
+        }
+        return session;
+    }
 
-//     public static void main(String[] args) throws Exception {
-//         System.out.println("Hello World!");
-//     }
-// }
+    public static void startSession() {
+        session = new Session();
+    }
+
+    public static void endSession() {
+        session = null;
+    }
+}

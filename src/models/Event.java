@@ -1,36 +1,21 @@
-// package models;
+package models;
 
-// import java.util.HashMap;
+import models.enums.EventType;
 
-// public class Event {
-//     private HashMap<String, String> event_data;
+public abstract class Event {
+    protected EventType type;
+    protected Avatar cause;
+    
+    public Event(EventType t, Avatar a) {
+        this.type = t;
+        this.cause = a;
+    }
 
-//     public Event(HashMap<String, String> d) {
-//         this.event_data = d;
-//         Session.addEvent(this);
-//     }
+    public EventType getType() {
+        return this.type;
+    }
 
-//     public Event(Types t, String d, SigilAffectable s, SigilAffectable tg) {
-//         this.type = t;
-//         this.description = d;
-//         this.source = s;
-//         this.target = tg;
-//         Session.addEvent(this);
-//     }
-
-//     public Types getType() {
-//         return this.type;
-//     }
-
-//     public String getDescription() {
-//         return this.description;
-//     }
-
-//     public SigilAffectable getSource() {
-//         return this.source;
-//     }
-
-//     public SigilAffectable getTarget() {
-//         return this.target;
-//     }
-// }
+    public Avatar getCause() {
+        return this.cause;
+    }
+}
