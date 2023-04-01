@@ -8,7 +8,7 @@
             "type": "java",
             "name": "Launch App",
             "request": "launch",
-            "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-19/lib\" --add-modules javafx.controls,javafx.fxml --add-modules javafx.web",
+            "vmArgs": "--module-path \"C:/Program Files/JavaFX/javafx-sdk-19/lib\" --add-modules javafx.controls,javafx.fxml --add-modules javafx.web",
             "mainClass": "Main",
         }
     ]
