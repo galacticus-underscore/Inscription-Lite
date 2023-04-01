@@ -11,6 +11,9 @@ package models;
 
 import java.util.PriorityQueue;
 
+import models.exceptions.NullSessionException;
+import models.exceptions.ZeroHealthException;
+
 public class Session {
     private static Avatar[] avatars = {
         new Avatar("path_1"),
@@ -51,7 +54,7 @@ public class Session {
         this.event_history.add(e);
     }
 
-    public void nextPlayer() {
+    public void nextPlayer() throws NullSessionException, ZeroHealthException {
         if (turn_number > 0) {
             this.playing_avatar.attack();
         }
@@ -65,5 +68,8 @@ public class Session {
             this.observing_avatar = avatars[this.p2_index];
             this.turn_number += 1;
         }
+
+        this.playing_avatar.flip();
+        this.observing_avatar.flip();
     }
 }

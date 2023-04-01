@@ -1,13 +1,15 @@
 package models;
+
 import java.util.ArrayList;
 
+import models.exceptions.NullSessionException;
 import models.exceptions.ZeroHealthException;
 
-public class Character extends Card implements SigilAffectable {
+public class Character extends Card {
     private int health, attack;
     private ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
 
-    public Character(int h, int a, int c) {
+    public Character(int c, int h, int a) {
         super(c);
         this.health = h;
         this.attack = a;
@@ -17,10 +19,33 @@ public class Character extends Card implements SigilAffectable {
         return this.health;
     }
 
-    public void changeHealth(int hp) {
+    public void changeHealth(int hp) throws ZeroHealthException {
         this.health += hp;
-        if (this.health < 0)
+
+        this.effects.forEach((e) -> {
+            e.applyEffect();
+        });
+
+        if (this.health <= 0) {
             this.health = 0;
+            throw new ZeroHealthException();
+        }
+    }
+
+    public int getAttack() {
+        return this.attack;
+    }
+
+    public void changeAttack(int a) {
+        this.attack += a;
+
+        this.effects.forEach((e) -> {
+            e.applyEffect();
+        });
+
+        if (this.attack <= 0) {
+            this.attack = 0;
+        }
     }
 
     public ArrayList<SigilEffect> getEffects() {
@@ -31,14 +56,18 @@ public class Character extends Card implements SigilAffectable {
         this.effects.add(s);
     }
 
-    public void attack(int column) {
-        // if (App.getSession().getObservingAvatar().getCharInSlot(column) == null) {
-        //     ;
-        // }
-        // c.changeHealth(-this.attack);
-    }
+    public void attack(int column) throws NullSessionException, ZeroHealthException {
+        Avatar playing_avatar = App.getSession().getPlayingAvatar();
+        Avatar observing_avatar = App.getSession().getObservingAvatar();
+        Character attacking_char = playing_avatar.getCharInSlot(column);
+        Character defending_char = playing_avatar.getCharInSlot(column);
 
-    public void attack(Avatar a) throws ZeroHealthException {
-        a.changeHealth(-this.attack);
+        if (observing_avatar.getCharInSlot(column) == null) {
+            observing_avatar.changeHealth(-this.attack);
+        }
+        else {
+            attacking_char.changeHealth(-defending_char.getAttack());
+            defending_char.changeHealth(-attacking_char.getAttack());
+        }
     }
 }

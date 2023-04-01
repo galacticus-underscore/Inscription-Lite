@@ -2,12 +2,13 @@ package models;
 
 import java.util.ArrayList;
 
-public class Sigil {
+public class Sigil extends Card {
     private boolean atc, ata;
     private SigilEffect effect;
     private static ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
 
-    public Sigil(boolean atc, boolean ata, int e) {
+    public Sigil(int c, boolean atc, boolean ata, int e) {
+        super(c);
         this.atc = atc;
         this.ata = ata;
         this.effect = effects.get(e);
@@ -25,17 +26,7 @@ public class Sigil {
         return effect;
     }
 
-    // Testing code
-    public static void main(String[] args) throws Exception {
-        ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
-
-        effects.add(new SigilEffect() {
-            String output = "test successful";
-            public void applyEffect() {
-                System.out.println(output);
-            }
-        });
-
-        effects.get(0).applyEffect();
+    public static void addEffect(SigilEffect s) {
+        effects.add(s);
     }
 }

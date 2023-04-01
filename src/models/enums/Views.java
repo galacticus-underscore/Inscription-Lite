@@ -1,4 +1,5 @@
-package models;
+package models.enums;
+
 public enum Views {
     START("path_1"),
     OPTIONS("path_2"),

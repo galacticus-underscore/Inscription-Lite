@@ -1,4 +1,7 @@
 package models;
+
+import java.util.ArrayList;
+
 class Demo {
 	int x;
   	
@@ -38,5 +41,27 @@ public class Test {
         index += 1;
         testingg = testing[index];
         System.out.println(testingg);
+
+        App backend = new App();
+        System.out.println(backend.getClass().getSimpleName());
+
+        ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
+
+        effects.add(new SigilEffect() {
+            String output = "test successful";
+            public void applyEffect() {
+                System.out.println(output);
+            }
+        });
+
+        effects.get(0).applyEffect();
+
+        // returns null
+        Card[] arr = new Card[4];
+        arr[1] = new Character(1, 1, 1);
+        System.out.println(arr[1]);
+
+        ArrayList<Card> arraylist = new ArrayList<Card>();
+        System.out.println(arraylist.get(0));
     }
 }

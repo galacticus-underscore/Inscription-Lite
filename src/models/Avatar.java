@@ -9,6 +9,7 @@
 
 package models;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Collections;
@@ -17,13 +18,15 @@ import models.exceptions.ZeroHealthException;
 import models.exceptions.BloodCountException;
 import models.exceptions.EmptySlotException;
 import models.exceptions.FullSlotException;
+import models.exceptions.InvalidSummonException;
+import models.exceptions.NullSessionException;
 
-public class Avatar implements SigilAffectable {
+public class Avatar {
     private int health = 20;
     private int blood_count = 0;
     private ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
 
-    private String data;
+    private File data;
     private Stack<Card> deck = new Stack<Card>();
     private ArrayList<Card> hand = new ArrayList<Card>();
     private Character[] slots = new Character[4];
@@ -34,7 +37,7 @@ public class Avatar implements SigilAffectable {
     private Card summoned;
 
     public Avatar(String d) {
-        this.data = d;
+        this.data = new File(d);
     }
 
     public void initialize() {
@@ -85,44 +88,79 @@ public class Avatar implements SigilAffectable {
         this.effects.add(s);
     }
 
-    public Card getCharInSlot(int slot_pos) {
-        return slots[slot_pos];
+    public Character getCharInSlot(int column) {
+        return slots[column];
+    }
+
+    public void flip() {
+        this.hand.forEach((c) -> {
+            c.flip();
+        });
     }
 
     public void draw() {
         this.hand.add(this.deck.pop());
     }
 
-    public void summonChar(int hand_pos, int slot_pos) throws FullSlotException, BloodCountException {
+    public void summonChar(int hand_pos, int column) throws FullSlotException, BloodCountException {
         summoned = this.hand.get(hand_pos);
 
-        if (this.slots[slot_pos] != null) {
+        if (this.slots[column] != null) {
             throw new FullSlotException();
         }
         else {
-            this.changeBloodCount(summoned.getCost() * -1);
-            this.slots[slot_pos] = summoned;
+            this.changeBloodCount(-summoned.getCost());
+            this.slots[column] = (Character)summoned;
             this.hand.remove(hand_pos);
         }        
     }
 
-    public void summonSigil(int hand_pos, int slot_pos) throws EmptySlotException, BloodCountException {
+    public void summonSigil(int hand_pos, int column) throws InvalidSummonException, EmptySlotException, BloodCountException {
         summoned = this.hand.get(hand_pos);
 
-        if (this.slots[slot_pos] == null) {
+        if (!((Sigil)summoned).appliesToChars()) {
+            throw new InvalidSummonException("character");
+        }
+        else if (this.slots[column] == null) {
             throw new EmptySlotException();
         }
         else {
-            this.changeBloodCount(summoned.getCost() * -1);
-            this.getCharInSlot(slot_pos).addEffect(summoned.getEffect());
+            this.changeBloodCount(-summoned.getCost());
+            this.getCharInSlot(column).addEffect(((Sigil)summoned).getEffect());
             this.discardSigil(hand_pos);
             this.hand.remove(hand_pos);
         }
     }
 
-    public void discardChar(int slot_pos) {
-        this.pile.push(this.slots[slot_pos]);
-        this.slots[slot_pos] = null;
+    public void summonSigil(int hand_pos, char avatar) throws InvalidSummonException, BloodCountException, NullSessionException {
+        summoned = this.hand.get(hand_pos);
+
+        if (!((Sigil)summoned).appliesToAvatars()) {
+            throw new InvalidSummonException("avatar");
+        }
+
+        this.changeBloodCount(-summoned.getCost());
+
+        // if applied to the playing avatar
+        if (avatar == 'p') {
+            this.addEffect(((Sigil)summoned).getEffect());
+        }
+        // if applied to the observing avatar
+        else {
+            App.getSession().getObservingAvatar().addEffect(((Sigil)summoned).getEffect());
+        }
+
+        this.discardSigil(hand_pos);
+        this.hand.remove(hand_pos);
+    }
+
+    public void discardChar(int column) {
+        this.pile.push(this.slots[column]);
+        this.slots[column] = null;
+
+        ((Character)(this.pile.peek())).getEffects().forEach((e) -> {
+            e.applyEffect();
+        });
     }
 
     public void discardSigil(int hand_pos) {
@@ -130,12 +168,12 @@ public class Avatar implements SigilAffectable {
         this.hand.remove(hand_pos);
     }
 
-    public void sacrifice(int slot_pos) throws BloodCountException {
-        this.changeBloodCount(this.slots[slot_pos].getHealth());
-        this.discardChar(slot_pos);
+    public void sacrifice(int column) throws BloodCountException {
+        this.changeBloodCount(this.slots[column].getHealth());
+        this.discardChar(column);
     }
 
-    public void attack() {
+    public void attack() throws NullSessionException, ZeroHealthException {
         for (int i = 0; i < 4; i++) {
             this.slots[i].attack(i);
         }
