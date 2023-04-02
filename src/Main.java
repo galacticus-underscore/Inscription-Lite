@@ -7,8 +7,6 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public static void main(String[] args) {
-        String a = "test", b = "test";
-        System.out.println(a.equals(b));
         // launch(args);
     }
     

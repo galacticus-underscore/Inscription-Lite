@@ -9,7 +9,10 @@
 
 package models;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Collections;
@@ -40,28 +43,43 @@ public class Avatar {
     private Character[] slots = new Character[4];
     private Stack<Card> pile = new Stack<Card>();
 
-    // placeholder variables
-    private ArrayList<Card> shuffler = new ArrayList<Card>();
-    private Card summoned;
-
     public Avatar(String d) {
         this.data = new File(d);
     }
 
     public void initialize() throws NullSessionException, EmptyDeckException {
         // TODO: Read file referenced by this.data
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(this.data));
+            String line = "";
+            String[] card_data;
+            Card card;
+
+            while ((line = br.readLine()) != null) {
+                card_data = line.split(",");
+                for(String tempStr : card_data) {
+                    System.out.print(tempStr + " ");
+                }
+            }
+
+            br.close();
+        }
+        catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
         // TODO: Assign values stored in file to their respective fields
         
         // shuffle the cards in the deck
+        ArrayList<Card> shuffler = new ArrayList<Card>();
+
         for (int i = 0; i < 40; i++)
-            shuffler.add(deck.pop());
+            shuffler.add(this.deck.pop());
 
         Collections.shuffle(shuffler);
 
         for (int i = 0; i < 40; i++)
-            deck.push(shuffler.get(i));
-
-        shuffler = new ArrayList<Card>();
+            this.deck.push(shuffler.get(i));
 
         // draw 5 cards from the deck
         for (int j = 0; j < 5; j++) {
@@ -128,7 +146,7 @@ public class Avatar {
     }
 
     public void summonChar(int hand_pos, int column) throws FullSlotException, BloodCountException, NullSessionException {
-        summoned = this.hand.get(hand_pos);
+        Card summoned = this.hand.get(hand_pos);
 
         if (this.slots[column] != null) {
             throw new FullSlotException();
@@ -142,7 +160,7 @@ public class Avatar {
     }
 
     public void summonSigil(int hand_pos, int column) throws InvalidSummonException, EmptySlotException, BloodCountException, NullSessionException {
-        summoned = this.hand.get(hand_pos);
+        Card summoned = this.hand.get(hand_pos);
 
         if (!((Sigil)summoned).appliesToChars()) {
             throw new InvalidSummonException("character");
@@ -160,7 +178,7 @@ public class Avatar {
     }
 
     public void summonSigil(int hand_pos, char avatar) throws InvalidSummonException, BloodCountException, NullSessionException {
-        summoned = this.hand.get(hand_pos);
+        Card summoned = this.hand.get(hand_pos);
 
         if (!((Sigil)summoned).appliesToAvatars()) {
             throw new InvalidSummonException("avatar");
@@ -217,9 +235,5 @@ public class Avatar {
         this.hand = new ArrayList<Card>();
         this.slots = new Character[4];
         this.pile = new Stack<Card>();
-    }
-
-    public void saveData() {
-        // TODO: Write avatar data to file referenced by this.data
     }
 }

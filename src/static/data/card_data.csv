@@ -1,0 +1,15 @@
+Name,Type,Summoning Cost,Image Location,Health,Attack,Applies to Characters,Applies to Avatars,Effecct Index
+Chipmunk,Avatar,0,src\static\images\card fronts\01 - chipmunk.png,1,1,,,
+Platypus,Avatar,1,src\static\images\card fronts\01 - chipmunk.png,2,1,,,
+Medusa,Avatar,10,src\static\images\card fronts\01 - chipmunk.png,5,5,,,
+Panther,Avatar,2,src\static\images\card fronts\01 - chipmunk.png,3,2,,,
+Black Cat,Avatar,2,src\static\images\card fronts\01 - chipmunk.png,2,1,,,
+Stingray,Avatar,1,src\static\images\card fronts\01 - chipmunk.png,1,3,,,
+Converge Router,Avatar,1,src\static\images\card fronts\01 - chipmunk.png,5,0,,,
+Bio Lab Microscope,Avatar,2,src\static\images\card fronts\01 - chipmunk.png,2,2,,,
+Gaming Mouse,Avatar,2,src\static\images\card fronts\01 - chipmunk.png,1,3,,,
+Grandma's Flower Vase,Avatar,3,src\static\images\card fronts\01 - chipmunk.png,1,4,,,
+Communist Manifesto,Avatar,4,src\static\images\card fronts\01 - chipmunk.png,5,3,,,
+Sniper,Sigil,1,src\static\images\card fronts\01 - chipmunk.png,,,TRUE,FALSE,0
+Stone Ocean,Sigil,1,src\static\images\card fronts\01 - chipmunk.png,,,TRUE,FALSE,1
+Touch of Death,Sigil,3,src\static\images\card fronts\01 - chipmunk.png,,,TRUE,FALSE,2
