@@ -8,6 +8,7 @@
 
 package models;
 
+import models.exceptions.EmptyDeckException;
 import models.exceptions.NullSessionException;
 
 public class App {
@@ -17,10 +18,11 @@ public class App {
         if (session == null) {
             throw new NullSessionException();
         }
+        
         return session;
     }
 
-    public static void startSession() {
+    public static void startSession() throws NullSessionException, EmptyDeckException {
         session = new Session(0, 1);
     }
 

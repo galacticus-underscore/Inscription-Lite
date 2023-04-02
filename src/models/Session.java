@@ -11,6 +11,8 @@ package models;
 
 import java.util.PriorityQueue;
 
+import models.interfaces.Event;
+import models.exceptions.EmptyDeckException;
 import models.exceptions.NullSessionException;
 import models.exceptions.ZeroHealthException;
 
@@ -24,7 +26,7 @@ public class Session {
     private Avatar playing_avatar, observing_avatar;
     private PriorityQueue<Event> event_history = new PriorityQueue<Event>();
 
-    public Session(int p1, int p2) {
+    public Session(int p1, int p2) throws NullSessionException, EmptyDeckException {
         this.p1_index = p1;
         this.p2_index = p2;
         this.playing_avatar = avatars[p1];

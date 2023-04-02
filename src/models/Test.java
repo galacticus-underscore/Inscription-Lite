@@ -9,6 +9,8 @@ package models;
 
 import java.util.ArrayList;
 
+import models.interfaces.SigilEffect;
+
 class Demo {
 	int x;
   	
@@ -65,7 +67,7 @@ public class Test {
 
         // returns null
         Card[] arr = new Card[4];
-        arr[1] = new Character(1, 1, 1);
+        arr[1] = new Character(1, "path", 1, 1);
         System.out.println(arr[1]);
 
         ArrayList<Card> arraylist = new ArrayList<Card>();

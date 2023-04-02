@@ -9,6 +9,8 @@ package models;
 
 import java.util.ArrayList;
 
+import models.interfaces.SigilEffect;
+import models.events.AttackEvent;
 import models.exceptions.NullSessionException;
 import models.exceptions.ZeroHealthException;
 
@@ -16,8 +18,8 @@ public class Character extends Card {
     private int health, attack;
     private ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
 
-    public Character(int c, int h, int a) {
-        super(c);
+    public Character(int c, String i, int h, int a) {
+        super(c, i);
         this.health = h;
         this.attack = a;
     }
@@ -35,7 +37,7 @@ public class Character extends Card {
 
         if (this.health <= 0) {
             this.health = 0;
-            throw new ZeroHealthException();
+            throw new ZeroHealthException("character");
         }
     }
 
@@ -70,9 +72,11 @@ public class Character extends Card {
         Character defending_char = playing_avatar.getCharInSlot(column);
 
         if (observing_avatar.getCharInSlot(column) == null) {
+            App.getSession().addEvent(new AttackEvent(column, this.attack));
             observing_avatar.changeHealth(-this.attack);
         }
         else {
+            App.getSession().addEvent(new AttackEvent(column, this.attack, defending_char.getAttack()));
             attacking_char.changeHealth(-defending_char.getAttack());
             defending_char.changeHealth(-attacking_char.getAttack());
         }

@@ -1,7 +1,14 @@
 package models.exceptions;
 
 public class ZeroHealthException extends Exception {
-    public ZeroHealthException() {
-        super("Error: Player has no more health left!");
+    private char type;
+
+    public ZeroHealthException(String t) {
+        super("Error: " + t + " has no more health left!");
+        this.type = t.charAt(0);
+    }
+
+    public char getType() {
+        return this.type;
     }
 }

@@ -14,8 +14,15 @@ import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Collections;
 
+import models.interfaces.SigilEffect;
+
+import models.events.DrawEvent;
+import models.events.SacrificeEvent;
+import models.events.SummonCharEvent;
+
 import models.exceptions.ZeroHealthException;
 import models.exceptions.BloodCountException;
+import models.exceptions.EmptyDeckException;
 import models.exceptions.EmptySlotException;
 import models.exceptions.FullSlotException;
 import models.exceptions.InvalidSummonException;
@@ -25,6 +32,7 @@ public class Avatar {
     private int health = 20;
     private int blood_count = 0;
     private ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
+    protected boolean is_highlighted = false;
 
     private File data;
     private Stack<Card> deck = new Stack<Card>();
@@ -40,7 +48,7 @@ public class Avatar {
         this.data = new File(d);
     }
 
-    public void initialize() {
+    public void initialize() throws NullSessionException, EmptyDeckException {
         // TODO: Read file referenced by this.data
         // TODO: Assign values stored in file to their respective fields
         
@@ -70,10 +78,10 @@ public class Avatar {
 
         if (this.health <= 0) {
             this.health = 0;
-            throw new ZeroHealthException();
+            throw new ZeroHealthException("avatar");
         }
 
-        //for concedes: use this method with hp = -1000
+        // for concedes: use this method with hp = -1000
     }
 
     public void changeBloodCount(int b) throws BloodCountException {
@@ -82,6 +90,18 @@ public class Avatar {
             this.health -= b;
             throw new BloodCountException();
         }
+    }
+
+    public boolean isHighlighted() {
+        return this.is_highlighted;
+    }
+
+    public void highlight() {
+        this.is_highlighted = true;
+    }
+
+    public void unhighlight() {
+        this.is_highlighted = false;
     }
 
     public void addEffect(SigilEffect s) {
@@ -98,24 +118,30 @@ public class Avatar {
         });
     }
 
-    public void draw() {
+    public void draw() throws NullSessionException, EmptyDeckException {
+        if (this.deck.empty()) {
+            throw new EmptyDeckException();
+        }
+        
+        App.getSession().addEvent(new DrawEvent());
         this.hand.add(this.deck.pop());
     }
 
-    public void summonChar(int hand_pos, int column) throws FullSlotException, BloodCountException {
+    public void summonChar(int hand_pos, int column) throws FullSlotException, BloodCountException, NullSessionException {
         summoned = this.hand.get(hand_pos);
 
         if (this.slots[column] != null) {
             throw new FullSlotException();
         }
         else {
+            App.getSession().addEvent(new SummonCharEvent(summoned.getImage(), column));
             this.changeBloodCount(-summoned.getCost());
             this.slots[column] = (Character)summoned;
             this.hand.remove(hand_pos);
-        }        
+        }
     }
 
-    public void summonSigil(int hand_pos, int column) throws InvalidSummonException, EmptySlotException, BloodCountException {
+    public void summonSigil(int hand_pos, int column) throws InvalidSummonException, EmptySlotException, BloodCountException, NullSessionException {
         summoned = this.hand.get(hand_pos);
 
         if (!((Sigil)summoned).appliesToChars()) {
@@ -125,6 +151,7 @@ public class Avatar {
             throw new EmptySlotException();
         }
         else {
+            App.getSession().addEvent(new SummonCharEvent(summoned.getImage(), column));
             this.changeBloodCount(-summoned.getCost());
             this.getCharInSlot(column).addEffect(((Sigil)summoned).getEffect());
             this.discardSigil(hand_pos);
@@ -140,6 +167,7 @@ public class Avatar {
         }
 
         this.changeBloodCount(-summoned.getCost());
+        App.getSession().addEvent(new SummonCharEvent(summoned.getImage(), avatar));
 
         // if applied to the playing avatar
         if (avatar == 'p') {
@@ -168,7 +196,8 @@ public class Avatar {
         this.hand.remove(hand_pos);
     }
 
-    public void sacrifice(int column) throws BloodCountException {
+    public void sacrifice(int column) throws BloodCountException, NullSessionException {
+        App.getSession().addEvent(new SacrificeEvent(column, this.slots[column].getHealth()));
         this.changeBloodCount(this.slots[column].getHealth());
         this.discardChar(column);
     }

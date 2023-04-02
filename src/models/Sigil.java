@@ -9,13 +9,15 @@ package models;
 
 import java.util.ArrayList;
 
+import models.interfaces.SigilEffect;
+
 public class Sigil extends Card {
     private boolean atc, ata;
     private SigilEffect effect;
     private static ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
 
-    public Sigil(int c, boolean atc, boolean ata, int e) {
-        super(c);
+    public Sigil(int c, String i, boolean atc, boolean ata, int e) {
+        super(c, i);
         this.atc = atc;
         this.ata = ata;
         this.effect = effects.get(e);

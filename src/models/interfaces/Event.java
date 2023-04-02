@@ -10,8 +10,10 @@
  * game will inevitably add more kinds of events.
  */
 
-package models;
+package models.interfaces;
+
+import models.enums.EventTypes;
 
 public interface Event {
-    public void replay();
+    public EventTypes getType();
 }
