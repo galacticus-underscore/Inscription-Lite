@@ -48,4 +48,5 @@ public abstract class SigilEffect {
  * - When the cards are being read, every sigil will be assigned their sigil
  *   effect using the sigil effects processor based on sigil effect codes
  * - Sigil effects will use data from the most recent event when applied
+ * - The apply effects method will be the one to add the sigil effect event
  */

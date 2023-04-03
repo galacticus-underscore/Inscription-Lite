@@ -19,8 +19,6 @@ import models.enums.EventTypes;
 
 import models.processors.PointerProcessor;
 
-import models.events.SigilEffectEvent;
-
 import models.exceptions.DeadAvatarException;
 import models.exceptions.DeadCharacterException;
 import models.exceptions.EmptyDeckException;
@@ -76,15 +74,21 @@ public class Session {
             ;
         }
         else {
-            ArrayList<SigilEffect> effects = PointerProcessor.fromPointer(e.getTarget()).getEffects();
+            ArrayList<SigilEffect> effects = PointerProcessor.fromPointer(e.getSource()).getEffects();
             SigilEffect effect;
 
             for (int i = 0; i < effects.size(); i++) {
                 effect = effects.get(i);
-                if (effect.appliesToEvent(e.getType())) {
+                if (effect.appliesToEvent(e.getType()))
                     effect.applyEffect(e);
-                    this.addEvent(new SigilEffectEvent(e.getTarget(), e.getSource(), effect.getEffectCode()));
-                }
+            }
+
+            effects = PointerProcessor.fromPointer(e.getTarget()).getEffects();
+
+            for (int i = 0; i < effects.size(); i++) {
+                effect = effects.get(i);
+                if (effect.appliesToEvent(e.getType()))
+                    effect.applyEffect(e);
             }
         }
     }
