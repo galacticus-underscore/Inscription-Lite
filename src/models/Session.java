@@ -9,13 +9,17 @@
 
 package models;
 
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 import models.patterns.Event;
+import models.patterns.SigilEffect;
 
 import models.enums.EventTypes;
 
 import models.processors.PointerProcessor;
+
+import models.events.SigilEffectEvent;
 
 import models.exceptions.DeadAvatarException;
 import models.exceptions.DeadCharacterException;
@@ -68,10 +72,21 @@ public class Session {
         else if (e.getType().equals(EventTypes.CHAR_DEATH)) {
             throw new DeadCharacterException();
         }
+        else if (e.getType().equals(EventTypes.SIGIL_EFFECT)) {
+            ;
+        }
+        else {
+            ArrayList<SigilEffect> effects = PointerProcessor.fromPointer(e.getTarget()).getEffects();
+            SigilEffect effect;
 
-        PointerProcessor.fromPointer(e.getTarget()).getEffects().forEach((effect) -> {
-            effect.applyEffect(e.getType());
-        });
+            for (int i = 0; i < effects.size(); i++) {
+                effect = effects.get(i);
+                if (effect.appliesToEvent(e.getType())) {
+                    effect.applyEffect(e);
+                    this.addEvent(new SigilEffectEvent(e.getTarget(), e.getSource(), effect.getEffectCode()));
+                }
+            }
+        }
     }
 
     public void nextPlayer() throws NullSessionException, ZeroHealthException, DeadAvatarException, DeadCharacterException {

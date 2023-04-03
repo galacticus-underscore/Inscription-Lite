@@ -11,29 +11,26 @@ package models;
 // import java.io.File;
 // import java.io.FileReader;
 // import java.io.IOException;
-import java.util.ArrayList;
 // import java.util.Arrays;
 // import java.util.Stack;
 
-import models.enums.EventTypes;
-import models.patterns.SigilEffect;
+// import models.enums.EventTypes;
+// import models.patterns.SigilEffect;
 
 // import java.util.ArrayList;
 
-// import models.interfaces.SigilEffect;
-
-// class Demo {
-// 	int x;
+class Demo {
+	int x;
   	
-//   	Demo(int num) {
-//       x = num;
-//     }
-  
-// 	int display() {
-// 		System.out.println("x = " + x);
-// 		return 0;
-// 	}
-// }
+  	Demo(int num) {
+      x = num;
+    }
+
+	int display() {
+		System.out.println("x = " + x);
+		return 0;
+	}
+}
 
 public class Test {
     public static void main(String[] args) throws Exception {
@@ -65,11 +62,11 @@ public class Test {
         // App backend = new App();
         // System.out.println(backend.getClass().getSimpleName());
 
-        ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
+        // ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
 
-        effects.add(new TestSigilEffect());
+        // effects.add(new TestSigilEffect());
 
-        effects.get(0).applyEffect(EventTypes.DRAW);
+        // effects.get(0).applyEffect(EventTypes.DRAW);
 
         // // returns null
         // Card[] arr = new Card[4];

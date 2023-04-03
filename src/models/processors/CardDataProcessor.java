@@ -48,7 +48,7 @@ public class CardDataProcessor {
                             Integer.parseInt(card_data[3]),
                             Boolean.parseBoolean(card_data[4]),
                             Boolean.parseBoolean(card_data[5]),
-                            Integer.parseInt(card_data[6])
+                            card_data[6]
                         ));
                         break;
                 }

@@ -14,19 +14,38 @@
 
 package models.patterns;
 
-import models.enums.EventTypes;
-import models.enums.Sigils;
+import java.util.Arrays;
 
-public interface SigilEffect {
-    public Sigils getEffectType();
-    public boolean applyEffect(EventTypes event);
+import models.enums.EventTypes;
+import models.enums.EffectCodes;
+
+public abstract class SigilEffect {
+    private EventTypes[] applies_to;
+    private EffectCodes effect_code;
+
+    public SigilEffect(EventTypes[] at, EffectCodes ec) {
+        this.applies_to = at;
+        this.effect_code = ec;
+    }
+
+    public boolean appliesToEvent(EventTypes type) {
+        return Arrays.asList(this.applies_to).contains(type);
+    }
+
+    public EffectCodes getEffectCode() {
+        return this.effect_code;
+    }
+
+    public abstract void applyEffect(Event e);
 }
 
 /*
- * More notes to self:
- * - Use details from event history to apply effect
- * - When applying an effect, create the sigil effect event in the apply
- *   effects method after the effect is applied
- * - No sigil effect event will be created if the sigil does not respond to the
- *   last event type in the event history array
+ * Details on the implementation of sigil effects:
+ * - All sigil effects will be stored as separate classes, each being in their
+ *   own file at the sigil_effects directory
+ * - Every sigil effect will have their own corresponding effect code, which is
+ *   unique to the sigil effect it corresponds to
+ * - When the cards are being read, every sigil will be assigned their sigil
+ *   effect using the sigil effects processor based on sigil effect codes
+ * - Sigil effects will use data from the most recent event when applied
  */

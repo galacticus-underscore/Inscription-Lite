@@ -7,20 +7,18 @@
 
 package models;
 
-import java.util.ArrayList;
-
 import models.patterns.SigilEffect;
+import models.processors.SigilEffectsProcessor;
 
 public class Sigil extends Card {
     private boolean atc, ata;
     private SigilEffect effect;
-    private static ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
 
-    public Sigil(String n, String i, int c, boolean atc, boolean ata, int e) {
+    public Sigil(String n, String i, int c, boolean atc, boolean ata, String e) {
         super(n, i, c);
         this.atc = atc;
         this.ata = ata;
-        this.effect = effects.get(e);
+        this.effect = SigilEffectsProcessor.assignEffect(e);
     }
 
     public boolean appliesToChars() {
@@ -33,9 +31,5 @@ public class Sigil extends Card {
 
     public SigilEffect getEffect() {
         return effect;
-    }
-
-    public static void addEffect(SigilEffect s) {
-        effects.add(s);
     }
 }

@@ -2,18 +2,18 @@ package models.events;
 
 import models.enums.EventPointers;
 import models.enums.EventTypes;
-import models.enums.Sigils;
+import models.enums.EffectCodes;
 import models.patterns.Event;
 
 public class SigilEffectEvent extends Event {
-    private Sigils effect;
+    private EffectCodes effect;
     
-    public SigilEffectEvent(EventPointers source, EventPointers target, Sigils e) {
+    public SigilEffectEvent(EventPointers source, EventPointers target, EffectCodes e) {
         super(EventTypes.SIGIL_EFFECT, source, target);
         this.effect = e;
     }
 
-    public Sigils getEffect() {
+    public EffectCodes getEffect() {
         return this.effect;
     }
 }
