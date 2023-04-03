@@ -6,10 +6,16 @@ import models.patterns.Event;
 
 public class SigilSummonEvent extends Event {
     private String card_image;
+    private int blood_change;
 
-    public SigilSummonEvent(EventPointers target, String c) {
+    public SigilSummonEvent(EventPointers target, int cost, String image) {
         super(EventTypes.SIGIL_SUMMON, EventPointers.PA, target);
-        this.card_image = c;
+        this.blood_change = -cost;
+        this.card_image = image;
+    }
+
+    public int getBloodChange() {
+        return this.blood_change;
     }
 
     public String getCardImage() {

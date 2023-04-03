@@ -11,10 +11,17 @@ package models;
 
 import java.util.PriorityQueue;
 
+import models.patterns.Event;
+
+import models.enums.EventTypes;
+
+import models.processors.PointerProcessor;
+
+import models.exceptions.DeadAvatarException;
+import models.exceptions.DeadCharacterException;
 import models.exceptions.EmptyDeckException;
 import models.exceptions.NullSessionException;
 import models.exceptions.ZeroHealthException;
-import models.patterns.Event;
 
 public class Session {
     private static Avatar[] avatars = {
@@ -26,7 +33,7 @@ public class Session {
     private Avatar playing_avatar, observing_avatar;
     private PriorityQueue<Event> event_history = new PriorityQueue<Event>();
 
-    public Session(int p1, int p2) throws NullSessionException, EmptyDeckException {
+    public Session(int p1, int p2) throws NullSessionException, EmptyDeckException, DeadAvatarException, DeadCharacterException {
         this.p1_index = p1;
         this.p2_index = p2;
         this.playing_avatar = avatars[p1];
@@ -52,11 +59,22 @@ public class Session {
         return this.event_history.poll();
     }
 
-    public void addEvent(Event e) {
+    public void addEvent(Event e) throws DeadAvatarException, DeadCharacterException, NullSessionException {
         this.event_history.add(e);
+
+        if (e.getType().equals(EventTypes.AVATAR_DEATH)) {
+            throw new DeadAvatarException();
+        }
+        else if (e.getType().equals(EventTypes.CHAR_DEATH)) {
+            throw new DeadCharacterException();
+        }
+
+        PointerProcessor.fromPointer(e.getTarget()).getEffects().forEach((effect) -> {
+            effect.applyEffect(e.getType());
+        });
     }
 
-    public void nextPlayer() throws NullSessionException, ZeroHealthException {
+    public void nextPlayer() throws NullSessionException, ZeroHealthException, DeadAvatarException, DeadCharacterException {
         if (turn_number > 0) {
             this.playing_avatar.attack();
         }
@@ -73,5 +91,9 @@ public class Session {
 
         this.playing_avatar.flip();
         this.observing_avatar.flip();
+    }
+
+    public void close() {
+        ;
     }
 }

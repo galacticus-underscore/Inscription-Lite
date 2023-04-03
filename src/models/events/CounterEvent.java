@@ -4,11 +4,11 @@ import models.enums.EventPointers;
 import models.enums.EventTypes;
 import models.patterns.Event;
 
-public class AttackEvent extends Event {
+public class CounterEvent extends Event {
     private int health_change;
 
-    public AttackEvent(EventPointers s, EventPointers t, int d) {
-        super(EventTypes.ATTACK, s, t);
+    public CounterEvent(EventPointers s, EventPointers t, int d) {
+        super(EventTypes.COUNTER, s, t);
         this.health_change = -d;
     }
 

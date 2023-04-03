@@ -29,6 +29,8 @@ import models.events.CharSummonEvent;
 
 import models.exceptions.ZeroHealthException;
 import models.exceptions.BloodCountException;
+import models.exceptions.DeadAvatarException;
+import models.exceptions.DeadCharacterException;
 import models.exceptions.EmptyDeckException;
 import models.exceptions.EmptySlotException;
 import models.exceptions.FullSlotException;
@@ -51,7 +53,7 @@ public class Avatar implements Entity {
         this.data = new File(d);
     }
 
-    public void initialize() throws NullSessionException, EmptyDeckException {
+    public void initialize() throws NullSessionException, EmptyDeckException, DeadAvatarException, DeadCharacterException {
         this.deck = CardDataProcessor.read(this.data);
         
         // Shuffle the cards in the deck
@@ -71,12 +73,8 @@ public class Avatar implements Entity {
         }
     }
 
-    public void changeHealth(int hp) throws ZeroHealthException, NullSessionException {
+    public void changeHealth(int hp, boolean is_counter) throws ZeroHealthException, NullSessionException {
         this.health += hp;
-
-        this.effects.forEach((e) -> {
-            e.applyEffect();
-        });
 
         if (this.health <= 0) {
             this.health = 0;
@@ -124,7 +122,7 @@ public class Avatar implements Entity {
         });
     }
 
-    public void draw() throws NullSessionException, EmptyDeckException {
+    public void draw() throws NullSessionException, EmptyDeckException, DeadAvatarException, DeadCharacterException {
         if (this.deck.empty()) {
             throw new EmptyDeckException();
         }
@@ -133,21 +131,21 @@ public class Avatar implements Entity {
         this.hand.add(this.deck.pop());
     }
 
-    public void summonChar(int hand_pos, int column) throws FullSlotException, BloodCountException, NullSessionException {
+    public void summonChar(int hand_pos, int column) throws FullSlotException, BloodCountException, NullSessionException, DeadAvatarException, DeadCharacterException {
         Card summoned = this.hand.get(hand_pos);
 
         if (this.slots[column] != null) {
             throw new FullSlotException();
         }
         else {
-            App.getSession().addEvent(new CharSummonEvent(summoned.getImage(), column));
+            App.getSession().addEvent(new CharSummonEvent(column, summoned.getCost(), summoned.getImage()));
             this.changeBloodCount(-summoned.getCost());
             this.slots[column] = (Character)summoned;
             this.hand.remove(hand_pos);
         }
     }
 
-    public void summonSigil(int hand_pos, EventPointers t) throws BloodCountException, NullSessionException, InvalidSummonException, EmptySlotException {
+    public void summonSigil(int hand_pos, EventPointers t) throws BloodCountException, NullSessionException, InvalidSummonException, EmptySlotException, DeadAvatarException, DeadCharacterException {
         Card summoned = this.hand.get(hand_pos);
         this.changeBloodCount(-summoned.getCost());
         Entity target = PointerProcessor.fromPointer(t);
@@ -180,7 +178,7 @@ public class Avatar implements Entity {
                 }
         }
 
-        App.getSession().addEvent(new SigilSummonEvent(t, summoned.getImage()));
+        App.getSession().addEvent(new SigilSummonEvent(t, summoned.getCost(), summoned.getImage()));
         this.changeBloodCount(-summoned.getCost());
         target.addEffect(((Sigil)summoned).getEffect());
         this.discardSigil(hand_pos);
@@ -190,10 +188,6 @@ public class Avatar implements Entity {
     public void discardChar(int column) {
         this.pile.push(this.slots[column]);
         this.slots[column] = null;
-
-        ((Character)(this.pile.peek())).getEffects().forEach((e) -> {
-            e.applyEffect();
-        });
     }
 
     public void discardSigil(int hand_pos) {
@@ -201,13 +195,13 @@ public class Avatar implements Entity {
         this.hand.remove(hand_pos);
     }
 
-    public void sacrifice(int column) throws BloodCountException, NullSessionException {
+    public void sacrifice(int column) throws BloodCountException, NullSessionException, DeadAvatarException, DeadCharacterException {
         App.getSession().addEvent(new SacrificeEvent(column, this.slots[column].getHealth()));
         this.changeBloodCount(this.slots[column].getHealth());
         this.discardChar(column);
     }
 
-    public void attack() throws NullSessionException, ZeroHealthException {
+    public void attack() throws NullSessionException, ZeroHealthException, DeadAvatarException, DeadCharacterException {
         for (int i = 0; i < 4; i++) {
             this.slots[i].attack();
         }

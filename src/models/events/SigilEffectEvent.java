@@ -1,26 +1,19 @@
 package models.events;
 
+import models.enums.EventPointers;
 import models.enums.EventTypes;
+import models.enums.Sigils;
 import models.patterns.Event;
 
-public class SigilEffectEvent implements Event {
-    private char avatar;
-    private int column;
-
-    public SigilEffectEvent(char a, int col) {
-        this.avatar = a;
-        this.column = col;
+public class SigilEffectEvent extends Event {
+    private Sigils effect;
+    
+    public SigilEffectEvent(EventPointers source, EventPointers target, Sigils e) {
+        super(EventTypes.SIGIL_EFFECT, source, target);
+        this.effect = e;
     }
 
-    public EventTypes getType() {
-        return EventTypes.SIGIL_EFFECT;
-    }
-
-    public char getAvatar() {
-        return this.avatar;
-    }
-
-    public int getColumn() {
-        return this.column;
+    public Sigils getEffect() {
+        return this.effect;
     }
 }

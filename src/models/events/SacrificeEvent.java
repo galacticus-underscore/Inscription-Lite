@@ -1,25 +1,19 @@
 package models.events;
 
+import models.enums.EventPointers;
 import models.enums.EventTypes;
 import models.patterns.Event;
+import models.processors.PointerProcessor;
 
-public class SacrificeEvent implements Event {
-    private int column, blood_gained;
+public class SacrificeEvent extends Event {
+    private int blood_change;
 
     public SacrificeEvent(int col, int gain) {
-        this.column = col;
-        this.blood_gained = gain;
+        super(EventTypes.SACRIFICE, PointerProcessor.toPointer(col), EventPointers.PA);
+        this.blood_change = gain;
     }
 
-    public EventTypes getType() {
-        return EventTypes.SACRIFICE;
-    }
-
-    public int getColumn() {
-        return this.column;
-    }
-
-    public int getBloodGained() {
-        return this.blood_gained;
+    public int getBloodChange() {
+        return this.blood_change;
     }
 }

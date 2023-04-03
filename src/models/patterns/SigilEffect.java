@@ -14,7 +14,19 @@
 
 package models.patterns;
 
+import models.enums.EventTypes;
+import models.enums.Sigils;
+
 public interface SigilEffect {
-    // use details from event history to apply effect
-    public void applyEffect();
+    public Sigils getEffectType();
+    public boolean applyEffect(EventTypes event);
 }
+
+/*
+ * More notes to self:
+ * - Use details from event history to apply effect
+ * - When applying an effect, create the sigil effect event in the apply
+ *   effects method after the effect is applied
+ * - No sigil effect event will be created if the sigil does not respond to the
+ *   last event type in the event history array
+ */

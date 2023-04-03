@@ -8,6 +8,8 @@
 
 package models;
 
+import models.exceptions.DeadAvatarException;
+import models.exceptions.DeadCharacterException;
 import models.exceptions.EmptyDeckException;
 import models.exceptions.NullSessionException;
 
@@ -22,7 +24,7 @@ public class App {
         return session;
     }
 
-    public static void startSession() throws NullSessionException, EmptyDeckException {
+    public static void startSession() throws NullSessionException, EmptyDeckException, DeadAvatarException, DeadCharacterException {
         session = new Session(0, 1);
     }
 
