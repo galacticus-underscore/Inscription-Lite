@@ -7,10 +7,14 @@ import javafx.fxml.FXMLLoader;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.Node;
+
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.Node;
+
+import javafx.scene.image.ImageView;
+
+import javafx.scene.input.MouseEvent;
 
 import javafx.stage.Stage;
 
@@ -38,5 +42,15 @@ public class GameController {
     protected void draw(MouseEvent e) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../views/components/Card.fxml"));
         avatar.getChildren().add(fxmlLoader.load());
+    }
+
+    @FXML 
+    protected void highlight(MouseEvent e){
+        ((ImageView)e.getSource()).getStyleClass().add("pane");
+    }
+
+    @FXML 
+    protected void unhighlight(MouseEvent e){
+        ((ImageView)e.getSource()).getStyleClass().add("pane");
     }
 }
