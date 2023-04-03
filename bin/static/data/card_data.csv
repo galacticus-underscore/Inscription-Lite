@@ -1,15 +1,15 @@
-Name,Type,Summoning Cost,Image Location,Health,Attack,Applies to Characters,Applies to Avatars,Effecct Index
-Chipmunk,Avatar,0,src\static\images\card fronts\01 - chipmunk.png,1,1,,,
-Platypus,Avatar,1,src\static\images\card fronts\01 - chipmunk.png,2,1,,,
-Medusa,Avatar,10,src\static\images\card fronts\01 - chipmunk.png,5,5,,,
-Panther,Avatar,2,src\static\images\card fronts\01 - chipmunk.png,3,2,,,
-Black Cat,Avatar,2,src\static\images\card fronts\01 - chipmunk.png,2,1,,,
-Stingray,Avatar,1,src\static\images\card fronts\01 - chipmunk.png,1,3,,,
-Converge Router,Avatar,1,src\static\images\card fronts\01 - chipmunk.png,5,0,,,
-Bio Lab Microscope,Avatar,2,src\static\images\card fronts\01 - chipmunk.png,2,2,,,
-Gaming Mouse,Avatar,2,src\static\images\card fronts\01 - chipmunk.png,1,3,,,
-Grandma's Flower Vase,Avatar,3,src\static\images\card fronts\01 - chipmunk.png,1,4,,,
-Communist Manifesto,Avatar,4,src\static\images\card fronts\01 - chipmunk.png,5,3,,,
-Sniper,Sigil,1,src\static\images\card fronts\01 - chipmunk.png,,,TRUE,FALSE,0
-Stone Ocean,Sigil,1,src\static\images\card fronts\01 - chipmunk.png,,,TRUE,FALSE,1
-Touch of Death,Sigil,3,src\static\images\card fronts\01 - chipmunk.png,,,TRUE,FALSE,2
+Type,Name,Image Location,Summoning Cost,Health,Attack,Applies to Characters,Applies to Avatars,Effecct Index
+Character,Chipmunk,src\static\images\card fronts\01 - chipmunk.png,0,1,1,,,
+Character,Platypus,src\static\images\card fronts\01 - chipmunk.png,1,2,1,,,
+Character,Medusa,src\static\images\card fronts\01 - chipmunk.png,10,5,5,,,
+Character,Panther,src\static\images\card fronts\01 - chipmunk.png,2,3,2,,,
+Character,Black Cat,src\static\images\card fronts\01 - chipmunk.png,2,2,1,,,
+Character,Stingray,src\static\images\card fronts\01 - chipmunk.png,1,1,3,,,
+Character,Converge Router,src\static\images\card fronts\01 - chipmunk.png,1,5,0,,,
+Character,Bio Lab Microscope,src\static\images\card fronts\01 - chipmunk.png,2,2,2,,,
+Character,Gaming Mouse,src\static\images\card fronts\01 - chipmunk.png,2,1,3,,,
+Character,Grandma's Flower Vase,src\static\images\card fronts\01 - chipmunk.png,3,1,4,,,
+Character,Communist Manifesto,src\static\images\card fronts\01 - chipmunk.png,4,5,3,,,
+Sigil,Sniper,src\static\images\card fronts\01 - chipmunk.png,1,,,TRUE,FALSE,0
+Sigil,Stone Ocean,src\static\images\card fronts\01 - chipmunk.png,1,,,TRUE,FALSE,1
+Sigil,Touch of Death,src\static\images\card fronts\01 - chipmunk.png,3,,,TRUE,FALSE,2

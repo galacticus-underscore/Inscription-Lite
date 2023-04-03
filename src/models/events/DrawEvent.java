@@ -1,10 +1,11 @@
 package models.events;
 
-import models.interfaces.Event;
+import models.enums.EventPointers;
 import models.enums.EventTypes;
+import models.patterns.Event;
 
-public class DrawEvent implements Event {
-    public EventTypes getType() {
-        return EventTypes.DRAW;
+public class DrawEvent extends Event {
+    public DrawEvent() {
+        super(EventTypes.DRAW, EventPointers.PA, EventPointers.PA);
     }
 }

@@ -1,7 +1,7 @@
 package models.events;
 
 import models.enums.EventTypes;
-import models.interfaces.Event;
+import models.patterns.Event;
 
 public class CharDeathEvent implements Event {
     private int column;

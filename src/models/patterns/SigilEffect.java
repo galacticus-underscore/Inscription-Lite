@@ -12,7 +12,7 @@
  * effects.
  */
 
-package models.interfaces;
+package models.patterns;
 
 public interface SigilEffect {
     // use details from event history to apply effect

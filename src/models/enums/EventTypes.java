@@ -2,9 +2,8 @@ package models.enums;
 
 public enum EventTypes {
     DRAW,
-    SUMMON_CHAR,
-    SUMMON_SIGIL_CHAR,
-    SUMMON_SIGIL_AVATAR,
+    CHAR_SUMMON,
+    SIGIL_SUMMON,
     ATTACK,
     SIGIL_EFFECT,
     CHAR_DEATH,

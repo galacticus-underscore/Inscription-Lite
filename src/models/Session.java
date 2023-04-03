@@ -11,10 +11,10 @@ package models;
 
 import java.util.PriorityQueue;
 
-import models.interfaces.Event;
 import models.exceptions.EmptyDeckException;
 import models.exceptions.NullSessionException;
 import models.exceptions.ZeroHealthException;
+import models.patterns.Event;
 
 public class Session {
     private static Avatar[] avatars = {

@@ -1,35 +1,18 @@
 package models.events;
 
-import models.interfaces.Event;
+import models.enums.EventPointers;
 import models.enums.EventTypes;
+import models.patterns.Event;
 
-public class AttackEvent implements Event {
-    private int column, attack, counter;
+public class AttackEvent extends Event {
+    private int damage;
 
-    public AttackEvent(int col, int a) {
-        this.column = col;
-        this.attack = a;
+    public AttackEvent(EventPointers s, EventPointers t, int d) {
+        super(EventTypes.ATTACK, s, t);
+        this.damage = d;
     }
 
-    public AttackEvent(int col, int a, int c) {
-        this.column = col;
-        this.attack = a;
-        this.counter = c;
-    }
-
-    public EventTypes getType() {
-        return EventTypes.ATTACK;
-    }
-
-    public int getColumn() {
-        return this.column;
-    }
-
-    public int getAttack() {
-        return this.attack;
-    }
-
-    public int getCounter() {
-        return this.counter;
+    public int getDamage() {
+        return this.damage;
     }
 }

@@ -9,19 +9,23 @@
 
 package models;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Collections;
 
-import models.interfaces.SigilEffect;
+import models.patterns.Entity;
+import models.patterns.SigilEffect;
+
+import models.enums.EventPointers;
+
+import models.processors.CardDataProcessor;
+import models.processors.PointerProcessor;
 
 import models.events.DrawEvent;
 import models.events.SacrificeEvent;
-import models.events.SummonCharEvent;
+import models.events.SigilSummonEvent;
+import models.events.CharSummonEvent;
 
 import models.exceptions.ZeroHealthException;
 import models.exceptions.BloodCountException;
@@ -31,7 +35,7 @@ import models.exceptions.FullSlotException;
 import models.exceptions.InvalidSummonException;
 import models.exceptions.NullSessionException;
 
-public class Avatar {
+public class Avatar implements Entity {
     private int health = 20;
     private int blood_count = 0;
     private ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
@@ -48,29 +52,9 @@ public class Avatar {
     }
 
     public void initialize() throws NullSessionException, EmptyDeckException {
-        // TODO: Read file referenced by this.data
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(this.data));
-            String line = "";
-            String[] card_data;
-            Card card;
-
-            while ((line = br.readLine()) != null) {
-                card_data = line.split(",");
-                for(String tempStr : card_data) {
-                    System.out.print(tempStr + " ");
-                }
-            }
-
-            br.close();
-        }
-        catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-
-        // TODO: Assign values stored in file to their respective fields
+        this.deck = CardDataProcessor.read(this.data);
         
-        // shuffle the cards in the deck
+        // Shuffle the cards in the deck
         ArrayList<Card> shuffler = new ArrayList<Card>();
 
         for (int i = 0; i < 40; i++)
@@ -81,13 +65,13 @@ public class Avatar {
         for (int i = 0; i < 40; i++)
             this.deck.push(shuffler.get(i));
 
-        // draw 5 cards from the deck
+        // Draw 5 cards from the deck
         for (int j = 0; j < 5; j++) {
             this.draw();
         }
     }
 
-    public void changeHealth(int hp) throws ZeroHealthException {
+    public void changeHealth(int hp) throws ZeroHealthException, NullSessionException {
         this.health += hp;
 
         this.effects.forEach((e) -> {
@@ -122,6 +106,10 @@ public class Avatar {
         this.is_highlighted = false;
     }
 
+    public ArrayList<SigilEffect> getEffects() {
+        return this.effects;
+    }
+
     public void addEffect(SigilEffect s) {
         this.effects.add(s);
     }
@@ -152,50 +140,49 @@ public class Avatar {
             throw new FullSlotException();
         }
         else {
-            App.getSession().addEvent(new SummonCharEvent(summoned.getImage(), column));
+            App.getSession().addEvent(new CharSummonEvent(summoned.getImage(), column));
             this.changeBloodCount(-summoned.getCost());
             this.slots[column] = (Character)summoned;
             this.hand.remove(hand_pos);
         }
     }
 
-    public void summonSigil(int hand_pos, int column) throws InvalidSummonException, EmptySlotException, BloodCountException, NullSessionException {
+    public void summonSigil(int hand_pos, EventPointers t) throws BloodCountException, NullSessionException, InvalidSummonException, EmptySlotException {
         Card summoned = this.hand.get(hand_pos);
-
-        if (!((Sigil)summoned).appliesToChars()) {
-            throw new InvalidSummonException("character");
-        }
-        else if (this.slots[column] == null) {
-            throw new EmptySlotException();
-        }
-        else {
-            App.getSession().addEvent(new SummonCharEvent(summoned.getImage(), column));
-            this.changeBloodCount(-summoned.getCost());
-            this.getCharInSlot(column).addEffect(((Sigil)summoned).getEffect());
-            this.discardSigil(hand_pos);
-            this.hand.remove(hand_pos);
-        }
-    }
-
-    public void summonSigil(int hand_pos, char avatar) throws InvalidSummonException, BloodCountException, NullSessionException {
-        Card summoned = this.hand.get(hand_pos);
-
-        if (!((Sigil)summoned).appliesToAvatars()) {
-            throw new InvalidSummonException("avatar");
-        }
-
         this.changeBloodCount(-summoned.getCost());
-        App.getSession().addEvent(new SummonCharEvent(summoned.getImage(), avatar));
+        Entity target = PointerProcessor.fromPointer(t);
 
-        // if applied to the playing avatar
-        if (avatar == 'p') {
-            this.addEffect(((Sigil)summoned).getEffect());
-        }
-        // if applied to the observing avatar
-        else {
-            App.getSession().getObservingAvatar().addEffect(((Sigil)summoned).getEffect());
+        switch (t) {
+            case PA: 
+            case OA:
+                if (!((Sigil)summoned).appliesToAvatars()) {
+                    throw new InvalidSummonException("avatar");
+                }
+                else {
+                    break;
+                }
+            case P1:
+            case P2:
+            case P3:
+            case P4:
+            case O1:
+            case O2:
+            case O3:
+            case O4:
+                if (!((Sigil)summoned).appliesToChars()) {
+                    throw new InvalidSummonException("character");
+                }
+                else if (target == null) {
+                    throw new EmptySlotException();
+                }
+                else {
+                    break;
+                }
         }
 
+        App.getSession().addEvent(new SigilSummonEvent(t, summoned.getImage()));
+        this.changeBloodCount(-summoned.getCost());
+        target.addEffect(((Sigil)summoned).getEffect());
         this.discardSigil(hand_pos);
         this.hand.remove(hand_pos);
     }
@@ -222,7 +209,7 @@ public class Avatar {
 
     public void attack() throws NullSessionException, ZeroHealthException {
         for (int i = 0; i < 4; i++) {
-            this.slots[i].attack(i);
+            this.slots[i].attack();
         }
     }
 

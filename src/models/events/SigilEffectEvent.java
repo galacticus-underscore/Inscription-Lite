@@ -1,7 +1,7 @@
 package models.events;
 
-import models.interfaces.Event;
 import models.enums.EventTypes;
+import models.patterns.Event;
 
 public class SigilEffectEvent implements Event {
     private char avatar;

@@ -1,7 +1,7 @@
 package models.events;
 
 import models.enums.EventTypes;
-import models.interfaces.Event;
+import models.patterns.Event;
 
 public class SacrificeEvent implements Event {
     private int column, blood_gained;

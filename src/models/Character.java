@@ -9,17 +9,25 @@ package models;
 
 import java.util.ArrayList;
 
-import models.interfaces.SigilEffect;
+import models.patterns.Entity;
+import models.patterns.SigilEffect;
+
+import models.enums.EventPointers;
+
+import models.processors.PointerProcessor;
+
 import models.events.AttackEvent;
+
 import models.exceptions.NullSessionException;
 import models.exceptions.ZeroHealthException;
 
-public class Character extends Card {
+public class Character extends Card implements Entity {
     private int health, attack;
+    private EventPointers location;
     private ArrayList<SigilEffect> effects = new ArrayList<SigilEffect>();
 
-    public Character(int c, String i, int h, int a) {
-        super(c, i);
+    public Character(String n, String i, int c, int h, int a) {
+        super(n, i, c);
         this.health = h;
         this.attack = a;
     }
@@ -28,7 +36,7 @@ public class Character extends Card {
         return this.health;
     }
 
-    public void changeHealth(int hp) throws ZeroHealthException {
+    public void changeHealth(int hp) throws ZeroHealthException, NullSessionException {
         this.health += hp;
 
         this.effects.forEach((e) -> {
@@ -39,6 +47,9 @@ public class Character extends Card {
             this.health = 0;
             throw new ZeroHealthException("character");
         }
+        else if (hp < 0) {
+            this.attack();
+        }
     }
 
     public int getAttack() {
@@ -48,37 +59,27 @@ public class Character extends Card {
     public void changeAttack(int a) {
         this.attack += a;
 
-        this.effects.forEach((e) -> {
-            e.applyEffect();
-        });
-
         if (this.attack <= 0) {
             this.attack = 0;
         }
     }
 
+    public void setLocation(int l) {
+        this.location = PointerProcessor.toPointer(l);
+    }
+
     public ArrayList<SigilEffect> getEffects() {
-        return effects;
+        return this.effects;
     }
 
     public void addEffect(SigilEffect s) {
         this.effects.add(s);
     }
 
-    public void attack(int column) throws NullSessionException, ZeroHealthException {
-        Avatar playing_avatar = App.getSession().getPlayingAvatar();
-        Avatar observing_avatar = App.getSession().getObservingAvatar();
-        Character attacking_char = playing_avatar.getCharInSlot(column);
-        Character defending_char = playing_avatar.getCharInSlot(column);
-
-        if (observing_avatar.getCharInSlot(column) == null) {
-            App.getSession().addEvent(new AttackEvent(column, this.attack));
-            observing_avatar.changeHealth(-this.attack);
-        }
-        else {
-            App.getSession().addEvent(new AttackEvent(column, this.attack, defending_char.getAttack()));
-            attacking_char.changeHealth(-defending_char.getAttack());
-            defending_char.changeHealth(-attacking_char.getAttack());
-        }
+    public void attack() throws NullSessionException, ZeroHealthException {
+        EventPointers opposite = PointerProcessor.getOpposite(this.location);
+        Entity target = PointerProcessor.fromPointer(opposite);
+        App.getSession().addEvent(new AttackEvent(this.location, opposite, this.attack));
+        target.changeHealth(-this.attack);
     }
 }

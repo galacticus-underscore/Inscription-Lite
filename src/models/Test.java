@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Stack;
 
 // import java.util.ArrayList;
 
@@ -79,20 +80,46 @@ public class Test {
         // ArrayList<Card> arraylist = new ArrayList<Card>();
         // System.out.println(arraylist.get(0));
 
+        Stack<Card> deck = new Stack<Card>();
+
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File("src/static/data/card_data.csv")));
             String line = "";
-            String[] tempArr;
+            String[] card_data;
+            boolean skipped_headers = false;
 
             while ((line = br.readLine()) != null) {
-                tempArr = Arrays.stream(line.split(",")).filter(x -> !x.isEmpty()).toArray(String[]::new);
-                for(String tempStr : tempArr) {
-                    System.out.print(tempStr + " ");
+                if (!skipped_headers) {
+                    skipped_headers = true;
+                    continue;
                 }
-                System.out.println("\n");
-            }
+                
+                card_data = Arrays.stream(line.split(","))
+                    .filter(x -> !x.isEmpty())
+                    .toArray(String[]::new);
 
-            br.close();
+                switch (card_data[0].charAt(0)) {
+                    case 'C':
+                        deck.push(new Character(
+                            card_data[1],
+                            card_data[2],
+                            Integer.parseInt(card_data[3]),
+                            Integer.parseInt(card_data[4]),
+                            Integer.parseInt(card_data[5])
+                        ));
+                        break;
+                    case 'S':
+                        deck.push(new Sigil(
+                            card_data[1],
+                            card_data[2],
+                            Integer.parseInt(card_data[3]),
+                            Boolean.parseBoolean(card_data[4]),
+                            Boolean.parseBoolean(card_data[5]),
+                            Integer.parseInt(card_data[6])
+                        ));
+                        break;
+                }
+            }
         }
         catch (IOException ioe) {
             ioe.printStackTrace();

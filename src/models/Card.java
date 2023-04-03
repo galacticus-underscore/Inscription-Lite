@@ -8,22 +8,27 @@
 package models;
 
 public abstract class Card {
+    protected String name, image;
     protected int cost;
-    protected String image;
     protected boolean is_facing_up = true;
     protected boolean is_highlighted = false;
 
-    public Card(int c, String i) {
-        this.cost = c;
+    public Card(String n, String i, int c) {
+        this.name = n;
         this.image = i;
+        this.cost = c;
     }
 
-    public int getCost() {
-        return this.cost;
+    public String getName() {
+        return this.name;
     }
 
     public String getImage() {
         return this.image;
+    }
+
+    public int getCost() {
+        return this.cost;
     }
 
     public boolean isFacingUp() {
