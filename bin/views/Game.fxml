@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -9,10 +10,12 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<StackPane prefHeight="150.0" prefWidth="200.0" styleClass="container" stylesheets="@../static/styles/css/game.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane prefHeight="150.0" prefWidth="200.0" styleClass="container" stylesheets="@../static/styles/css/game.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameController">
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0">
+      <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="630.0">
          <children>
             <GridPane styleClass="avatar-container">
                <columnConstraints>
@@ -24,24 +27,140 @@
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="34.0625" prefHeight="100.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <HBox prefWidth="200.0">
+                  <HBox alignment="CENTER_RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="630.0" spacing="4.0">
                      <children>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <ImageView fitHeight="65.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/backing.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/backing.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/backing.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/backing.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/backing.png" />
+                           </image>
+                        </ImageView>
+                        <Separator maxHeight="-Infinity" minHeight="-Infinity" orientation="VERTICAL" prefHeight="81.0" valignment="TOP">
+                           <HBox.margin>
+                              <Insets left="8.0" right="8.0" />
+                           </HBox.margin></Separator>
+                        <StackPane prefHeight="150.0" prefWidth="64.0">
                            <children>
-                              <ImageView fitHeight="200.0" fitWidth="200.0" styleClass="avatar-icon">
+                              <ImageView fitHeight="64.0" fitWidth="64.0" styleClass="avatar-icon">
                                  <image>
                                     <Image url="@../static/icons/player%202%20icon.jpg" />
                                  </image>
                               </ImageView>
+                              <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="52.0" prefWidth="200.0" spacing="4.0" StackPane.alignment="BOTTOM_CENTER">
+                                 <children>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <ImageView fitHeight="39.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../static/icons/health.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="20">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <ImageView fitHeight="39.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../static/icons/blood.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </HBox>
                            </children>
                         </StackPane>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
                      </children>
                   </HBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="35" textAlignment="RIGHT" wrappingWidth="89.0" />
+                        <ImageView fitHeight="170.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/backing.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="89.0" />
+                        <ImageView fitHeight="170.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/backing.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="186.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/boardglow.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="186.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/boardglow.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="186.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/boardglow.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="186.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/boardglow.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
                </children>
             </GridPane>
             <GridPane styleClass="avatar-container">
@@ -54,11 +173,152 @@
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="34.0625" prefHeight="100.0" vgrow="SOMETIMES" />
                </rowConstraints>
+               <children>
+                  <HBox fx:id="avatar" alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="630.0" spacing="4.0" GridPane.rowIndex="1">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="64.0">
+                           <children>
+                              <ImageView fitHeight="64.0" fitWidth="64.0" styleClass="avatar-icon">
+                                 <image>
+                                    <Image url="@../static/icons/player%201%20icon.jpg" />
+                                 </image>
+                              </ImageView>
+                              <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="52.0" prefWidth="200.0" spacing="4.0" StackPane.alignment="BOTTOM_CENTER">
+                                 <children>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <ImageView fitHeight="39.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../static/icons/health.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="20">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <ImageView fitHeight="39.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../static/icons/blood.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </StackPane>
+                        <Separator maxHeight="-Infinity" minHeight="-Infinity" orientation="VERTICAL" prefHeight="81.0" valignment="TOP">
+                           <HBox.margin>
+                              <Insets left="8.0" right="8.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <ImageView fitHeight="65.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/card%20fronts/01%20-%20chipmunk.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/card%20fronts/01%20-%20chipmunk.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/card%20fronts/01%20-%20chipmunk.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/card%20fronts/01%20-%20chipmunk.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/card%20fronts/01%20-%20chipmunk.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="89.0" />
+                        <ImageView fitHeight="170.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/backing.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="35" textAlignment="RIGHT" wrappingWidth="89.0" />
+                        <ImageView fitHeight="170.0" fitWidth="89.0" onMouseClicked="#draw" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/backing.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <StackPane fx:id="slot1" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <children>
+                        <ImageView fitHeight="186.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/boardglow.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2">
+                     <children>
+                        <ImageView fitHeight="186.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/boardglow.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3">
+                     <children>
+                        <ImageView fitHeight="186.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/boardglow.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4">
+                     <children>
+                        <ImageView fitHeight="186.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../static/images/boardglow.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+               </children>
             </GridPane>
          </children>
       </VBox>
+      <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#nextTurn" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_RIGHT">
+         <image>
+            <Image url="@../static/icons/end_turn.png" />
+         </image>
+         <StackPane.margin>
+            <Insets bottom="16.0" right="16.0" />
+         </StackPane.margin>
+      </ImageView>
    </children>
 </StackPane>
