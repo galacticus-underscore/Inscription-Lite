@@ -3,10 +3,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import models.processors.StyleProcessor;
 
 public class Main extends Application {
 
     public static void main(String[] args) {
+        StyleProcessor.writeScreenVars();
+        StyleProcessor.compile();
         launch(args);
     }
     

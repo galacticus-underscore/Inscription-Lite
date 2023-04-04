@@ -1,11 +1,18 @@
 /*
  * Test.java
  * 
- * The testing grounds for the model classes we made and some Java concepts we
- * wanted to use in this project.
+ * This is the testing grounds for the model classes we made and some Java
+ * concepts wanted to use in this project.
  */
 
 package models;
+
+// import models.processors.StyleProcessor;
+
+// import java.io.InputStreamReader;
+// import java.io.File;
+// import java.io.FileWriter;
+// import java.io.IOException;
 
 // import java.io.BufferedReader;
 // import java.io.File;
@@ -120,5 +127,63 @@ public class Test {
         // catch (IOException ioe) {
         //     ioe.printStackTrace();
         // }
+
+        // String path = "filename.scss";
+
+        // try {
+        //     File myObj = new File(path);
+        //     if (myObj.createNewFile()) {
+        //         System.out.println("File created: " + myObj.getName());
+        //     }
+        //     else {
+        //         System.out.println("File already exists.");
+        //     }
+        // } catch (IOException e) {
+        //     System.out.println("An error occurred.");
+        //     e.printStackTrace();
+        // }
+
+        // try {
+        //     FileWriter myWriter = new FileWriter(path, true);
+        //     myWriter.write("\n$color: red");
+        //     myWriter.close();
+        //     System.out.println("Successfully wrote to the file.");
+        // }
+        // catch (IOException e) {
+        //     System.out.println("An error occurred.");
+        //     e.printStackTrace();
+        // }
+
+        // ProcessBuilder processBuilder = new ProcessBuilder("compile.bat");
+					
+        // try {
+
+        //     Process process = processBuilder.start();
+
+        //     StringBuilder output = new StringBuilder();
+
+        //     BufferedReader reader = new BufferedReader(
+        //             new InputStreamReader(process.getInputStream()));
+
+        //     String line;
+        //     while ((line = reader.readLine()) != null) {
+        //         output.append(line + "\n");
+        //     }
+
+        //     int exitVal = process.waitFor();
+        //     if (exitVal == 0) {
+        //         System.out.println(output);
+        //         System.exit(0);
+        //     } else {
+        //         //abnormal...
+        //     }
+
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }
+
+        // StyleProcessor.writeScreenVars();
     }
 }
