@@ -45,6 +45,7 @@ public class StyleProcessor {
     }
 
     public static void writeScreenVars() {
+        // TODO: write root font size variable to SCSS file depending on the sceern width and height
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         int width = gd.getDisplayMode().getWidth();
         int height = gd.getDisplayMode().getHeight();
