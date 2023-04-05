@@ -13,52 +13,70 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
+import javafx.stage.Screen;
 
 public class StyleProcessor {
+    private static int width = (int)Screen.getPrimary().getBounds().getWidth();
+    private static int height = (int)Screen.getPrimary().getBounds().getHeight();
+    private static int font_size = 16;
+
+    public static int getWidth() {
+        return width;
+    }
+
+    public static int getHeight() {
+        return height;
+    }
+
+    public static int getFontSize() {
+        return font_size;
+    }
+
     public static void compile() {
+        LogProcessor.start("StyleProcessor", "compile");
+
+        LogProcessor.log("Initializing batch script");
         ProcessBuilder processBuilder = new ProcessBuilder("./src/scripts/compile.bat");
         	
         try {
+            LogProcessor.log("Running batch script");
             Process process = processBuilder.start();
-            StringBuilder output = new StringBuilder();
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(process.getInputStream()));
 
             String line;
             while ((line = reader.readLine()) != null) {
-                output.append(line + "\n");
+                LogProcessor.success(line);
             }
-
-            int exitVal = process.waitFor();
-            if (exitVal == 0) {
-                System.out.println(output);
-                
-            }
-
-            System.exit(exitVal);
         }
-        catch (IOException | InterruptedException e) {
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void writeScreenVars() {
-        // TODO: write root font size variable to SCSS file depending on the sceern width and height
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        int width = gd.getDisplayMode().getWidth();
-        int height = gd.getDisplayMode().getHeight();
-
+        LogProcessor.start("StyleProcessor", "writeScreenVars");
+        
         try {
+            LogProcessor.log("Writing variables to _screen.scss");
             FileWriter myWriter = new FileWriter("src/static/styles/sass/_screen.scss");
-            myWriter.write("$screen-width: " + width + ";\n");
-            myWriter.write("$screen-height: " + height + ";\n");
+
+            myWriter.write("$screen-width: " + width + "px;\n");
+            LogProcessor.success("Written screen width to _screen.scss");
+
+            myWriter.write("$screen-height: " + height + "px;\n");
+            LogProcessor.success("Written screen height to _screen.scss");
+
+            myWriter.write("$rem: " + font_size + "px;\n");
+            LogProcessor.success("Written font size to _screen.scss");
+
             myWriter.close();
-            System.out.println("Successfully wrote to the file.");
+            LogProcessor.success("All variables written to _screen.scss");
         }
         catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println();
     }
 }

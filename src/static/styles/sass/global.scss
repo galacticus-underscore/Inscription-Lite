@@ -1,0 +1,55 @@
+@use "vars";
+@use "screen";
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Lato&family=Shadows+Into+Light+Two&display=swap');
+
+.root {
+    width: screen.$screen-width;
+    -fx-pref-width: screen.$screen-width;
+    height: screen.$screen-height;
+    -fx-pref-height: screen.$screen-height;
+
+    padding: 2*screen.$rem;
+    -fx-padding: 2*screen.$rem;
+
+    background-color: vars.$bg-primary;
+    -fx-background-color: vars.$bg-primary;
+
+    -fx-alignment: center;
+    -fx-spacing: 24px;
+}
+
+.title {
+    fill: white;
+    -fx-fill: white;
+}
+
+.subtitle {
+    font-family: "Shadows Into Light Two", cursive;
+    -fx-font-family: "Shadows Into Light Two", cursive;
+    font-size: 24px;
+    -fx-font-size: 24px;
+    fill: white;
+    -fx-fill: white;
+}
+
+.header {
+    font-family: "Anton", sans-serif;
+    -fx-font-family: "Anton", sans-serif;
+    font-size: 32px;
+    -fx-font-size: 32px;
+    fill: white;
+    -fx-fill: white;
+}
+
+.text {
+    font-family: "Lato", sans-serif;
+    -fx-font-family: "Lato", sans-serif;
+    font-size: 12px;
+    -fx-font-size: 12px;
+    fill: white;
+    -fx-fill: white;
+}
+
+// myWriter.write("$h1-font-size: " + font_size*4 + "px;/n");
+// myWriter.write("$h2-font-size: " + font_size*2 + "px;/n");
+// myWriter.write("$h3-font-size: " + font_size*1.5 + "px;/n");

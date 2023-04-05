@@ -3,7 +3,10 @@
 @ECHO OFF
 
 sass .\src\static\styles\sass
-move .\src\static\styles\sass\*.css .\src\static\styles\css
-move .\src\static\styles\sass\*.map .\src\static\styles\maps
+ECHO All non-partial sass files have been compiled
 
-ECHO Success! All non-partial sass files have been compiled to the directory .\src\static\styles\css
+move .\src\static\styles\sass\*.css .\src\static\styles\css >nul
+ECHO All compiled css files have been moved to the directory .\src\static\styles\css
+
+move .\src\static\styles\sass\*.map .\src\static\styles\maps >nul
+ECHO All map files have been moved to the directory .\src\static\styles\map

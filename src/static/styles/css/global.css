@@ -1,48 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Lato&family=Shadows+Into+Light+Two&display=swap');
-
-.container {
-    width: 840px;
-    -fx-pref-width: 840px;
-    height: 630px;
-    -fx-pref-height: 630px;
-    background-color: #421D14;
-    -fx-background-color: #421D14;
-    -fx-alignment: center;
-    -fx-spacing: 24px;
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Lato&family=Shadows+Into+Light+Two&display=swap");
+.root {
+  width: 1536px;
+  -fx-pref-width: 1536px;
+  height: 864px;
+  -fx-pref-height: 864px;
+  padding: 32px;
+  -fx-padding: 32px;
+  background-color: #421D14;
+  -fx-background-color: #421D14;
+  -fx-alignment: center;
+  -fx-spacing: 24px;
 }
 
 .title {
-    font-family: "Anton", sans-serif;
-    -fx-font-family: "Anton", sans-serif;
-    font-size: 64px;
-    -fx-font-size: 64px;
-    fill: white;
-    -fx-fill: white;
+  fill: white;
+  -fx-fill: white;
 }
 
 .subtitle {
-    font-family: "Shadows Into Light Two", cursive;
-    -fx-font-family: "Shadows Into Light Two", cursive;
-    font-size: 24px;
-    -fx-font-size: 24px;
-    fill: white;
-    -fx-fill: white;
+  font-family: "Shadows Into Light Two", cursive;
+  -fx-font-family: "Shadows Into Light Two", cursive;
+  font-size: 24px;
+  -fx-font-size: 24px;
+  fill: white;
+  -fx-fill: white;
 }
 
 .header {
-    font-family: "Anton", sans-serif;
-    -fx-font-family: "Anton", sans-serif;
-    font-size: 32px;
-    -fx-font-size: 32px;
-    fill: white;
-    -fx-fill: white;
+  font-family: "Anton", sans-serif;
+  -fx-font-family: "Anton", sans-serif;
+  font-size: 32px;
+  -fx-font-size: 32px;
+  fill: white;
+  -fx-fill: white;
 }
 
 .text {
-    font-family: "Lato", sans-serif;
-    -fx-font-family: "Lato", sans-serif;
-    font-size: 12px;
-    -fx-font-size: 12px;
-    fill: white;
-    -fx-fill: white;
+  font-family: "Lato", sans-serif;
+  -fx-font-family: "Lato", sans-serif;
+  font-size: 12px;
+  -fx-font-size: 12px;
+  fill: white;
+  -fx-fill: white;
 }
+
+/*# sourceMappingURL=global.css.map */
