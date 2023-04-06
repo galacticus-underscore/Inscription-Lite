@@ -1,65 +1,51 @@
-@import url("https://fonts.googleapis.com/css2?family=Anton&family=Lato&family=Shadows+Into+Light+Two&display=swap");
-.root {
+@import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&family=Special+Elite&display=swap");
+.body {
   width: 1536px;
   -fx-pref-width: 1536px;
   height: 864px;
   -fx-pref-height: 864px;
   padding: 32px;
   -fx-padding: 32px;
-  background-color: #421D14;
-  -fx-background-color: #421D14;
+  background-color: #371809;
+  -fx-background-color: #371809;
   -fx-alignment: center;
-  -fx-spacing: 24px;
+  -fx-spacing: 16px;
 }
 
 .title {
-  fill: white;
-  -fx-fill: white;
+  fill: #FFF;
+  -fx-fill: #FFF;
 }
 
 .subtitle {
-  font-family: "Shadows Into Light Two", cursive;
-  -fx-font-family: "Shadows Into Light Two", cursive;
-  font-size: 24px;
-  -fx-font-size: 24px;
-  fill: white;
-  -fx-fill: white;
-}
-
-.header {
-  font-family: "Anton", sans-serif;
-  -fx-font-family: "Anton", sans-serif;
+  fill: #FFF;
+  -fx-fill: #FFF;
+  font-family: "Shadows Into Light Two";
+  -fx-font-family: "Shadows Into Light Two";
   font-size: 32px;
   -fx-font-size: 32px;
-  fill: white;
-  -fx-fill: white;
 }
 
-.text {
-  font-family: "Lato", sans-serif;
-  -fx-font-family: "Lato", sans-serif;
-  font-size: 12px;
-  -fx-font-size: 12px;
-  fill: white;
-  -fx-fill: white;
-}
-
-.menu-button {
-  width: 160px;
-  -fx-pref-width: 160px;
-  height: 50px;
-  -fx-pref-height: 50px;
-  background-color: #19B066;
-  -fx-background-color: #19B066;
-  -fx-background-radius: 8px;
-  border-color: #6CE10F;
-  -fx-border-color: #6CE10F;
+.home-button {
+  width: 230.4px;
+  -fx-pref-width: 230.4px;
+  height: 86.4px;
+  -fx-pref-height: 86.4px;
+  background-color: #5ec236;
+  -fx-background-color: #5ec236;
+  -fx-background-radius: 20px;
+  border-color: #bfec39;
+  -fx-border-color: #bfec39;
   border-width: 4px;
   -fx-border-width: 4px;
-  border-radius: 8px;
-  -fx-border-radius: 8px;
-  font-size: 24px;
-  -fx-font-size: 24px;
+  border-radius: 16px;
+  -fx-border-radius: 16px;
+  fill: #FFF;
+  -fx-fill: #FFF;
+  font-family: "Special Elite";
+  -fx-font-family: "Special Elite";
+  font-size: 32px;
+  -fx-font-size: 32px;
 }
 
 /*# sourceMappingURL=home.css.map */

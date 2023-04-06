@@ -2,7 +2,7 @@
 @use "global";
 
 .body {
-    @include global.root();
+    @include global.root($color: black);
 }
 
 .title {
@@ -10,10 +10,10 @@
 }
 
 .subtitle {
-    @include global.text(true, "Shadows Into Light Two", 2);
+    @include global.text(true, "Special Elite", 4);
 }
 
-.home-button {
+.confirm-button {
     @include global.primary-box(0.15, 0.1);
     @include global.button();
     @include global.text(true, "Special Elite", 2);

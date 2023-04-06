@@ -1,0 +1,83 @@
+@use "screen";
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&family=Special+Elite&display=swap');
+
+$bg-primary: #371809;
+$bg-secondary: #d5814a;
+$text-primary: #FFF;
+$text-secondary: #fbddd4;
+$btn-primary: #5ec236;
+$btn-secondary: #40e081;
+$btn-highlight: #bfec39;
+
+@mixin root($color: $bg-primary, $spacing: screen.$rem) {
+    width: screen.$screen-width;
+    -fx-pref-width: screen.$screen-width;
+    height: screen.$screen-height;
+    -fx-pref-height: screen.$screen-height;
+
+    padding: 2*screen.$rem;
+    -fx-padding: 2*screen.$rem;
+
+    background-color: $color;
+    -fx-background-color: $color;
+
+    -fx-alignment: center;
+    -fx-spacing: $spacing;
+}
+
+@mixin primary-box($percent-screen-width, $percent-screen-height) {
+    width: $percent-screen-width * screen.$screen-width;
+    -fx-pref-width: $percent-screen-width * screen.$screen-width;
+    height: $percent-screen-height * screen.$screen-height;
+    -fx-pref-height: $percent-screen-height * screen.$screen-height;
+}
+
+@mixin button {
+    background-color: $btn-primary;
+    -fx-background-color: $btn-primary;
+    -fx-background-radius: screen.$rem + 4;
+
+    border-color: $btn-highlight;
+    -fx-border-color: $btn-highlight;
+    border-width: 0.25 * screen.$rem;
+    -fx-border-width: 0.25 * screen.$rem;
+    border-radius: screen.$rem;
+    -fx-border-radius: screen.$rem;
+}
+
+@mixin text($set-font: false, $font:none, $font-size-rem:none) {
+    fill: $text-primary;
+    -fx-fill: $text-primary;
+    
+    @if $set-font {
+        font-family: $font;
+        -fx-font-family: $font;
+        font-size: $font-size-rem * screen.$rem;
+        -fx-font-size: $font-size-rem * screen.$rem;
+    }
+}
+
+// .header {
+//     font-family: "Special Elite", cursive;
+//     -fx-font-family: "Special Elite", cursive;
+//     font-size: 32px;
+//     -fx-font-size: 32px;
+//     fill: $text-primary;
+//     -fx-fill: $text-primary;
+// }
+
+// .menu-button {
+//     @include global.primary-box(1/12, 1/10);
+    
+//     background-color: #19B066;
+//     -fx-background-color: #19B066;
+//     -fx-background-radius: screen.$rem;
+//     border-color: #6CE10F;
+//     -fx-border-color: #6CE10F;
+//     border-width: 4px;
+//     -fx-border-width: 4px;
+//     border-radius: screen.$rem;
+//     -fx-border-radius: screen.$rem;
+//     font-size: 24px;
+//     -fx-font-size: 24px;
+// }
