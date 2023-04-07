@@ -1,19 +1,15 @@
-@import "global.css";
-
-.container {
-    -fx-spacing: 0px;
+@import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&family=Special+Elite&display=swap");
+.body {
+  width: 1536px;
+  -fx-pref-width: 1536px;
+  height: 864px;
+  -fx-pref-height: 864px;
+  padding: 32px;
+  -fx-padding: 32px;
+  background-color: #371809;
+  -fx-background-color: #371809;
+  -fx-alignment: center;
+  -fx-spacing: 0;
 }
 
-.avatar-container {
-    width: 630px;
-    -fx-pref-width: 630px;
-    height: 315px;
-    -fx-pref-height: 315px;
-}
-
-.avatar-icon {
-    width: 64px;
-    -fx-pref-width: 64px;
-    height: 64px;
-    -fx-pref-height: 64px;
-}
+/*# sourceMappingURL=game.css.map */

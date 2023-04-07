@@ -1,33 +1,54 @@
 package controllers;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+
+import javafx.stage.Stage;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-
-import javafx.scene.image.ImageView;
+// import javafx.scene.layout.HBox;
+// import javafx.scene.layout.StackPane;
+// import javafx.scene.image.ImageView;
 
 import javafx.scene.input.MouseEvent;
 
-import javafx.stage.Stage;
+import models.App;
 
-public class GameController {
+import models.exceptions.DeadAvatarException;
+import models.exceptions.DeadCharacterException;
+import models.exceptions.EmptyDeckException;
+import models.exceptions.NullSessionException;
+
+public class GameController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-    @FXML protected HBox avatar;
-    @FXML protected StackPane slot1;
-    @FXML protected StackPane slot2;
-    @FXML protected StackPane slot3;
-    @FXML protected StackPane slot4;
+    // @FXML protected HBox avatar;
+    // @FXML protected StackPane slot1;
+    // @FXML protected StackPane slot2;
+    // @FXML protected StackPane slot3;
+    // @FXML protected StackPane slot4;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // int font_size = StyleProcessor.getFontSize();
+        // Font font = Font.loadFont(getClass().getResourceAsStream("../static/fonts/Heavyweight.ttf"), font_size * 10);
+        // title.setFont(font);
+        try {
+            App.startSession();
+        } catch (NullSessionException | EmptyDeckException | DeadAvatarException | DeadCharacterException e) {
+            e.printStackTrace();
+        }
+    }
     
     @FXML 
     protected void nextTurn(MouseEvent e) throws IOException {
@@ -38,19 +59,19 @@ public class GameController {
         stage.show();
     }
 
-    @FXML
-    protected void draw(MouseEvent e) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../views/components/Card.fxml"));
-        avatar.getChildren().add(fxmlLoader.load());
-    }
+    // @FXML
+    // protected void draw(MouseEvent e) throws IOException {
+    //     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../views/components/Card.fxml"));
+    //     avatar.getChildren().add(fxmlLoader.load());
+    // }
 
-    @FXML 
-    protected void highlight(MouseEvent e){
-        ((ImageView)e.getSource()).getStyleClass().add("pane");
-    }
+    // @FXML 
+    // protected void highlight(MouseEvent e){
+    //     ((ImageView)e.getSource()).getStyleClass().add("pane");
+    // }
 
-    @FXML 
-    protected void unhighlight(MouseEvent e){
-        ((ImageView)e.getSource()).getStyleClass().add("pane");
-    }
+    // @FXML 
+    // protected void unhighlight(MouseEvent e){
+    //     ((ImageView)e.getSource()).getStyleClass().add("pane");
+    // }
 }

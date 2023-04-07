@@ -1,0 +1,5 @@
+@use "global";
+
+.body {
+    @include global.root($spacing: 0);
+}
