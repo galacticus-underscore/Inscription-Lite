@@ -13,6 +13,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Insets;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+
 import javafx.stage.Screen;
 
 public class StyleProcessor {
@@ -56,6 +62,20 @@ public class StyleProcessor {
 
     public static void writeScreenVars() {
         LogProcessor.start("StyleProcessor", "writeScreenVars");
+
+        LogProcessor.log("Getting maximized screen width and height");
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        Rectangle bounds = gd.getDefaultConfiguration().getBounds();
+        Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(gd.getDefaultConfiguration());
+
+        Rectangle safeBounds = new Rectangle(bounds);
+        safeBounds.x += insets.left;
+        safeBounds.y += insets.top;
+        safeBounds.width -= (insets.left + insets.right);
+        safeBounds.height -= (insets.top + insets.bottom);
+
+        width = safeBounds.width;
+        height = safeBounds.height - 23;
         
         try {
             LogProcessor.log("Writing variables to _screen.scss");
@@ -64,7 +84,7 @@ public class StyleProcessor {
             myWriter.write("$screen-width: " + width + "px;\n");
             LogProcessor.success("Written screen width to _screen.scss");
 
-            myWriter.write("$screen-height: " + height + "px;\n");
+            myWriter.write("$screen-height: " + (height) + "px;\n");
             LogProcessor.success("Written screen height to _screen.scss");
 
             myWriter.write("$rem: " + font_size + "px;\n");

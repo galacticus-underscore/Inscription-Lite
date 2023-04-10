@@ -14,7 +14,7 @@
 }
 
 .confirm-button {
-    @include global.primary-box(0.15, 0.1);
+    @include global.box($layer: 1, $width-percent: 0.15, $height-percent: 0.1);
     @include global.button();
     @include global.text(true, "Special Elite", 2);
 }

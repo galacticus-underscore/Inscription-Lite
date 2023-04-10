@@ -5,11 +5,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="body" stylesheets="@../static/styles/css/game.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0" />
-      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" styleClass="end-turn" StackPane.alignment="BOTTOM_RIGHT">
+      <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" styleClass="end-turn" StackPane.alignment="BOTTOM_RIGHT">
          <image>
             <Image url="@../static/icons/end_turn.png" />
          </image>

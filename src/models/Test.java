@@ -10,16 +10,19 @@ package models;
 // import models.processors.StyleProcessor;
 
 // import java.io.InputStreamReader;
+// import java.io.BufferedReader;
 // import java.io.File;
 // import java.io.FileWriter;
 // import java.io.IOException;
 
-// import java.io.BufferedReader;
-// import java.io.File;
-// import java.io.FileReader;
-// import java.io.IOException;
 // import java.util.Arrays;
 // import java.util.Stack;
+
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Insets;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 
 // import models.enums.EventTypes;
 // import models.patterns.SigilEffect;
@@ -185,5 +188,17 @@ public class Test {
         // }
 
         // StyleProcessor.writeScreenVars();
+
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        Rectangle bounds = gd.getDefaultConfiguration().getBounds();
+        Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(gd.getDefaultConfiguration());
+
+        Rectangle safeBounds = new Rectangle(bounds);
+        safeBounds.x += insets.left;
+        safeBounds.y += insets.top;
+        safeBounds.width -= (insets.left + insets.right);
+        safeBounds.height -= (insets.top + insets.bottom);
+        System.out.println(safeBounds.width);
+        System.out.println(safeBounds.height);
     }
 }

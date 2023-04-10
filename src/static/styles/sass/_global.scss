@@ -9,11 +9,24 @@ $btn-primary: #5ec236;
 $btn-secondary: #40e081;
 $btn-highlight: #bfec39;
 
+$z0-box-width: screen.$screen-width;
+$z0-box-height: screen.$screen-height;
+$z1-box-width: none;
+$z1-box-height: none;
+$z2-box-width: none;
+$z2-box-height: none;
+$z3-box-width: none;
+$z3-box-height: none;
+$z4-box-width: none;
+$z4-box-height: none;
+$z5-box-width: none;
+$z5-box-height: none;
+
 @mixin root($color: $bg-primary, $spacing: screen.$rem) {
-    width: screen.$screen-width;
-    -fx-pref-width: screen.$screen-width;
-    height: screen.$screen-height;
-    -fx-pref-height: screen.$screen-height;
+    width: $z0-box-width;
+    -fx-pref-width: $z0-box-width;
+    height: $z0-box-height;
+    -fx-pref-height: $z0-box-height;
 
     padding: 2*screen.$rem;
     -fx-padding: 2*screen.$rem;
@@ -25,11 +38,52 @@ $btn-highlight: #bfec39;
     -fx-spacing: $spacing;
 }
 
-@mixin primary-box($percent-screen-width, $percent-screen-height) {
-    width: $percent-screen-width * screen.$screen-width;
-    -fx-pref-width: $percent-screen-width * screen.$screen-width;
-    height: $percent-screen-height * screen.$screen-height;
-    -fx-pref-height: $percent-screen-height * screen.$screen-height;
+@mixin box($layer, $width-percent, $height-percent, $set-vars: false) {
+    $parent-width: map-get((
+        1 : $z0-box-width,
+        2 : $z1-box-width,
+        3 : $z2-box-width,
+        4 : $z3-box-width,
+        5 : $z4-box-width,
+        6 : $z5-box-width
+    ), $layer);
+
+    $parent-height: map-get((
+        1 : $z0-box-height,
+        2 : $z1-box-height,
+        3 : $z2-box-height,
+        4 : $z3-box-height,
+        5 : $z4-box-height,
+        6 : $z5-box-height
+    ), $layer);
+
+    width: $width-percent * $parent-width;
+    -fx-pref-width: $width-percent * $parent-width;
+    height: $height-percent * $parent-height;
+    -fx-pref-height: $height-percent * $parent-height;
+
+    @if $set-vars {
+        @if $layer == 1 {
+            $z1-box-width: $width-percent * $z0-box-width;
+            $z1-box-height: $height-percent * $z0-box-height;
+        }
+        @else if $layer == 2 {
+            $z2-box-width: $width-percent * $z0-box-width;
+            $z2-box-height: $height-percent * $z0-box-height;
+        }
+        @else if $layer == 3 {
+            $z3-box-width: $width-percent * $z0-box-width;
+            $z3-box-height: $height-percent * $z0-box-height;
+        }
+        @else if $layer == 4 {
+            $z4-box-width: $width-percent * $z0-box-width;
+            $z4-box-height: $height-percent * $z0-box-height;
+        }
+        @else if $layer == 5 {
+            $z5-box-width: $width-percent * $z0-box-width;
+            $z5-box-height: $height-percent * $z0-box-height;
+        }
+    }
 }
 
 @mixin button {
@@ -56,15 +110,6 @@ $btn-highlight: #bfec39;
         -fx-font-size: $font-size-rem * screen.$rem;
     }
 }
-
-// .header {
-//     font-family: "Special Elite", cursive;
-//     -fx-font-family: "Special Elite", cursive;
-//     font-size: 32px;
-//     -fx-font-size: 32px;
-//     fill: $text-primary;
-//     -fx-fill: $text-primary;
-// }
 
 // .menu-button {
 //     @include global.primary-box(1/12, 1/10);
