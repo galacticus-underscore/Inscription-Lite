@@ -19,22 +19,21 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 
-import javafx.stage.Screen;
-
 public class StyleProcessor {
-    private static int width = (int)Screen.getPrimary().getBounds().getWidth();
-    private static int height = (int)Screen.getPrimary().getBounds().getHeight();
-    private static int font_size = 16;
+    private static int width, height, font_size = 16;
 
     public static int getWidth() {
+        computeScreenVars();
         return width;
     }
 
     public static int getHeight() {
+        computeScreenVars();
         return height;
     }
 
     public static int getFontSize() {
+        computeScreenVars();
         return font_size;
     }
 
@@ -60,10 +59,7 @@ public class StyleProcessor {
         }
     }
 
-    public static void writeScreenVars() {
-        LogProcessor.start("StyleProcessor", "writeScreenVars");
-
-        LogProcessor.log("Getting maximized screen width and height");
+    public static void computeScreenVars() {
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         Rectangle bounds = gd.getDefaultConfiguration().getBounds();
         Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(gd.getDefaultConfiguration());
@@ -76,6 +72,13 @@ public class StyleProcessor {
 
         width = safeBounds.width;
         height = safeBounds.height - 23;
+    }
+
+    public static void writeScreenVars() {
+        LogProcessor.start("StyleProcessor", "writeScreenVars");
+
+        LogProcessor.log("Getting maximized screen width and height");
+        computeScreenVars();
         
         try {
             LogProcessor.log("Writing variables to _screen.scss");
