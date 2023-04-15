@@ -8,13 +8,15 @@
 
 package models;
 
+import models.exceptions.BloodCountException;
 import models.exceptions.DeadAvatarException;
 import models.exceptions.DeadCharacterException;
 import models.exceptions.EmptyDeckException;
+import models.exceptions.FullSlotException;
 import models.exceptions.NullSessionException;
 
 public class App {
-    private static Session session;
+    private static Session session = new Session(0, 1);
 
     public static Session getSession() throws NullSessionException {
         if (session == null) {
@@ -25,11 +27,21 @@ public class App {
     }
 
     public static void startSession() throws NullSessionException, EmptyDeckException, DeadAvatarException, DeadCharacterException {
-        session = new Session(0, 1);
+        session.initialize();
     }
 
     public static void endSession() {
         session = null;
+    }
+
+    public static void main(String[] args) throws NullSessionException, EmptyDeckException, DeadAvatarException, DeadCharacterException, FullSlotException, BloodCountException {
+        startSession();
+        System.out.println(session);
+
+        session.getPlayingAvatar().changeBloodCount(100);
+        session.getPlayingAvatar().summonChar(0, 0);
+        System.out.println(session.getPlayingAvatar().getCharInSlot(0));
+        //TODO: make an all-inclusive summon function that can summon both characters and sigils
     }
 }
 

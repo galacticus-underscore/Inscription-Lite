@@ -10,7 +10,7 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
+import java.util.LinkedList;
 
 import models.patterns.Event;
 import models.patterns.SigilEffect;
@@ -27,20 +27,22 @@ import models.exceptions.ZeroHealthException;
 
 public class Session {
     private static Avatar[] avatars = {
-        new Avatar("path_1"),
-        new Avatar("path_2"),
+        new Avatar("src/static/data/card_data.csv"),
+        new Avatar("src/static/data/card_data.csv"),
     };
 
     private int p1_index, p2_index, turn_number = 0;
     private Avatar playing_avatar, observing_avatar;
-    private PriorityQueue<Event> event_history = new PriorityQueue<Event>();
+    private LinkedList<Event> event_history = new LinkedList<Event>();
 
-    public Session(int p1, int p2) throws NullSessionException, EmptyDeckException, DeadAvatarException, DeadCharacterException {
+    public Session(int p1, int p2) {
         this.p1_index = p1;
         this.p2_index = p2;
-        this.playing_avatar = avatars[p1];
-        this.observing_avatar = avatars[p2];
+    }
 
+    public void initialize() throws NullSessionException, EmptyDeckException, DeadAvatarException, DeadCharacterException {
+        this.playing_avatar = avatars[this.p1_index];
+        this.observing_avatar = avatars[this.p2_index];
         this.playing_avatar.initialize();
         this.observing_avatar.initialize();
     }
@@ -82,7 +84,7 @@ public class Session {
                 if (effect.appliesToEvent(e.getType()))
                     effect.applyEffect(e);
             }
-
+            
             effects = PointerProcessor.fromPointer(e.getTarget()).getEffects();
 
             for (int i = 0; i < effects.size(); i++) {
@@ -113,6 +115,7 @@ public class Session {
     }
 
     public void close() {
-        ;
+        this.playing_avatar = null;
+        this.observing_avatar = null;
     }
 }

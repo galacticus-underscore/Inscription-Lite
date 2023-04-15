@@ -7,27 +7,8 @@
 
 package models;
 
-// import models.processors.StyleProcessor;
-
-// import java.io.InputStreamReader;
-// import java.io.BufferedReader;
-// import java.io.File;
-// import java.io.FileWriter;
-// import java.io.IOException;
-
-// import java.util.Arrays;
-// import java.util.Stack;
-
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
-
-// import models.enums.EventTypes;
-// import models.patterns.SigilEffect;
-
-// import java.util.ArrayList;
+import models.enums.EventPointers;
+import models.processors.PointerProcessor;
 
 class Demo {
 	int x;
@@ -189,16 +170,28 @@ public class Test {
 
         // StyleProcessor.writeScreenVars();
 
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        Rectangle bounds = gd.getDefaultConfiguration().getBounds();
-        Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(gd.getDefaultConfiguration());
+        // GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        // Rectangle bounds = gd.getDefaultConfiguration().getBounds();
+        // Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(gd.getDefaultConfiguration());
 
-        Rectangle safeBounds = new Rectangle(bounds);
-        safeBounds.x += insets.left;
-        safeBounds.y += insets.top;
-        safeBounds.width -= (insets.left + insets.right);
-        safeBounds.height -= (insets.top + insets.bottom);
-        System.out.println(safeBounds.width);
-        System.out.println(safeBounds.height);
+        // Rectangle safeBounds = new Rectangle(bounds);
+        // safeBounds.x += insets.left;
+        // safeBounds.y += insets.top;
+        // safeBounds.width -= (insets.left + insets.right);
+        // safeBounds.height -= (insets.top + insets.bottom);
+        // System.out.println(safeBounds.width);
+        // System.out.println(safeBounds.height);
+
+        // LinkedList<Event> event_history = new LinkedList<Event>();
+        // Event test1 = new DrawEvent(), test2 = new DrawEvent();
+        // System.out.println(test1);
+        // System.out.println(test2);
+        // event_history.add(test1);
+        // event_history.add(test2);
+        // System.out.println(event_history.peek());
+        // System.out.println(event_history.pop());
+        // System.out.println(event_history.peek());
+
+        PointerProcessor.fromPointer(EventPointers.P1);
     }
 }

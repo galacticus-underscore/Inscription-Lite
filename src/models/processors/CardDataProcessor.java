@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Stack;
 
 import models.Card;
@@ -14,6 +16,7 @@ import models.Sigil;
 public class CardDataProcessor {
     public static Stack<Card> read(File csv) {
         Stack<Card> out = new Stack<Card>();
+        ArrayList<Card> shuffler = new ArrayList<Card>();
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(csv));
@@ -33,7 +36,7 @@ public class CardDataProcessor {
 
                 switch (card_data[0].charAt(0)) {
                     case 'C':
-                        out.push(new Character(
+                        shuffler.add(new Character(
                             card_data[1],
                             card_data[2],
                             Integer.parseInt(card_data[3]),
@@ -42,7 +45,7 @@ public class CardDataProcessor {
                         ));
                         break;
                     case 'S':
-                        out.push(new Sigil(
+                        shuffler.add(new Sigil(
                             card_data[1],
                             card_data[2],
                             Integer.parseInt(card_data[3]),
@@ -55,6 +58,12 @@ public class CardDataProcessor {
             }
 
             br.close();
+
+            Collections.shuffle(shuffler);
+
+            for (int i = 0; i < shuffler.size(); i++)
+                out.push(shuffler.get(i));
+
             return out;
         }
         catch (IOException ioe) {

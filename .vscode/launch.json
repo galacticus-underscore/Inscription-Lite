@@ -9,6 +9,27 @@
             "name": "Test",
             "request": "launch",
             "mainClass": "models.Test",
+            "projectName": "Inscription Lite_568f857b"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "models.App",
+            "projectName": "Inscription Lite_568f857b"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "tests.Main",
+            "projectName": "Inscription Lite_568f857b"
+        },
+        {
+            "type": "java",
+            "name": "Test",
+            "request": "launch",
+            "mainClass": "models.Test",
             "projectName": "Inscription-Lite_559cf16a"
         },
         {
