@@ -5,7 +5,7 @@
  * concepts wanted to use in this project.
  */
 
-package models;
+package tests;
 
 // import models.processors.StyleProcessor;
 

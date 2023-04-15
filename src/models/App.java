@@ -14,7 +14,7 @@ import models.exceptions.EmptyDeckException;
 import models.exceptions.NullSessionException;
 
 public class App {
-    private static Session session;
+    private static Session session = new Session();
 
     public static Session getSession() throws NullSessionException {
         if (session == null) {
@@ -25,7 +25,7 @@ public class App {
     }
 
     public static void startSession() throws NullSessionException, EmptyDeckException, DeadAvatarException, DeadCharacterException {
-        session = new Session(0, 1);
+        session.initialize(0, 1);
     }
 
     public static void endSession() {
