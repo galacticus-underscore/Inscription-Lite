@@ -12,7 +12,6 @@ package models;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Stack;
-import java.util.Collections;
 
 import models.patterns.Entity;
 import models.patterns.SigilEffect;
@@ -55,17 +54,6 @@ public class Avatar implements Entity {
 
     public void initialize() throws NullSessionException, EmptyDeckException, DeadAvatarException, DeadCharacterException {
         this.deck = CardDataProcessor.read(this.data);
-        
-        // Shuffle the cards in the deck
-        ArrayList<Card> shuffler = new ArrayList<Card>();
-
-        for (int i = 0; i < 40; i++)
-            shuffler.add(this.deck.pop());
-
-        Collections.shuffle(shuffler);
-
-        for (int i = 0; i < 40; i++)
-            this.deck.push(shuffler.get(i));
 
         // Draw 5 cards from the deck
         for (int j = 0; j < 5; j++) {
@@ -132,16 +120,17 @@ public class Avatar implements Entity {
     }
 
     public void summonChar(int hand_pos, int column) throws FullSlotException, BloodCountException, NullSessionException, DeadAvatarException, DeadCharacterException {
+        System.out.println(this.hand);
         Card summoned = this.hand.get(hand_pos);
 
         if (this.slots[column] != null) {
             throw new FullSlotException();
         }
         else {
-            App.getSession().addEvent(new CharSummonEvent(column, summoned.getCost(), summoned.getImage()));
             this.changeBloodCount(-summoned.getCost());
             this.slots[column] = (Character)summoned;
             this.hand.remove(hand_pos);
+            App.getSession().addEvent(new CharSummonEvent(column, summoned.getCost(), summoned.getImage()));
         }
     }
 
@@ -178,11 +167,11 @@ public class Avatar implements Entity {
                 }
         }
 
-        App.getSession().addEvent(new SigilSummonEvent(t, summoned.getCost(), summoned.getImage()));
         this.changeBloodCount(-summoned.getCost());
         target.addEffect(((Sigil)summoned).getEffect());
         this.discardSigil(hand_pos);
         this.hand.remove(hand_pos);
+        App.getSession().addEvent(new SigilSummonEvent(t, summoned.getCost(), summoned.getImage()));
     }
 
     public void discardChar(int column) {
