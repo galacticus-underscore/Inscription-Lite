@@ -22,11 +22,6 @@ import javafx.scene.input.MouseEvent;
 
 import models.App;
 
-import models.exceptions.DeadAvatarException;
-import models.exceptions.DeadCharacterException;
-import models.exceptions.EmptyDeckException;
-import models.exceptions.NullSessionException;
-
 public class GameController implements Initializable {
     private Stage stage;
     private Scene scene;
@@ -43,11 +38,7 @@ public class GameController implements Initializable {
         // int font_size = StyleProcessor.getFontSize();
         // Font font = Font.loadFont(getClass().getResourceAsStream("../static/fonts/Heavyweight.ttf"), font_size * 10);
         // title.setFont(font);
-        try {
-            App.startSession();
-        } catch (NullSessionException | EmptyDeckException | DeadAvatarException | DeadCharacterException e) {
-            e.printStackTrace();
-        }
+        App.startSession();
     }
     
     @FXML 

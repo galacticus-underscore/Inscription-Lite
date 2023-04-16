@@ -28,6 +28,9 @@ public class Main {
             //         System.out.println("Player 1's turn");
             //     }   
             // }
+            // catch (DeadAvatarException e) {
+            //     e.printStackTrace();
+            // }
         }
     }
 }

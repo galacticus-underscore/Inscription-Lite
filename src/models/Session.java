@@ -9,21 +9,15 @@
 
 package models;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import models.patterns.Event;
-import models.patterns.SigilEffect;
-
 import models.enums.EventTypes;
-
-import models.processors.PointerProcessor;
 
 import models.exceptions.DeadAvatarException;
 import models.exceptions.DeadCharacterException;
-import models.exceptions.EmptyDeckException;
 import models.exceptions.NullSessionException;
-import models.exceptions.ZeroHealthException;
+import models.exceptions.PointerConversionException;
 
 public class Session {
     private static Avatar[] avatars = {
@@ -35,9 +29,12 @@ public class Session {
     private Avatar playing_avatar, observing_avatar;
     private LinkedList<Event> event_history = new LinkedList<Event>();
 
-    public void initialize() throws NullSessionException, EmptyDeckException, DeadAvatarException, DeadCharacterException {
+    public void open(int p1, int p2) {
+        this.p1_index = p1;
+        this.p2_index = p2;
         this.playing_avatar = avatars[this.p1_index];
         this.observing_avatar = avatars[this.p2_index];
+
         this.playing_avatar.initialize();
         this.observing_avatar.initialize();
     }
@@ -58,43 +55,30 @@ public class Session {
         return this.event_history.poll();
     }
 
-    public void addEvent(Event e) throws DeadAvatarException, DeadCharacterException, NullSessionException {
+    public void addEvent(Event e) throws DeadCharacterException, DeadAvatarException {
         this.event_history.add(e);
 
         if (e.getType().equals(EventTypes.AVATAR_DEATH)) {
             throw new DeadAvatarException();
         }
-        else if (e.getType().equals(EventTypes.CHAR_DEATH)) {
+        
+        if (e.getType().equals(EventTypes.CHAR_DEATH)) {
             throw new DeadCharacterException();
-        }
-        else if (e.getType().equals(EventTypes.SIGIL_EFFECT)) {
-            ;
-        }
-        else {
-            ArrayList<SigilEffect> effects = PointerProcessor.fromPointer(e.getSource()).getEffects();
-            SigilEffect effect;
-
-            for (int i = 0; i < effects.size(); i++) {
-                effect = effects.get(i);
-                if (effect.appliesToEvent(e.getType()))
-                    effect.applyEffect(e);
-            }
-            
-            effects = PointerProcessor.fromPointer(e.getTarget()).getEffects();
-
-            for (int i = 0; i < effects.size(); i++) {
-                effect = effects.get(i);
-                if (effect.appliesToEvent(e.getType()))
-                    effect.applyEffect(e);
-            }
         }
     }
 
-    public void nextPlayer() throws NullSessionException, ZeroHealthException, DeadAvatarException, DeadCharacterException {
+    // call after a player finishes their turn
+    public void endTurn() throws NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException {
         if (turn_number > 0) {
             this.playing_avatar.attack();
         }
 
+        this.playing_avatar.flip();
+        this.observing_avatar.flip();
+    }
+
+    // call during the start of the next player's turn, after the moves of the last player are replayed
+    public void nextPlayer() {
         if (this.playing_avatar == avatars[this.p1_index]) {
             this.playing_avatar = avatars[this.p2_index];
             this.observing_avatar = avatars[this.p1_index];
@@ -104,9 +88,6 @@ public class Session {
             this.observing_avatar = avatars[this.p2_index];
             this.turn_number += 1;
         }
-
-        this.playing_avatar.flip();
-        this.observing_avatar.flip();
     }
 
     public void close() {

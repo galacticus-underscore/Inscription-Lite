@@ -35,19 +35,7 @@ public abstract class Card {
         return this.is_facing_up;
     }
 
-    public boolean isHighlighted() {
-        return this.is_highlighted;
-    }
-
     public void flip() {
         this.is_facing_up = !(this.is_facing_up);
-    }
-
-    public void highlight() {
-        this.is_highlighted = true;
-    }
-
-    public void unhighlight() {
-        this.is_highlighted = false;
     }
 }

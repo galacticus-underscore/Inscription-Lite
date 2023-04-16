@@ -1,10 +1,6 @@
-/*
- * EffectCodes.java
- */
-
 package models.enums;
 
-public enum EffectCodes {
+public enum SpellCodes {
     SNIPER,
     STONE_OCEAN,
     TOUCH_OF_DEATH,

@@ -14,29 +14,10 @@
 
 package models.patterns;
 
-import java.util.Arrays;
+import models.enums.Pointers;
 
-import models.enums.EventTypes;
-import models.enums.EffectCodes;
-
-public abstract class SigilEffect {
-    private EventTypes[] applies_to;
-    private EffectCodes effect_code;
-
-    public SigilEffect(EventTypes[] at, EffectCodes ec) {
-        this.applies_to = at;
-        this.effect_code = ec;
-    }
-
-    public boolean appliesToEvent(EventTypes type) {
-        return Arrays.asList(this.applies_to).contains(type);
-    }
-
-    public EffectCodes getEffectCode() {
-        return this.effect_code;
-    }
-
-    public abstract void applyEffect(Event e);
+public interface SpellEffect {
+    public void applyEffect(Pointers target);
 }
 
 /*

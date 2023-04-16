@@ -6,7 +6,6 @@ public enum EventTypes {
     SIGIL_SUMMON,
     ATTACK,
     COUNTER,
-    SIGIL_EFFECT,
     CHAR_DEATH,
     SACRIFICE,
     AVATAR_DEATH;

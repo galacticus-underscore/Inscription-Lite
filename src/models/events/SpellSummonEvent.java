@@ -1,15 +1,15 @@
 package models.events;
 
-import models.enums.EventPointers;
+import models.enums.Pointers;
 import models.enums.EventTypes;
 import models.patterns.Event;
 
-public class SigilSummonEvent extends Event {
+public class SpellSummonEvent extends Event {
     private String card_image;
     private int blood_change;
 
-    public SigilSummonEvent(EventPointers target, int cost, String image) {
-        super(EventTypes.SIGIL_SUMMON, EventPointers.PA, target);
+    public SpellSummonEvent(Pointers target, int cost, String image) {
+        super(EventTypes.SIGIL_SUMMON, Pointers.PA, target);
         this.blood_change = -cost;
         this.card_image = image;
     }

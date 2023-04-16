@@ -11,7 +11,7 @@ import java.util.Stack;
 
 import models.Card;
 import models.Character;
-import models.Sigil;
+import models.Spell;
 
 public class CardDataProcessor {
     public static Stack<Card> read(File csv) {
@@ -45,7 +45,7 @@ public class CardDataProcessor {
                         ));
                         break;
                     case 'S':
-                        shuffler.add(new Sigil(
+                        shuffler.add(new Spell(
                             card_data[1],
                             card_data[2],
                             Integer.parseInt(card_data[3]),

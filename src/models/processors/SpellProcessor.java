@@ -7,12 +7,12 @@
 
 package models.processors;
 
-import models.enums.EffectCodes;
-import models.patterns.SigilEffect;
+import models.enums.SigilCodes;
+import models.patterns.SpellEffect;
 
-public class SigilEffectsProcessor {
-    public static SigilEffect assignEffect(String e) {
-        EffectCodes effect_code = EffectCodes.valueOf(e);
+public class SpellProcessor {
+    public static SpellEffect assignEffect(String e) {
+        SigilCodes effect_code = SigilCodes.valueOf(e);
 
         switch (effect_code) {
             default:

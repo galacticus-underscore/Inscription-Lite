@@ -1,11 +1,11 @@
 package models.events;
 
-import models.enums.EventPointers;
+import models.enums.Pointers;
 import models.enums.EventTypes;
 import models.patterns.Event;
 
 public class AvatarDeathEvent extends Event {
-    public AvatarDeathEvent(EventPointers killer, EventPointers avatar) {
+    public AvatarDeathEvent(Pointers killer, Pointers avatar) {
         super(EventTypes.AVATAR_DEATH, killer, avatar);
     }
 }

@@ -7,18 +7,19 @@
 
 package models;
 
-import models.patterns.SigilEffect;
-import models.processors.SigilEffectsProcessor;
+import models.patterns.SpellEffect;
+import models.enums.Pointers;
+import models.processors.SpellProcessor;
 
-public class Sigil extends Card {
+public class Spell extends Card {
     private boolean atc, ata;
-    private SigilEffect effect;
+    private SpellEffect effect;
 
-    public Sigil(String n, String i, int c, boolean atc, boolean ata, String e) {
+    public Spell(String n, String i, int c, boolean atc, boolean ata, String e) {
         super(n, i, c);
         this.atc = atc;
         this.ata = ata;
-        this.effect = SigilEffectsProcessor.assignEffect(e);
+        this.effect = SpellProcessor.assignEffect(e);
     }
 
     public boolean appliesToChars() {
@@ -29,7 +30,7 @@ public class Sigil extends Card {
         return this.ata;
     }
 
-    public SigilEffect getEffect() {
-        return effect;
+    public void applyEffect(Pointers pointer) {
+        effect.applyEffect(pointer);
     }
 }

@@ -13,14 +13,14 @@
 package models.patterns;
 
 import models.enums.EventTypes;
-import models.enums.EventPointers;
+import models.enums.Pointers;
 
 public abstract class Event {
     protected EventTypes type;
-    protected EventPointers source;
-    protected EventPointers target;
+    protected Pointers source;
+    protected Pointers target;
 
-    public Event(EventTypes t, EventPointers p1, EventPointers p2) {
+    public Event(EventTypes t, Pointers p1, Pointers p2) {
         this.type = t;
         this.source = p1;
         this.target = p2;
@@ -30,11 +30,11 @@ public abstract class Event {
         return this.type;
     }
 
-    public EventPointers getSource() {
+    public Pointers getSource() {
         return this.source;
     }
 
-    public EventPointers getTarget() {
+    public Pointers getTarget() {
         return this.target;
     }
 }

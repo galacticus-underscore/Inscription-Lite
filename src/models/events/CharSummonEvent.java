@@ -1,16 +1,15 @@
 package models.events;
 
-import models.enums.EventPointers;
+import models.enums.Pointers;
 import models.enums.EventTypes;
 import models.patterns.Event;
-import models.processors.PointerProcessor;
 
 public class CharSummonEvent extends Event {
     private int blood_change;
     private String card_image;
 
-    public CharSummonEvent(int col, int cost, String image) {
-        super(EventTypes.CHAR_SUMMON, EventPointers.PA, PointerProcessor.toPointer(col));
+    public CharSummonEvent(Pointers target, int cost, String image) {
+        super(EventTypes.CHAR_SUMMON, Pointers.PA, target);
         this.card_image = image;
         this.blood_change = -cost;
     }

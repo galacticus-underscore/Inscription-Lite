@@ -7,9 +7,6 @@
 
 package tests;
 
-import models.enums.EventPointers;
-import models.processors.PointerProcessor;
-
 class Demo {
 	int x;
   	
@@ -192,6 +189,9 @@ public class Test {
         // System.out.println(event_history.pop());
         // System.out.println(event_history.peek());
 
-        PointerProcessor.fromPointer(EventPointers.P1);
+        // PointerProcessor.fromPointer(Pointers.P1);
+
+        String a = "hello world";
+        System.out.println(a.getClass().getSimpleName());
     }
 }

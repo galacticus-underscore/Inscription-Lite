@@ -1,72 +1,23 @@
 package models.processors;
 
 import models.App;
-import models.enums.EventPointers;
+import models.Avatar;
+import models.Entity;
+import models.enums.Pointers;
+
 import models.exceptions.NullSessionException;
-import models.patterns.Entity;
+import models.exceptions.PointerConversionException;
 
 public class PointerProcessor {
-    public static EventPointers toPointer(int column) {
-        switch (column) {
-            case 0:
-                return EventPointers.P1;
-            case 1:
-                return EventPointers.P2;
-            case 2:
-                return EventPointers.P3;
-            case 3:
-                return EventPointers.P4;
-            default:
-                return null;
-        }
+    public static Pointers strToPointer(String str) {
+        return Pointers.valueOf(str);
     }
 
-    public static EventPointers toPointer(char avatar) {
-        switch (avatar) {
-            case 'p':
-                return EventPointers.PA;
-            case 'o':
-                return EventPointers.OA;
-            default:
-                return null;
-        }
+    public static int pointerToInt(Pointers pointer) {
+        return Character.getNumericValue(pointer.name().charAt(1));
     }
 
-    public static EventPointers toPointer(char avatar, int column) {
-        switch (avatar) {
-            case 'p':
-                switch (column) {
-                    case 0:
-                        return EventPointers.P1;
-                    case 1:
-                        return EventPointers.P2;
-                    case 2:
-                        return EventPointers.P3;
-                    case 3:
-                        return EventPointers.P4;
-                    default:
-                        return null;
-                }
-            case 'o':
-                switch (column) {
-                    case 0:
-                        return EventPointers.O1;
-                    case 1:
-                        return EventPointers.O2;
-                    case 2:
-                        return EventPointers.O3;
-                    case 3:
-                        return EventPointers.O4;
-                    default:
-                        return null;
-                }
-            default:
-                return null;
-        }
-  
-    }
-
-    public static Entity fromPointer(EventPointers pointer) throws NullSessionException {
+    public static Entity pointerToEntity(Pointers pointer) throws NullSessionException, PointerConversionException {
         switch (pointer) {
             case PA:
                 return App.getSession().getPlayingAvatar();
@@ -89,30 +40,49 @@ public class PointerProcessor {
             case O4:
                 return App.getSession().getObservingAvatar().getCharInSlot(3);
             default:
-                return null;
+                throw new PointerConversionException(pointer.name() + " does not point to an entity");
         }
     }
 
-    public static EventPointers getOpposite(EventPointers pointer) throws NullSessionException {
-        switch (pointer) {
-            case P1:
-                return fromPointer(pointer) != null ? EventPointers.O1 : EventPointers.OA;
-            case P2:
-                return fromPointer(pointer) != null ? EventPointers.O2 : EventPointers.OA;
-            case P3:
-                return fromPointer(pointer) != null ? EventPointers.O3 : EventPointers.OA;
-            case P4:
-                return fromPointer(pointer) != null ? EventPointers.O4 : EventPointers.OA;
-            case O1:
-                return fromPointer(pointer) != null ? EventPointers.P1 : EventPointers.PA;
-            case O2:
-                return fromPointer(pointer) != null ? EventPointers.P2 : EventPointers.PA;
-            case O3:
-                return fromPointer(pointer) != null ? EventPointers.P3 : EventPointers.PA;
-            case O4:
-                return fromPointer(pointer) != null ? EventPointers.P4 : EventPointers.PA;
-            default:
-                return null;
+    public static Pointers getAvatarOfPointer(Pointers pointer) {
+        if (pointer.name().charAt(0) == 'P') {
+            return Pointers.PA;
         }
+        else {
+            return Pointers.OA;
+        }
+    }
+
+    public static Pointers getOppositePointer(Pointers pointer) throws NullSessionException, PointerConversionException {
+        String pointer_name = pointer.name();
+        char avatar_code = pointer_name.charAt(0);
+        int slot = pointerToInt(pointer);
+
+        if (avatar_code == 'P') {
+            Avatar opposite = App.getSession().getObservingAvatar();
+            
+            try {
+                opposite.getCharInSlot(slot);
+                return Pointers.valueOf(pointer_name.replace('P', 'O'));
+            }
+            catch (NullPointerException e) {
+                return Pointers.OA;
+            }
+        }
+        else {
+            Avatar opposite = App.getSession().getPlayingAvatar();
+
+            try {
+                opposite.getCharInSlot(slot);
+                return Pointers.valueOf(pointer_name.replace('O', 'P'));
+            }
+            catch (NullPointerException e) {
+                return Pointers.PA;
+            }
+        }
+    }
+
+    public static Entity getOppositeEntity(Pointers pointer) throws NullSessionException, PointerConversionException {
+        return pointerToEntity(getOppositePointer(pointer));
     }
 }

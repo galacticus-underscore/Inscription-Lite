@@ -6,6 +6,34 @@
     "configurations": [
         {
             "type": "java",
+            "name": "PointersProcessor",
+            "request": "launch",
+            "mainClass": "models.processors.PointersProcessor",
+            "projectName": "Inscription-Lite_559cf16a"
+        },
+        {
+            "type": "java",
+            "name": "Test",
+            "request": "launch",
+            "mainClass": "tests.Test",
+            "projectName": "Inscription-Lite_559cf16a"
+        },
+        {
+            "type": "java",
+            "name": "PointerProcessor",
+            "request": "launch",
+            "mainClass": "models.processors.PointerProcessor",
+            "projectName": "Inscription-Lite_559cf16a"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "tests.Main",
+            "projectName": "Inscription-Lite_559cf16a"
+        },
+        {
+            "type": "java",
             "name": "Test",
             "request": "launch",
             "mainClass": "models.Test",
