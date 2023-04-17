@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CardDataProcessor",
+            "request": "launch",
+            "mainClass": "models.processors.CardDataProcessor",
+            "projectName": "Inscription-Lite_559cf16a"
+        },
+        {
+            "type": "java",
             "name": "PointersProcessor",
             "request": "launch",
             "mainClass": "models.processors.PointersProcessor",

@@ -36,13 +36,25 @@ public class CardDataProcessor {
 
                 switch (card_data[0].charAt(0)) {
                     case 'C':
-                        shuffler.add(new Character(
-                            card_data[1],
-                            card_data[2],
-                            Integer.parseInt(card_data[3]),
-                            Integer.parseInt(card_data[4]),
-                            Integer.parseInt(card_data[5])
-                        ));
+                        if (card_data.length == 7) {
+                            shuffler.add(new Character(
+                                card_data[1],
+                                card_data[2],
+                                Integer.parseInt(card_data[3]),
+                                Integer.parseInt(card_data[4]),
+                                Integer.parseInt(card_data[5]),
+                                card_data[6]
+                            ));
+                        }
+                        else {
+                            shuffler.add(new Character(
+                                card_data[1],
+                                card_data[2],
+                                Integer.parseInt(card_data[3]),
+                                Integer.parseInt(card_data[4]),
+                                Integer.parseInt(card_data[5])
+                            ));
+                        }
                         break;
                     case 'S':
                         shuffler.add(new Spell(
