@@ -5,11 +5,11 @@ import models.enums.EventTypes;
 import models.patterns.Event;
 
 public class SpellSummonEvent extends Event {
-    private String card_image;
     private int blood_change;
+    private String card_image;
 
     public SpellSummonEvent(Pointers target, int cost, String image) {
-        super(EventTypes.SIGIL_SUMMON, Pointers.PA, target);
+        super(EventTypes.SPELL_SUMMON, Pointers.PA, target);
         this.blood_change = -cost;
         this.card_image = image;
     }

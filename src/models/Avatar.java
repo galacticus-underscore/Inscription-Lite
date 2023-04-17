@@ -13,15 +13,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import models.patterns.Sigil;
 import models.enums.Pointers;
+import models.enums.SigilCodes;
 
 import models.processors.CardDataProcessor;
 import models.processors.PointerProcessor;
+
 import models.events.DrawEvent;
 import models.events.SacrificeEvent;
-import models.events.SpellSummonEvent;
 import models.events.CharSummonEvent;
+import models.events.SpellSummonEvent;
+import models.events.AttackEvent;
 
 import models.exceptions.ZeroHealthException;
 import models.exceptions.BloodCountException;
@@ -32,11 +34,12 @@ import models.exceptions.FullSlotException;
 import models.exceptions.InvalidSummonException;
 import models.exceptions.NullSessionException;
 import models.exceptions.PointerConversionException;
+import models.exceptions.UndeadSacrificeException;
 
 public class Avatar implements Entity {
     private int health = 20;
     private int blood_count = 0;
-    private ArrayList<Sigil> sigils = new ArrayList<Sigil>();
+    private ArrayList<SigilCodes> sigils = new ArrayList<SigilCodes>();
 
     private File data;
     private Stack<Card> deck = new Stack<Card>();
@@ -50,29 +53,32 @@ public class Avatar implements Entity {
 
     public void initialize() {
         this.deck = CardDataProcessor.read(this.data);
-
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++)
             this.hand.add(this.deck.pop());
-        }
     }
 
     public int getHealth() {
         return this.health;
     }
 
-    public void changeHealth(int hp, boolean is_attack) throws NullSessionException, ZeroHealthException, DeadAvatarException, DeadCharacterException, PointerConversionException {
+    public void changeHealth(int hp, Pointers source) throws NullSessionException, ZeroHealthException, DeadAvatarException, DeadCharacterException, PointerConversionException {
         this.health += hp;
-
+        App.getSession().addEvent(new AttackEvent(source, PointerProcessor.entityToPointer(this), -hp));
+        
         if (this.health <= 0) {
             this.health = 0;
             throw new ZeroHealthException("avatar");
         }
-
-        if (is_attack) {
-            this.counter();
-        }
-
         // for concedes: use this method with hp = -1000
+    }
+
+    public void changeHealth(int hp) throws ZeroHealthException {
+        this.health += hp;
+        
+        if (this.health <= 0) {
+            this.health = 0;
+            throw new ZeroHealthException("avatar");
+        }
     }
 
     public void changeBloodCount(int b) throws BloodCountException {
@@ -83,12 +89,16 @@ public class Avatar implements Entity {
         }
     }
 
-    public ArrayList<Sigil> getSigils() {
+    public ArrayList<SigilCodes> getSigils() {
         return this.sigils;
     }
 
-    public void addSigil(Sigil a) {
-        this.sigils.add(a);
+    public boolean hasSigil(SigilCodes c) {
+        return this.sigils.contains(c);
+    }
+
+    public void addSigil(SigilCodes c) {
+        this.sigils.add(c);
     }
 
     public Character getCharInSlot(int column) {
@@ -101,27 +111,23 @@ public class Avatar implements Entity {
         });
     }
 
-    public void draw() throws NullSessionException, EmptyDeckException, DeadAvatarException, DeadCharacterException {
-        if (this.deck.empty()) {
+    public void draw() throws NullSessionException, EmptyDeckException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
+        if (this.deck.empty())
             throw new EmptyDeckException();
-        }
 
         this.hand.add(this.deck.pop());
         App.getSession().addEvent(new DrawEvent());
     }
 
-    public void summon(int source, Pointers target) throws FullSlotException, BloodCountException, DeadCharacterException, DeadAvatarException, NullSessionException, InvalidSummonException {
+    public void summon(int source, Pointers target) throws FullSlotException, BloodCountException, DeadCharacterException, DeadAvatarException, NullSessionException, InvalidSummonException, PointerConversionException, ZeroHealthException {
         Card summoned = this.hand.get(source);
-        String card_type = summoned.getClass().getSimpleName();
 
-        if (card_type.equals("Character")) {
-            if (this.slots[PointerProcessor.pointerToInt(target)] != null) {
+        if (summoned instanceof Character) {
+            if (this.slots[PointerProcessor.pointerToInt(target)] != null)
                 throw new FullSlotException();
-            }
 
             this.changeBloodCount(-summoned.getCost());
             this.slots[PointerProcessor.pointerToInt(target)] = (Character)summoned;
-            ((Character) summoned).setLocation(target);
             this.hand.remove(source);
             App.getSession().addEvent(new CharSummonEvent(target, summoned.getCost(), summoned.getImage()));
         }
@@ -131,12 +137,10 @@ public class Avatar implements Entity {
             switch (target) {
                 case PA: 
                 case OA:
-                    if (!((Spell)summoned).appliesToAvatars()) {
+                    if (!((Spell)summoned).appliesToAvatars())
                         throw new InvalidSummonException("avatar");
-                    }
-                    else {
+                    else
                         break;
-                    }
                 case P1:
                 case P2:
                 case P3:
@@ -145,11 +149,10 @@ public class Avatar implements Entity {
                 case O2:
                 case O3:
                 case O4:
-                    if (!((Spell)summoned).appliesToChars()) {
+                    if (!((Spell)summoned).appliesToChars())
                         throw new InvalidSummonException("character");
-                    } else {
+                    else
                         break;
-                    }
                 default:
                     throw new InvalidSummonException("non-entity");
             }
@@ -161,40 +164,51 @@ public class Avatar implements Entity {
         }
     }
 
-    public void discardChar(Pointers pointer) {
-        int column = PointerProcessor.pointerToInt(pointer); 
-        this.pile.push(this.slots[column]);
-        this.slots[column] = null;
-    }
-
     public void discardSpell(int hand_pos) {
         this.pile.push(this.hand.get(hand_pos));
         this.hand.remove(hand_pos);
     }
 
-    public void sacrifice(Pointers pointer) throws BloodCountException, NullSessionException, DeadAvatarException, DeadCharacterException {
-        int column = PointerProcessor.pointerToInt(pointer); 
-        this.changeBloodCount(this.slots[column].getHealth());
-        this.discardChar(pointer);
-        App.getSession().addEvent(new SacrificeEvent(pointer, this.slots[column].getHealth()));
+    public void killChar(Pointers pointer) {
+        int column = PointerProcessor.pointerToInt(pointer);
+        Character dead_char = this.slots[column];
+        this.slots[column] = null;
+        dead_char.reset();
+
+        if (dead_char.hasSigil(SigilCodes.RESURRECTION) && !dead_char.hasSigil(SigilCodes.NINE_LIVES))
+            this.hand.add(dead_char);
+        else
+            this.pile.push(this.slots[column]);
     }
 
-    public void attack() throws NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException {
-        for (int i = 0; i < 4; i++) {
+    public void sacrifice(Pointers pointer) throws BloodCountException, NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException, UndeadSacrificeException {
+        Character sacrifice = (Character)PointerProcessor.pointerToEntity(pointer);
+
+        if (sacrifice.hasSigil(SigilCodes.WORTHY_SACRIFICE))
+            this.changeBloodCount(3);
+        else
+            this.changeBloodCount(1);
+
+        if (sacrifice.hasSigil(SigilCodes.UNDEAD))
+            throw new UndeadSacrificeException();
+
+        if (sacrifice.hasSigil(SigilCodes.NINE_LIVES))
+            sacrifice.addSigil(SigilCodes.UNDEAD);
+        else
+            this.killChar(pointer);
+        
+        App.getSession().addEvent(new SacrificeEvent(pointer));
+    }
+
+    public void attack() throws NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
+        for (int i = 0; i < 4; i++)
             this.slots[i].attack();
-        }
-    }
-
-    public void counter() throws NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
-        for (Sigil sigil : this.getSigils()) {
-            sigil.activateSigil();
-        }  
     }
 
     public void reset() {
         this.health = 20;
         this.blood_count = 0;
-        this.sigils = new ArrayList<Sigil>();
+        this.sigils = new ArrayList<SigilCodes>();
         
         this.deck = new Stack<Card>();
         this.hand = new ArrayList<Card>();

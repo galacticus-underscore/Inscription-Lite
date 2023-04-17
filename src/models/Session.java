@@ -18,6 +18,7 @@ import models.exceptions.DeadAvatarException;
 import models.exceptions.DeadCharacterException;
 import models.exceptions.NullSessionException;
 import models.exceptions.PointerConversionException;
+import models.exceptions.ZeroHealthException;
 
 public class Session {
     private static Avatar[] avatars = {
@@ -55,23 +56,20 @@ public class Session {
         return this.event_history.poll();
     }
 
-    public void addEvent(Event e) throws DeadCharacterException, DeadAvatarException {
+    public void addEvent(Event e) throws DeadCharacterException, DeadAvatarException, NullSessionException, PointerConversionException, ZeroHealthException {
         this.event_history.add(e);
 
-        if (e.getType().equals(EventTypes.AVATAR_DEATH)) {
+        if (e.getType().equals(EventTypes.AVATAR_DEATH))
             throw new DeadAvatarException();
-        }
         
-        if (e.getType().equals(EventTypes.CHAR_DEATH)) {
+        if (e.getType().equals(EventTypes.CHAR_DEATH))
             throw new DeadCharacterException();
-        }
     }
 
     // call after a player finishes their turn
-    public void endTurn() throws NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException {
-        if (turn_number > 0) {
+    public void endTurn() throws NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
+        if (turn_number > 0)
             this.playing_avatar.attack();
-        }
 
         this.playing_avatar.flip();
         this.observing_avatar.flip();

@@ -13,6 +13,19 @@ public class PointerProcessor {
         return Pointers.valueOf(str);
     }
 
+    public static Pointers entityToPointer(Entity e) throws NullSessionException, PointerConversionException {
+        Pointers out = null;
+
+        for (Pointers pointer : Pointers.values()) { 
+            if (pointerToEntity(pointer) == e) {
+                out = pointer;
+                break;
+            }
+        }
+
+        return out;
+    }
+
     public static int pointerToInt(Pointers pointer) {
         return Character.getNumericValue(pointer.name().charAt(1));
     }

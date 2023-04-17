@@ -11,5 +11,6 @@ public enum SigilCodes {
     RESURRECTION,
     SHARP_QUILLS,
     NINE_LIVES,
+    UNDEAD,
     WORTHY_SACRIFICE;
 }

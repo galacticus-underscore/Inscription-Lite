@@ -10,8 +10,8 @@ public class CharSummonEvent extends Event {
 
     public CharSummonEvent(Pointers target, int cost, String image) {
         super(EventTypes.CHAR_SUMMON, Pointers.PA, target);
-        this.card_image = image;
         this.blood_change = -cost;
+        this.card_image = image;
     }
 
     public int getBloodChange() {

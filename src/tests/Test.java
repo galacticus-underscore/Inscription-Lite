@@ -21,6 +21,9 @@ class Demo {
 }
 
 public class Test {
+    public static void test(String n) {
+        ;
+    }
     public static void main(String[] args) throws Exception {
         // Demo[] D = {new Demo(1), new Demo(2)};
         // Demo[] test = {null, null, null, null, null, null, null, null, null, null};
@@ -191,7 +194,15 @@ public class Test {
 
         // PointerProcessor.fromPointer(Pointers.P1);
 
-        String a = "hello world";
-        System.out.println(a.getClass().getSimpleName());
+        // String a = "hello world";
+        // System.out.println(a.getClass().getSimpleName());
+
+        test(null);
+
+        int[] a = {1, 2, 3};
+        int b = a[0];
+        System.out.println(b);
+        a[0] = 4;
+        System.out.println(b);
     }
 }

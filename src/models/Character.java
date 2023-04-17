@@ -9,12 +9,10 @@ package models;
 
 import java.util.ArrayList;
 
-import models.patterns.Sigil;
-
 import models.enums.Pointers;
+import models.enums.SigilCodes;
 
 import models.processors.PointerProcessor;
-import models.processors.SigilProcessor;
 
 import models.events.AttackEvent;
 import models.events.AvatarDeathEvent;
@@ -28,36 +26,67 @@ import models.exceptions.ZeroHealthException;
 
 public class Character extends Card implements Entity {
     private int health, attack;
-    private Pointers location;
-    private ArrayList<Sigil> sigils = new ArrayList<Sigil>();
+    private ArrayList<SigilCodes> sigils = new ArrayList<SigilCodes>();
+
+    private int def_health, def_attack;
+    private ArrayList<SigilCodes> def_sigils = new ArrayList<SigilCodes>();
 
     public Character(String n, String i, int c, int h, int a) {
         super(n, i, c);
         this.health = h;
         this.attack = a;
+
+        this.def_health = h;
+        this.def_attack = a;
     }
 
     public Character(String n, String i, int c, int h, int a, String s) {
         super(n, i, c);
         this.health = h;
         this.attack = a;
-        this.sigils.add(SigilProcessor.assignSigil(s));
+        this.sigils.add(SigilCodes.valueOf(s));
+
+        this.def_health = h;
+        this.def_attack = a;
+        this.def_sigils.add(SigilCodes.valueOf(s));
     }
 
     public int getHealth() {
         return this.health;
     }
 
-    public void changeHealth(int hp, boolean is_attack) throws ZeroHealthException, NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException {
+    public void changeHealth(int hp, Pointers source) throws ZeroHealthException, NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException {
+        Pointers target = PointerProcessor.entityToPointer(this);
+        Entity source_ety = PointerProcessor.pointerToEntity(source);
+        Pointers target_avatar_ptr = PointerProcessor.getAvatarOfPointer(target);
+        Avatar target_avatar_ety = (Avatar)PointerProcessor.pointerToEntity(target_avatar_ptr);
+
+        if (source_ety.hasSigil(SigilCodes.TOUCH_OF_DEATH))
+            this.health += -1000;
+        else
+            this.health += hp;
+        
+        if (source_ety.hasSigil(SigilCodes.SNIPER) && !this.hasSigil(SigilCodes.STONE_OCEAN))
+            target_avatar_ety.changeHealth(hp);
+        
+        App.getSession().addEvent(new AttackEvent(source, target, -hp));
+        
+        if (this.health <= 0) {
+            this.health = 0;
+            throw new ZeroHealthException("character");
+        }
+
+        if (this.hasSigil(SigilCodes.SHARP_QUILLS)) {
+            source_ety.changeHealth(-1);
+        }
+    }
+
+    public void changeHealth(int hp) throws ZeroHealthException {
         this.health += hp;
 
         if (this.health <= 0) {
             this.health = 0;
             throw new ZeroHealthException("character");
-        }
-        
-        if (is_attack) {
-            this.counter();
         }
     }
 
@@ -68,62 +97,40 @@ public class Character extends Card implements Entity {
     public void changeAttack(int a) {
         this.attack += a;
 
-        if (this.attack <= 0) {
+        if (this.attack <= 0) 
             this.attack = 0;
-        }
     }
 
-    public void setLocation(Pointers pointer) {
-        this.location = pointer;
-    }
-
-    public ArrayList<Sigil> getSigils() {
+    public ArrayList<SigilCodes> getSigils() {
         return this.sigils;
     }
 
-    public void addSigil(Sigil a) {
-        this.sigils.add(a);
+    public boolean hasSigil(SigilCodes c) {
+        return this.hasSigil(c);
     }
 
-    public void attack() throws NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException {
-        Pointers opposite = PointerProcessor.getOppositePointer(this.location);
+    public void addSigil(SigilCodes s) {
+        this.sigils.add(s);
+    }
+
+    public void attack() throws NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
+        Pointers opposite = PointerProcessor.getOppositePointer(PointerProcessor.entityToPointer(this));
         Entity target = PointerProcessor.pointerToEntity(opposite);
-        App.getSession().addEvent(new AttackEvent(this.location, opposite, this.attack));
 
         try {
-            target.changeHealth(-this.attack, true);
-            for (Sigil sigil : this.getSigils()) {
-                sigil.activateSigil();
-            }
+            target.changeHealth(-this.attack, PointerProcessor.entityToPointer(this));
         }
         catch (ZeroHealthException e) {
-            if (target instanceof Avatar) {
-                App.getSession().addEvent(new AvatarDeathEvent(this.location, opposite));
-            }
-            else if (target instanceof Character) {
-                App.getSession().addEvent(new CharDeathEvent(this.location, opposite));
-            }
+            if (target instanceof Avatar)
+                App.getSession().addEvent(new AvatarDeathEvent(PointerProcessor.entityToPointer(this), opposite));
+            else if (target instanceof Character)
+                App.getSession().addEvent(new CharDeathEvent(PointerProcessor.entityToPointer(this), opposite));
         }
     }
 
-    public void counter() throws NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException {
-        Pointers opposite = PointerProcessor.getOppositePointer(this.location);
-        Entity target = PointerProcessor.pointerToEntity(opposite);
-        App.getSession().addEvent(new AttackEvent(this.location, opposite, this.attack));
-
-        try {
-            target.changeHealth(-this.attack, false);
-            for (Sigil sigil : this.getSigils()) {
-                sigil.activateSigil();
-            }
-        }
-        catch (ZeroHealthException e) {
-            if (target instanceof Avatar) {
-                App.getSession().addEvent(new AvatarDeathEvent(this.location, opposite));
-            }
-            else if (target instanceof Character) {
-                App.getSession().addEvent(new CharDeathEvent(this.location, opposite));
-            }
-        }
+    public void reset() {
+        this.health = this.def_health;
+        this.attack = this.def_attack;
+        this.sigils = this.def_sigils;
     }
 }
