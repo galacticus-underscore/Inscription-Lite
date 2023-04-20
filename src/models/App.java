@@ -8,16 +8,10 @@
 
 package models;
 
-import models.exceptions.NullSessionException;
-
 public class App {
     private static Session session = new Session();
 
-    public static Session getSession() throws NullSessionException {
-        if (session == null) {
-            throw new NullSessionException();
-        }
-        
+    public static Session getSession() {
         return session;
     }
 

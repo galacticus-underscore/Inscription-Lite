@@ -5,7 +5,6 @@ import models.Avatar;
 import models.Entity;
 import models.enums.Pointers;
 
-import models.exceptions.NullSessionException;
 import models.exceptions.PointerConversionException;
 
 public class PointerProcessor {
@@ -13,7 +12,7 @@ public class PointerProcessor {
         return Pointers.valueOf(str);
     }
 
-    public static Pointers entityToPointer(Entity e) throws NullSessionException, PointerConversionException {
+    public static Pointers entityToPointer(Entity e) throws PointerConversionException {
         Pointers out = null;
 
         for (Pointers pointer : Pointers.values()) { 
@@ -30,7 +29,7 @@ public class PointerProcessor {
         return Character.getNumericValue(pointer.name().charAt(1));
     }
 
-    public static Entity pointerToEntity(Pointers pointer) throws NullSessionException, PointerConversionException {
+    public static Entity pointerToEntity(Pointers pointer) throws PointerConversionException {
         switch (pointer) {
             case PA:
                 return App.getSession().getPlayingAvatar();
@@ -66,7 +65,7 @@ public class PointerProcessor {
         }
     }
 
-    public static Pointers getOppositePointer(Pointers pointer) throws NullSessionException, PointerConversionException {
+    public static Pointers getOppositePointer(Pointers pointer) throws PointerConversionException {
         String pointer_name = pointer.name();
         char avatar_code = pointer_name.charAt(0);
         int slot = pointerToInt(pointer);
@@ -95,7 +94,7 @@ public class PointerProcessor {
         }
     }
 
-    public static Entity getOppositeEntity(Pointers pointer) throws NullSessionException, PointerConversionException {
+    public static Entity getOppositeEntity(Pointers pointer) throws PointerConversionException {
         return pointerToEntity(getOppositePointer(pointer));
     }
 }

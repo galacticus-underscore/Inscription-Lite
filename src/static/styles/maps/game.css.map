@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":["_global.scss","game.scss","_screen.scss"],"names":[],"mappings":"AACQ;ACCR;EDuBI,OEzBW;EF0BX,gBE1BW;EF2BX,QE1BY;EF2BZ,iBE3BY;EF6BZ;EACA;EAEA,kBA9BS;EA+BT,sBA/BS;EAiCT;EACA,aClC+B","file":"game.css"}
+{"version":3,"sourceRoot":"","sources":["_global.scss","game.scss","_screen.scss"],"names":[],"mappings":"AACQ;ACCR;EDuBI,OEzBW;EF0BX,gBE1BW;EF2BX,QE1BY;EF2BZ,iBE3BY;EF6BZ;EACA;EAEA,kBA9BS;EA+BT,sBA/BS;EAiCT;EACA,aClC+B;;;AAGnC;EDqDI;EACA;EACA;EACA;EAMA;EACA;EACA;EACA","file":"game.css"}

@@ -3,3 +3,7 @@
 .body {
     @include global.root($spacing: 0);
 }
+
+.player {
+    @include global.box($layer: 1, $width-percent: 1, $height-percent: 0.5);
+}

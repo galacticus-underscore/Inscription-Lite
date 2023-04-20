@@ -9,8 +9,8 @@ $btn-primary: #5ec236;
 $btn-secondary: #40e081;
 $btn-highlight: #bfec39;
 
-$z0-box-width: screen.$screen-width;
-$z0-box-height: screen.$screen-height;
+$z0-box-width: screen.$screen-width - 32;
+$z0-box-height: screen.$screen-height - 32;
 $z1-box-width: none;
 $z1-box-height: none;
 $z2-box-width: none;
@@ -23,10 +23,10 @@ $z5-box-width: none;
 $z5-box-height: none;
 
 @mixin root($color: $bg-primary, $spacing: screen.$rem) {
-    width: $z0-box-width;
-    -fx-pref-width: $z0-box-width;
-    height: $z0-box-height;
-    -fx-pref-height: $z0-box-height;
+    width: screen.$screen-width;
+    -fx-pref-width: screen.$screen-width;
+    height: screen.$screen-height;
+    -fx-pref-height: screen.$screen-height;
 
     padding: 2*screen.$rem;
     -fx-padding: 2*screen.$rem;
@@ -38,55 +38,66 @@ $z5-box-height: none;
     -fx-spacing: $spacing;
 }
 
-@mixin box($layer, $width-percent, $height-percent, $set-vars: false) {
+@mixin component($layer, $width-percent, $height-percent) {
     $parent-width: map-get((
-        1 : $z0-box-width,
-        2 : $z1-box-width,
-        3 : $z2-box-width,
-        4 : $z3-box-width,
-        5 : $z4-box-width,
-        6 : $z5-box-width
-    ), $layer);
+        0 : $z0-box-width,
+        1 : $z1-box-width,
+        2 : $z2-box-width,
+        3 : $z3-box-width,
+        4 : $z4-box-width,
+        5 : $z5-box-width
+    ), $layer - 1);
 
     $parent-height: map-get((
-        1 : $z0-box-height,
-        2 : $z1-box-height,
-        3 : $z2-box-height,
-        4 : $z3-box-height,
-        5 : $z4-box-height,
-        6 : $z5-box-height
-    ), $layer);
+        0 : $z0-box-height,
+        1 : $z1-box-height,
+        2 : $z2-box-height,
+        3 : $z3-box-height,
+        4 : $z4-box-height,
+        5 : $z5-box-height
+    ), $layer - 1);
 
     width: $width-percent * $parent-width;
     -fx-pref-width: $width-percent * $parent-width;
     height: $height-percent * $parent-height;
     -fx-pref-height: $height-percent * $parent-height;
+}
 
-    @if $set-vars {
-        @if $layer == 1 {
-            $z1-box-width: $width-percent * $z0-box-width;
-            $z1-box-height: $height-percent * $z0-box-height;
-        }
-        @else if $layer == 2 {
-            $z2-box-width: $width-percent * $z0-box-width;
-            $z2-box-height: $height-percent * $z0-box-height;
-        }
-        @else if $layer == 3 {
-            $z3-box-width: $width-percent * $z0-box-width;
-            $z3-box-height: $height-percent * $z0-box-height;
-        }
-        @else if $layer == 4 {
-            $z4-box-width: $width-percent * $z0-box-width;
-            $z4-box-height: $height-percent * $z0-box-height;
-        }
-        @else if $layer == 5 {
-            $z5-box-width: $width-percent * $z0-box-width;
-            $z5-box-height: $height-percent * $z0-box-height;
-        }
+@mixin box($layer, $width-percent, $height-percent, $margin-rem: 0, $padding-rem: 0) {
+    @include component($layer, $width-percent, $height-percent);
+
+    margin: $margin-rem * screen.$rem;
+    -fx-margin: $margin-rem * screen.$rem;
+    padding: $padding-rem * screen.$rem;
+    -fx-padding: $padding-rem * screen.$rem;
+
+    $spacing: ($margin-rem + $padding-rem) * screen.$rem;
+
+    @if $layer == 1 {
+        $z1-box-width: $width-percent * $z0-box-width - $spacing;
+        $z1-box-height: $height-percent * $z0-box-height - $spacing;
+    }
+    @else if $layer == 2 {
+        $z2-box-width: $width-percent * $z1-box-width - $spacing;
+        $z2-box-height: $height-percent * $z1-box-height - $spacing;
+    }
+    @else if $layer == 3 {
+        $z3-box-width: $width-percent * $z2-box-width - $spacing;
+        $z3-box-height: $height-percent * $z2-box-height - $spacing;
+    }
+    @else if $layer == 4 {
+        $z4-box-width: $width-percent * $z3-box-width - $spacing;
+        $z4-box-height: $height-percent * $z3-box-height - $spacing;
+    }
+    @else if $layer == 5 {
+        $z5-box-width: $width-percent * $z4-box-width - $spacing;
+        $z5-box-height: $height-percent * $z4-box-height - $spacing;
     }
 }
 
-@mixin button {
+@mixin button($layer, $width-percent, $height-percent) {
+    @include component($layer, $width-percent, $height-percent);
+
     background-color: $btn-primary;
     -fx-background-color: $btn-primary;
     -fx-background-radius: screen.$rem + 4;
@@ -99,16 +110,18 @@ $z5-box-height: none;
     -fx-border-radius: screen.$rem;
 }
 
-@mixin text($set-font: false, $font:none, $font-size-rem:none) {
+@mixin text() {
     fill: $text-primary;
     -fx-fill: $text-primary;
-    
-    @if $set-font {
-        font-family: $font;
-        -fx-font-family: $font;
-        font-size: $font-size-rem * screen.$rem;
-        -fx-font-size: $font-size-rem * screen.$rem;
-    }
+}
+
+@mixin text-with-font($font:none, $font-size-rem:none) {
+    @include text();
+
+    font-family: $font;
+    -fx-font-family: $font;
+    font-size: $font-size-rem * screen.$rem;
+    -fx-font-size: $font-size-rem * screen.$rem;
 }
 
 // .menu-button {

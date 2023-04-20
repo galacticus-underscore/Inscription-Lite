@@ -16,7 +16,6 @@ import models.enums.EventTypes;
 
 import models.exceptions.DeadAvatarException;
 import models.exceptions.DeadCharacterException;
-import models.exceptions.NullSessionException;
 import models.exceptions.PointerConversionException;
 import models.exceptions.ZeroHealthException;
 
@@ -48,6 +47,14 @@ public class Session {
         return this.observing_avatar;
     }
 
+    public Avatar getPlayer1() {
+        return avatars[this.p1_index];
+    }
+
+    public Avatar getPlaye21() {
+        return avatars[this.p2_index];
+    }
+
     public Event peekLastEvent() {
         return this.event_history.peek();
     }
@@ -56,7 +63,7 @@ public class Session {
         return this.event_history.poll();
     }
 
-    public void addEvent(Event e) throws DeadCharacterException, DeadAvatarException, NullSessionException, PointerConversionException, ZeroHealthException {
+    public void addEvent(Event e) throws DeadCharacterException, DeadAvatarException, PointerConversionException, ZeroHealthException {
         this.event_history.add(e);
 
         if (e.getType().equals(EventTypes.AVATAR_DEATH))
@@ -67,12 +74,11 @@ public class Session {
     }
 
     // call after a player finishes their turn
-    public void endTurn() throws NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
+    public void endTurn() throws DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
         if (turn_number > 0)
             this.playing_avatar.attack();
 
         this.playing_avatar.flip();
-        this.observing_avatar.flip();
     }
 
     // call during the start of the next player's turn, after the moves of the last player are replayed
@@ -86,6 +92,8 @@ public class Session {
             this.observing_avatar = avatars[this.p2_index];
             this.turn_number += 1;
         }
+
+        this.playing_avatar.flip();
     }
 
     public void close() {

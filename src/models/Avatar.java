@@ -32,7 +32,6 @@ import models.exceptions.DeadCharacterException;
 import models.exceptions.EmptyDeckException;
 import models.exceptions.FullSlotException;
 import models.exceptions.InvalidSummonException;
-import models.exceptions.NullSessionException;
 import models.exceptions.PointerConversionException;
 import models.exceptions.UndeadSacrificeException;
 
@@ -61,7 +60,7 @@ public class Avatar implements Entity {
         return this.health;
     }
 
-    public void changeHealth(int hp, Pointers source) throws NullSessionException, ZeroHealthException, DeadAvatarException, DeadCharacterException, PointerConversionException {
+    public void changeHealth(int hp, Pointers source) throws ZeroHealthException, DeadAvatarException, DeadCharacterException, PointerConversionException {
         this.health += hp;
         App.getSession().addEvent(new AttackEvent(source, PointerProcessor.entityToPointer(this), -hp));
         
@@ -101,6 +100,10 @@ public class Avatar implements Entity {
         this.sigils.add(c);
     }
 
+    public ArrayList<Card> getHand() {
+        return this.hand;
+    }
+
     public Character getCharInSlot(int column) {
         return slots[column];
     }
@@ -111,7 +114,7 @@ public class Avatar implements Entity {
         });
     }
 
-    public void draw() throws NullSessionException, EmptyDeckException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
+    public void draw() throws EmptyDeckException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
         if (this.deck.empty())
             throw new EmptyDeckException();
 
@@ -119,7 +122,7 @@ public class Avatar implements Entity {
         App.getSession().addEvent(new DrawEvent());
     }
 
-    public void summon(int source, Pointers target) throws FullSlotException, BloodCountException, DeadCharacterException, DeadAvatarException, NullSessionException, InvalidSummonException, PointerConversionException, ZeroHealthException {
+    public void summon(int source, Pointers target) throws FullSlotException, BloodCountException, DeadCharacterException, DeadAvatarException, InvalidSummonException, PointerConversionException, ZeroHealthException {
         Card summoned = this.hand.get(source);
 
         if (summoned instanceof Character) {
@@ -181,7 +184,7 @@ public class Avatar implements Entity {
             this.pile.push(this.slots[column]);
     }
 
-    public void sacrifice(Pointers pointer) throws BloodCountException, NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException, UndeadSacrificeException {
+    public void sacrifice(Pointers pointer) throws BloodCountException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException, UndeadSacrificeException {
         Character sacrifice = (Character)PointerProcessor.pointerToEntity(pointer);
 
         if (sacrifice.hasSigil(SigilCodes.WORTHY_SACRIFICE))
@@ -200,7 +203,7 @@ public class Avatar implements Entity {
         App.getSession().addEvent(new SacrificeEvent(pointer));
     }
 
-    public void attack() throws NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
+    public void attack() throws DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
         for (int i = 0; i < 4; i++)
             this.slots[i].attack();
     }

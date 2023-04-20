@@ -20,7 +20,6 @@ import models.events.CharDeathEvent;
 
 import models.exceptions.DeadAvatarException;
 import models.exceptions.DeadCharacterException;
-import models.exceptions.NullSessionException;
 import models.exceptions.PointerConversionException;
 import models.exceptions.ZeroHealthException;
 
@@ -55,7 +54,7 @@ public class Character extends Card implements Entity {
         return this.health;
     }
 
-    public void changeHealth(int hp, Pointers source) throws ZeroHealthException, NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException {
+    public void changeHealth(int hp, Pointers source) throws ZeroHealthException, DeadAvatarException, DeadCharacterException, PointerConversionException {
         Pointers target = PointerProcessor.entityToPointer(this);
         Entity source_ety = PointerProcessor.pointerToEntity(source);
         Pointers target_avatar_ptr = PointerProcessor.getAvatarOfPointer(target);
@@ -113,7 +112,7 @@ public class Character extends Card implements Entity {
         this.sigils.add(s);
     }
 
-    public void attack() throws NullSessionException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
+    public void attack() throws DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
         Pointers opposite = PointerProcessor.getOppositePointer(PointerProcessor.entityToPointer(this));
         Entity target = PointerProcessor.pointerToEntity(opposite);
 

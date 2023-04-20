@@ -21,8 +21,15 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 
 import models.App;
+import models.Session;
+import models.exceptions.DeadAvatarException;
+import models.exceptions.DeadCharacterException;
+import models.exceptions.PointerConversionException;
+import models.exceptions.ZeroHealthException;
 
 public class GameController implements Initializable {
+    private Session session = App.getSession();
+    
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -35,14 +42,13 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // int font_size = StyleProcessor.getFontSize();
-        // Font font = Font.loadFont(getClass().getResourceAsStream("../static/fonts/Heavyweight.ttf"), font_size * 10);
-        // title.setFont(font);
-        App.startSession();
+        session.nextPlayer();
     }
     
     @FXML 
-    protected void nextTurn(MouseEvent e) throws IOException {
+    protected void nextTurn(MouseEvent e) throws IOException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
+        session.endTurn();
+        
         root = FXMLLoader.load(getClass().getResource("../views/Confirmation.fxml"));
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
