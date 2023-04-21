@@ -32,7 +32,7 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         stage.setTitle("Inscryption Lite");
         stage.setScene(scene);
-        stage.setMaximized(true);
+        // stage.setMaximized(true);
         stage.show();
         LogProcessor.success("Home screen loaded");
     }

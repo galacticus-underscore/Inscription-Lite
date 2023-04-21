@@ -1,4 +1,6 @@
+@use "sass:string";
 @use "screen";
+@use "boxes";
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&family=Special+Elite&display=swap');
 
 $bg-primary: #371809;
@@ -9,24 +11,20 @@ $btn-primary: #5ec236;
 $btn-secondary: #40e081;
 $btn-highlight: #bfec39;
 
-$z0-box-width: screen.$screen-width - 32;
-$z0-box-height: screen.$screen-height - 32;
-$z1-box-width: none;
-$z1-box-height: none;
-$z2-box-width: none;
-$z2-box-height: none;
-$z3-box-width: none;
-$z3-box-height: none;
-$z4-box-width: none;
-$z4-box-height: none;
-$z5-box-width: none;
-$z5-box-height: none;
+@mixin component($parent, $width-percent: 1, $height-percent: 1) {
+    $parent-width: boxes.get-width($parent);
+    width: $width-percent * $parent-width;
+    -fx-pref-width: $width-percent * $parent-width;
+    $temp-width: $width-percent * $parent-width !global;
+
+    $parent-height: boxes.get-height($parent);
+    height: $height-percent * $parent-height;
+    -fx-pref-height: $height-percent * $parent-height;
+    $temp-height: $height-percent * $parent-height !global;
+}
 
 @mixin root($color: $bg-primary, $spacing: screen.$rem) {
-    width: screen.$screen-width;
-    -fx-pref-width: screen.$screen-width;
-    height: screen.$screen-height;
-    -fx-pref-height: screen.$screen-height;
+    @include component($parent: 0);
 
     padding: 2*screen.$rem;
     -fx-padding: 2*screen.$rem;
@@ -38,33 +36,8 @@ $z5-box-height: none;
     -fx-spacing: $spacing;
 }
 
-@mixin component($layer, $width-percent, $height-percent) {
-    $parent-width: map-get((
-        0 : $z0-box-width,
-        1 : $z1-box-width,
-        2 : $z2-box-width,
-        3 : $z3-box-width,
-        4 : $z4-box-width,
-        5 : $z5-box-width
-    ), $layer - 1);
-
-    $parent-height: map-get((
-        0 : $z0-box-height,
-        1 : $z1-box-height,
-        2 : $z2-box-height,
-        3 : $z3-box-height,
-        4 : $z4-box-height,
-        5 : $z5-box-height
-    ), $layer - 1);
-
-    width: $width-percent * $parent-width;
-    -fx-pref-width: $width-percent * $parent-width;
-    height: $height-percent * $parent-height;
-    -fx-pref-height: $height-percent * $parent-height;
-}
-
-@mixin box($layer, $width-percent, $height-percent, $margin-rem: 0, $padding-rem: 0) {
-    @include component($layer, $width-percent, $height-percent);
+@mixin box($layer, $parent, $width-percent, $height-percent, $margin-rem: 0, $padding-rem: 0) {
+    @include component($parent, $width-percent, $height-percent);
 
     margin: $margin-rem * screen.$rem;
     -fx-margin: $margin-rem * screen.$rem;
@@ -73,30 +46,11 @@ $z5-box-height: none;
 
     $spacing: ($margin-rem + $padding-rem) * screen.$rem;
 
-    @if $layer == 1 {
-        $z1-box-width: $width-percent * $z0-box-width - $spacing;
-        $z1-box-height: $height-percent * $z0-box-height - $spacing;
-    }
-    @else if $layer == 2 {
-        $z2-box-width: $width-percent * $z1-box-width - $spacing;
-        $z2-box-height: $height-percent * $z1-box-height - $spacing;
-    }
-    @else if $layer == 3 {
-        $z3-box-width: $width-percent * $z2-box-width - $spacing;
-        $z3-box-height: $height-percent * $z2-box-height - $spacing;
-    }
-    @else if $layer == 4 {
-        $z4-box-width: $width-percent * $z3-box-width - $spacing;
-        $z4-box-height: $height-percent * $z3-box-height - $spacing;
-    }
-    @else if $layer == 5 {
-        $z5-box-width: $width-percent * $z4-box-width - $spacing;
-        $z5-box-height: $height-percent * $z4-box-height - $spacing;
-    }
+    @include boxes.add-child($layer, $parent, $temp-width - $spacing, $temp-height - $spacing);
 }
 
-@mixin button($layer, $width-percent, $height-percent) {
-    @include component($layer, $width-percent, $height-percent);
+@mixin button($parent, $width-percent, $height-percent) {
+    @include component($parent, $width-percent, $height-percent);
 
     background-color: $btn-primary;
     -fx-background-color: $btn-primary;

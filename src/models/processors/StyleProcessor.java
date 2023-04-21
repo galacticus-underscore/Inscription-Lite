@@ -71,7 +71,7 @@ public class StyleProcessor {
         safeBounds.height -= (insets.top + insets.bottom);
 
         width = safeBounds.width;
-        height = safeBounds.height - 23;
+        height = safeBounds.height;
     }
 
     public static void writeScreenVars() {
@@ -87,7 +87,7 @@ public class StyleProcessor {
             myWriter.write("$screen-width: " + width + "px;\n");
             LogProcessor.success("Written screen width to _screen.scss");
 
-            myWriter.write("$screen-height: " + (height) + "px;\n");
+            myWriter.write("$screen-height: " + height + "px;\n");
             LogProcessor.success("Written screen height to _screen.scss");
 
             myWriter.write("$rem: " + font_size + "px;\n");
@@ -101,5 +101,10 @@ public class StyleProcessor {
         }
 
         System.out.println();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getWidth());
+        System.out.println(getHeight());
     }
 }

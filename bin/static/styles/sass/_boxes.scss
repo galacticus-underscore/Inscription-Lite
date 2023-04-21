@@ -1,0 +1,48 @@
+@use "sass:map";
+@use "sass:list";
+@use "sass:string";
+@use "sass:math";
+@use "screen";
+
+$box-dimensions: ("0w": screen.$screen-width - 32, "0h": screen.$screen-height - 32, "0c": ());
+
+@function to-number($value) {    
+    $result: 0;
+    $numbers: ('0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9);
+    
+    @for $i from 1 through str-length($value) {
+        $character: str-slice($value, $i, $i);
+        $result: $result + map-get($numbers, $character) * math.pow(10, str-length($value) - $i);
+    }
+    
+    @return $result;
+}
+
+@function get-parent($layer) {
+    @if $layer == 0 {
+        @return 0;
+    }
+
+    @each $k, $v in $box-dimensions {
+        @if string.index($k, "c") {
+            @if list.index($v, $layer) {
+                @return to-number(string.slice($k, 1, -2));
+            }
+        }
+    }
+}
+
+@mixin add-child($layer, $parent, $width, $height) {
+    $box-dimensions: map.set($box-dimensions, "#{$parent}c", append(map.get($box-dimensions, "#{$parent}c"), $layer)) !global;
+    $box-dimensions: map.set($box-dimensions, "#{$layer}w", $width) !global;
+    $box-dimensions: map.set($box-dimensions, "#{$layer}h", $height) !global;
+    $box-dimensions: map.set($box-dimensions, "#{$layer}c", ()) !global;
+}
+
+@function get-width($layer) {
+    @return map.get($box-dimensions, "#{$layer}w");
+}
+
+@function get-height($layer) {
+    @return map.get($box-dimensions, "#{$layer}h");
+}
