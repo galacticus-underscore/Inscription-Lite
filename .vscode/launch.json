@@ -9,6 +9,13 @@
             "name": "StyleProcessor",
             "request": "launch",
             "mainClass": "models.processors.StyleProcessor",
+            "projectName": "Inscription-Lite_559cf16a"
+        },
+        {
+            "type": "java",
+            "name": "StyleProcessor",
+            "request": "launch",
+            "mainClass": "models.processors.StyleProcessor",
             "projectName": "Inscription Lite_568f857b"
         },
         {

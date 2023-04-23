@@ -197,12 +197,12 @@ public class Test {
         // String a = "hello world";
         // System.out.println(a.getClass().getSimpleName());
 
-        test(null);
+        // test(null);
 
-        int[] a = {1, 2, 3};
-        int b = a[0];
-        System.out.println(b);
-        a[0] = 4;
-        System.out.println(b);
+        // int[] a = {1, 2, 3};
+        // int b = a[0];
+        // System.out.println(b);
+        // a[0] = 4;
+        // System.out.println(b);
     }
 }

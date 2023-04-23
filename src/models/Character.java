@@ -30,8 +30,8 @@ public class Character extends Card implements Entity {
     private int def_health, def_attack;
     private ArrayList<SigilCodes> def_sigils = new ArrayList<SigilCodes>();
 
-    public Character(String n, String i, int c, int h, int a) {
-        super(n, i, c);
+    public Character(String n, String cn, String i, int c, int h, int a) {
+        super(n, cn, i, c);
         this.health = h;
         this.attack = a;
 
@@ -39,8 +39,8 @@ public class Character extends Card implements Entity {
         this.def_attack = a;
     }
 
-    public Character(String n, String i, int c, int h, int a, String s) {
-        super(n, i, c);
+    public Character(String n, String cn, String i, int c, int h, int a, String s) {
+        super(n, cn, i, c);
         this.health = h;
         this.attack = a;
         this.sigils.add(SigilCodes.valueOf(s));

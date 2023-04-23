@@ -25,18 +25,28 @@ public class Session {
         new Avatar("src/static/data/card_data.csv"),
     };
 
-    private int p1_index, p2_index, turn_number = 0;
+    private boolean new_init = true;
+    private int home_index, away_index, turn_number = 0;
+    private char playing_side = 'h';
     private Avatar playing_avatar, observing_avatar;
     private LinkedList<Event> event_history = new LinkedList<Event>();
 
     public void open(int p1, int p2) {
-        this.p1_index = p1;
-        this.p2_index = p2;
-        this.playing_avatar = avatars[this.p1_index];
-        this.observing_avatar = avatars[this.p2_index];
+        this.home_index = p1;
+        this.away_index = p2;
+        this.playing_avatar = avatars[this.home_index];
+        this.observing_avatar = avatars[this.away_index];
 
         this.playing_avatar.initialize();
         this.observing_avatar.initialize();
+    }
+
+    public boolean isNewInit() {
+        return this.new_init;
+    }
+
+    public char getPlayingSide() {
+        return this.playing_side;
     }
 
     public Avatar getPlayingAvatar() {
@@ -47,12 +57,12 @@ public class Session {
         return this.observing_avatar;
     }
 
-    public Avatar getPlayer1() {
-        return avatars[this.p1_index];
+    public Avatar getHome() {
+        return avatars[this.home_index];
     }
 
-    public Avatar getPlaye21() {
-        return avatars[this.p2_index];
+    public Avatar getAway() {
+        return avatars[this.away_index];
     }
 
     public Event peekLastEvent() {
@@ -82,22 +92,37 @@ public class Session {
     }
 
     // call during the start of the next player's turn, after the moves of the last player are replayed
-    public void nextPlayer() {
-        if (this.playing_avatar == avatars[this.p1_index]) {
-            this.playing_avatar = avatars[this.p2_index];
-            this.observing_avatar = avatars[this.p1_index];
+    public char nextPlayer() {
+        if (!this.new_init) {
+            if (this.playing_avatar == avatars[this.home_index]) {
+                this.playing_avatar = avatars[this.away_index];
+                this.observing_avatar = avatars[this.home_index];
+                this.playing_side = 'a';
+            }
+            else {
+                this.playing_avatar = avatars[this.home_index];
+                this.observing_avatar = avatars[this.away_index];
+                this.turn_number += 1;
+                this.playing_side = 'h';
+            }
+
+            this.playing_avatar.allowDraw();
+            this.playing_avatar.flip();
         }
         else {
-            this.playing_avatar = avatars[this.p1_index];
-            this.observing_avatar = avatars[this.p2_index];
-            this.turn_number += 1;
+            this.new_init = false;
+            this.observing_avatar.flip();
         }
-
-        this.playing_avatar.flip();
+        
+        return this.playing_side;
     }
 
     public void close() {
         this.playing_avatar.reset();
         this.observing_avatar.reset();
+
+        this.new_init = true;
+        this.turn_number = 0;
+        this.event_history.clear();;
     }
 }

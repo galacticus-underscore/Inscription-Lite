@@ -8,33 +8,57 @@
 
 package models.processors;
 
+import java.util.Arrays;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
-
 public class StyleProcessor {
-    private static int width, height, font_size = 16;
-
-    public static int getWidth() {
-        computeScreenVars();
-        return width;
-    }
-
-    public static int getHeight() {
-        computeScreenVars();
-        return height;
-    }
+    private static int font_size = 16;
 
     public static int getFontSize() {
-        computeScreenVars();
         return font_size;
+    }
+
+    public static void writeCardStyles() {
+        try {
+            BufferedReader fr = new BufferedReader(new FileReader(new File("src/static/data/card_data.csv")));
+            FileWriter fw = new FileWriter("src/static/styles/sass/_cards.scss");
+            String line = "";
+            String class_name;
+            String[] card_data;
+            boolean skipped_headers = false;
+
+            fw.write("@use \"global\";\n\n");
+
+            while ((line = fr.readLine()) != null) {
+                if (!skipped_headers) {
+                    skipped_headers = true;
+                    continue;
+                }
+                
+                card_data = Arrays.stream(line.split(","))
+                    .filter(x -> !x.isEmpty())
+                    .toArray(String[]::new);
+
+                class_name = card_data[1].toLowerCase().replace(' ', '-').replace("\'", "");
+
+                fw.write("." + class_name
+                    + " {\n\t@include global.image(\""
+                    + card_data[2]
+                    + "\");\n}\n\n"
+                );
+            }
+                        
+            fr.close();
+            fw.close();
+        }
+        catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
     public static void compile() {
@@ -59,52 +83,7 @@ public class StyleProcessor {
         }
     }
 
-    public static void computeScreenVars() {
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        Rectangle bounds = gd.getDefaultConfiguration().getBounds();
-        Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(gd.getDefaultConfiguration());
-
-        Rectangle safeBounds = new Rectangle(bounds);
-        safeBounds.x += insets.left;
-        safeBounds.y += insets.top;
-        safeBounds.width -= (insets.left + insets.right);
-        safeBounds.height -= (insets.top + insets.bottom);
-
-        width = safeBounds.width;
-        height = safeBounds.height;
-    }
-
-    public static void writeScreenVars() {
-        LogProcessor.start("StyleProcessor", "writeScreenVars");
-
-        LogProcessor.log("Getting maximized screen width and height");
-        computeScreenVars();
-        
-        try {
-            LogProcessor.log("Writing variables to _screen.scss");
-            FileWriter myWriter = new FileWriter("src/static/styles/sass/_screen.scss");
-
-            myWriter.write("$screen-width: " + width + "px;\n");
-            LogProcessor.success("Written screen width to _screen.scss");
-
-            myWriter.write("$screen-height: " + height + "px;\n");
-            LogProcessor.success("Written screen height to _screen.scss");
-
-            myWriter.write("$rem: " + font_size + "px;\n");
-            LogProcessor.success("Written font size to _screen.scss");
-
-            myWriter.close();
-            LogProcessor.success("All variables written to _screen.scss");
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println();
-    }
-
     public static void main(String[] args) {
-        System.out.println(getWidth());
-        System.out.println(getHeight());
+        writeCardStyles();
     }
 }

@@ -15,8 +15,8 @@ public class Spell extends Card {
     private boolean atc, ata;
     private SpellEffect effect;
 
-    public Spell(String n, String i, int c, boolean atc, boolean ata, String e) {
-        super(n, i, c);
+    public Spell(String n, String cn, String i, int c, boolean atc, boolean ata, String e) {
+        super(n, cn, i, c);
         this.atc = atc;
         this.ata = ata;
         this.effect = SpellProcessor.assignEffect(e);

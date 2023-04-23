@@ -1,0 +1,220 @@
+@import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&family=Special+Elite&display=swap");
+.chipmunk {
+  background-image: url("../../images/card_fronts/01_chipmunk.png");
+  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.platypus {
+  background-image: url("../../images/card_fronts/01_chipmunk.png");
+  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.medusa {
+  background-image: url("../../images/card_fronts/01_chipmunk.png");
+  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.panther {
+  background-image: url("../../images/card_fronts/01_chipmunk.png");
+  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.black-cat {
+  background-image: url("../../images/card_fronts/01_chipmunk.png");
+  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.stingray {
+  background-image: url("../../images/card_fronts/01_chipmunk.png");
+  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.converge-router {
+  background-image: url("../../images/card_fronts/01_chipmunk.png");
+  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.bio-lab-microscope {
+  background-image: url("../../images/card_fronts/01_chipmunk.png");
+  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.gaming-mouse {
+  background-image: url("../../images/card_fronts/01_chipmunk.png");
+  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.grandmas-flower-vase {
+  background-image: url("../../images/card_fronts/01_chipmunk.png");
+  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.communist-manifesto {
+  background-image: url("../../images/card_fronts/01_chipmunk.png");
+  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.body {
+  padding: 32px;
+  -fx-padding: 32px;
+  background-color: #371809;
+  -fx-background-color: #371809;
+  -fx-alignment: top-left;
+  -fx-spacing: 0;
+}
+
+.player-1 {
+  background-image: url("../../icons/player_1.jpg");
+  -fx-background-image: url("../../icons/player_1.jpg");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.player-2 {
+  background-image: url("../../icons/player_2.jpg");
+  -fx-background-image: url("../../icons/player_2.jpg");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.health {
+  background-image: url("../../icons/health.png");
+  -fx-background-image: url("../../icons/health.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.blood {
+  background-image: url("../../icons/blood.png");
+  -fx-background-image: url("../../icons/blood.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.count {
+  fill: #FFF;
+  -fx-fill: #FFF;
+  font-family: "Special Elite";
+  -fx-font-family: "Special Elite";
+  font-size: 16px;
+  -fx-font-size: 16px;
+}
+
+.hand {
+  padding: 8px;
+  -fx-padding: 8px;
+  -fx-alignment: center-left;
+  -fx-spacing: 8px;
+}
+
+.deck, .graveyard {
+  background-image: url("../../images/backing.png");
+  -fx-background-image: url("../../images/backing.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.slot {
+  background-image: url("../../images/boardglow.png");
+  -fx-background-image: url("../../images/boardglow.png");
+  background-size: contain;
+  -fx-background-size: contain;
+  background-repeat: no-repeat;
+  -fx-background-repeat: no-repeat;
+  background-position: center;
+  -fx-background-position: center;
+}
+
+.separator {
+  background-color: #40e081;
+  -fx-background-color: #40e081;
+  -fx-background-radius: 4px;
+}
+
+/*# sourceMappingURL=session.css.map */

@@ -14,6 +14,6 @@
 }
 
 .confirm-button {
-    @include global.button($parent: 0, $width-percent: 0.15, $height-percent: 0.1);
+    @include global.button();
     @include global.text-with-font("Special Elite", 2);
 }

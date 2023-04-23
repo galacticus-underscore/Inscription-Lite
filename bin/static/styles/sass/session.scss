@@ -1,0 +1,48 @@
+@use "cards";
+@use "global";
+
+.body {
+    @include global.root($align: top-left, $spacing: 0);
+}
+
+.player-1 {
+    @include global.image("../../icons/player_1.jpg");
+}
+
+.player-2 {
+    @include global.image("../../icons/player_2.jpg");
+}
+
+.health {
+    @include global.image("../../icons/health.png");
+}
+
+.blood {
+    @include global.image("../../icons/blood.png");
+}
+
+.count {
+    @include global.text-with-font("Special Elite", 1);
+}
+
+.hand {
+    padding: 0.5 * global.$rem;
+    -fx-padding: 0.5 * global.$rem;
+
+    -fx-alignment: center-left;
+    -fx-spacing: 0.5 * global.$rem;
+}
+
+.deck, .graveyard {
+    @include global.image("../../images/backing.png");
+}
+
+.slot {
+    @include global.image("../../images/boardglow.png");
+}
+
+.separator {
+    background-color: global.$btn-secondary;
+    -fx-background-color: global.$btn-secondary;
+    -fx-background-radius: 0.25 * global.$rem;
+}

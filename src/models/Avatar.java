@@ -32,6 +32,7 @@ import models.exceptions.DeadCharacterException;
 import models.exceptions.EmptyDeckException;
 import models.exceptions.FullSlotException;
 import models.exceptions.InvalidSummonException;
+import models.exceptions.MultipleDrawException;
 import models.exceptions.PointerConversionException;
 import models.exceptions.UndeadSacrificeException;
 
@@ -39,6 +40,7 @@ public class Avatar implements Entity {
     private int health = 20;
     private int blood_count = 0;
     private ArrayList<SigilCodes> sigils = new ArrayList<SigilCodes>();
+    private boolean has_drawn = false;
 
     private File data;
     private Stack<Card> deck = new Stack<Card>();
@@ -96,6 +98,10 @@ public class Avatar implements Entity {
         return this.sigils.contains(c);
     }
 
+    public void allowDraw() {
+        this.has_drawn = false;
+    }
+
     public void addSigil(SigilCodes c) {
         this.sigils.add(c);
     }
@@ -114,12 +120,17 @@ public class Avatar implements Entity {
         });
     }
 
-    public void draw() throws EmptyDeckException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
+    public Card draw() throws EmptyDeckException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException, MultipleDrawException {
         if (this.deck.empty())
             throw new EmptyDeckException();
+        else if (this.has_drawn)
+            throw new MultipleDrawException();
 
-        this.hand.add(this.deck.pop());
+        Card out = this.deck.pop();
+        this.hand.add(out);
+        this.has_drawn = true;
         App.getSession().addEvent(new DrawEvent());
+        return out;
     }
 
     public void summon(int source, Pointers target) throws FullSlotException, BloodCountException, DeadCharacterException, DeadAvatarException, InvalidSummonException, PointerConversionException, ZeroHealthException {
@@ -204,8 +215,14 @@ public class Avatar implements Entity {
     }
 
     public void attack() throws DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
-        for (int i = 0; i < 4; i++)
-            this.slots[i].attack();
+        for (int i = 0; i < 4; i++) {
+            try {
+                this.slots[i].attack();
+            }
+            catch (NullPointerException e) {
+                continue;
+            }
+        }
     }
 
     public void reset() {

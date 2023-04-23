@@ -1,7 +1,7 @@
 @use "sass:string";
-@use "screen";
-@use "boxes";
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&family=Special+Elite&display=swap');
+
+$rem: 16px;
 
 $bg-primary: #371809;
 $bg-secondary: #d5814a;
@@ -11,57 +11,28 @@ $btn-primary: #5ec236;
 $btn-secondary: #40e081;
 $btn-highlight: #bfec39;
 
-@mixin component($parent, $width-percent: 1, $height-percent: 1) {
-    $parent-width: boxes.get-width($parent);
-    width: $width-percent * $parent-width;
-    -fx-pref-width: $width-percent * $parent-width;
-    $temp-width: $width-percent * $parent-width !global;
-
-    $parent-height: boxes.get-height($parent);
-    height: $height-percent * $parent-height;
-    -fx-pref-height: $height-percent * $parent-height;
-    $temp-height: $height-percent * $parent-height !global;
-}
-
-@mixin root($color: $bg-primary, $spacing: screen.$rem) {
-    @include component($parent: 0);
-
-    padding: 2*screen.$rem;
-    -fx-padding: 2*screen.$rem;
+@mixin root($color: $bg-primary, $align: center, $spacing: $rem) {
+    padding: 2*$rem;
+    -fx-padding: 2*$rem;
 
     background-color: $color;
     -fx-background-color: $color;
 
-    -fx-alignment: center;
+    -fx-alignment: $align;
     -fx-spacing: $spacing;
 }
 
-@mixin box($layer, $parent, $width-percent, $height-percent, $margin-rem: 0, $padding-rem: 0) {
-    @include component($parent, $width-percent, $height-percent);
-
-    margin: $margin-rem * screen.$rem;
-    -fx-margin: $margin-rem * screen.$rem;
-    padding: $padding-rem * screen.$rem;
-    -fx-padding: $padding-rem * screen.$rem;
-
-    $spacing: ($margin-rem + $padding-rem) * screen.$rem;
-
-    @include boxes.add-child($layer, $parent, $temp-width - $spacing, $temp-height - $spacing);
-}
-
-@mixin button($parent, $width-percent, $height-percent) {
-    @include component($parent, $width-percent, $height-percent);
-
+@mixin button() {
     background-color: $btn-primary;
     -fx-background-color: $btn-primary;
-    -fx-background-radius: screen.$rem + 4;
+    -fx-background-radius: $rem + 4;
 
     border-color: $btn-highlight;
     -fx-border-color: $btn-highlight;
-    border-width: 0.25 * screen.$rem;
-    -fx-border-width: 0.25 * screen.$rem;
-    border-radius: screen.$rem;
-    -fx-border-radius: screen.$rem;
+    border-width: 0.25 * $rem;
+    -fx-border-width: 0.25 * $rem;
+    border-radius: $rem;
+    -fx-border-radius: $rem;
 }
 
 @mixin text() {
@@ -74,22 +45,17 @@ $btn-highlight: #bfec39;
 
     font-family: $font;
     -fx-font-family: $font;
-    font-size: $font-size-rem * screen.$rem;
-    -fx-font-size: $font-size-rem * screen.$rem;
+    font-size: $font-size-rem * $rem;
+    -fx-font-size: $font-size-rem * $rem;
 }
 
-// .menu-button {
-//     @include global.primary-box(1/12, 1/10);
-    
-//     background-color: #19B066;
-//     -fx-background-color: #19B066;
-//     -fx-background-radius: screen.$rem;
-//     border-color: #6CE10F;
-//     -fx-border-color: #6CE10F;
-//     border-width: 4px;
-//     -fx-border-width: 4px;
-//     border-radius: screen.$rem;
-//     -fx-border-radius: screen.$rem;
-//     font-size: 24px;
-//     -fx-font-size: 24px;
-// }
+@mixin image($img) {
+    background-image: url($img);
+    -fx-background-image: url($img);
+    background-size: contain;
+    -fx-background-size: contain;
+    background-repeat: no-repeat;
+    -fx-background-repeat: no-repeat;
+    background-position: center;
+    -fx-background-position: center;
+}

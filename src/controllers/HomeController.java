@@ -45,7 +45,6 @@ public class HomeController implements Initializable {
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
-        stage.setMaximized(true);
         stage.show();
     }
 

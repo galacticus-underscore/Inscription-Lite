@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1080.0" styleClass="body" stylesheets="@../static/styles/css/session.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SessionController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" percentHeight="15.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" percentHeight="15.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
+   <children>
+      <HBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="4">
+         <children>
+            <Pane prefHeight="200.0" prefWidth="100.0" styleClass="player-2" />
+            <VBox prefHeight="200.0" prefWidth="50.0">
+               <children>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="health">
+                     <children>
+                        <Text fx:id="away_health" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="count" text="20" translateY="1.0" />
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="blood">
+                     <children>
+                        <Text fx:id="away_blood" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="count" text="0" translateY="10.0" />
+                     </children>
+                  </StackPane>
+               </children>
+            </VBox>
+            <Pane prefHeight="200.0" prefWidth="8.0" styleClass="separator">
+               <HBox.margin>
+                  <Insets left="24.0" right="24.0" />
+               </HBox.margin>
+            </Pane>
+            <HBox fx:id="away_hand" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" styleClass="hand" />
+         </children>
+      </HBox>
+      <HBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="3">
+         <children>
+            <Pane prefHeight="200.0" prefWidth="100.0" styleClass="player-1" />
+            <VBox prefHeight="200.0" prefWidth="50.0">
+               <children>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="health">
+                     <children>
+                        <Text fx:id="home_health" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="count" text="20" translateY="1.0" />
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="blood">
+                     <children>
+                        <Text fx:id="home_blood" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="count" text="0" translateY="10.0" />
+                     </children>
+                  </StackPane>
+               </children>
+            </VBox>
+            <Pane prefHeight="200.0" prefWidth="8.0" styleClass="separator">
+               <HBox.margin>
+                  <Insets left="24.0" right="24.0" />
+               </HBox.margin>
+            </Pane>
+            <HBox fx:id="home_hand" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" styleClass="hand" />
+         </children>
+      </HBox>
+      <StackPane fx:id="away_slot1" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </GridPane.margin>
+      </StackPane>
+      <StackPane fx:id="away_slot2" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </GridPane.margin>
+      </StackPane>
+      <StackPane fx:id="away_slot3" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="3" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </GridPane.margin>
+      </StackPane>
+      <StackPane fx:id="away_slot4" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="4" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </GridPane.margin>
+      </StackPane>
+      <StackPane fx:id="home_slot1" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </GridPane.margin>
+      </StackPane>
+      <StackPane fx:id="home_slot2" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="2" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </GridPane.margin>
+      </StackPane>
+      <StackPane fx:id="home_slot3" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="3" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </GridPane.margin>
+      </StackPane>
+      <StackPane fx:id="home_slot4" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="4" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </GridPane.margin>
+      </StackPane>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+         <children>
+            <Text fx:id="away_graveyard_count" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="count" text="0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Text>
+            <StackPane fx:id="away_graveyard" prefHeight="1000.0" prefWidth="200.0" styleClass="graveyard">
+               <VBox.margin>
+                  <Insets bottom="24.0" left="12.0" right="12.0" />
+               </VBox.margin>
+            </StackPane>
+         </children>
+      </VBox>
+      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+         <children>
+            <StackPane fx:id="home_graveyard" prefHeight="1000.0" prefWidth="200.0" styleClass="graveyard">
+               <VBox.margin>
+                  <Insets bottom="4.0" left="12.0" right="12.0" top="20.0" />
+               </VBox.margin>
+            </StackPane>
+            <Text fx:id="home_graveyard_count" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="count" text="0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Text>
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+         <children>
+            <Text fx:id="away_deck_count" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="count" text="40" textAlignment="RIGHT">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Text>
+            <StackPane fx:id="away_deck" onMouseClicked="#draw" prefHeight="1000.0" prefWidth="200.0" styleClass="deck">
+               <VBox.margin>
+                  <Insets bottom="24.0" left="12.0" right="12.0" />
+               </VBox.margin>
+            </StackPane>
+         </children>
+      </VBox>
+      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+         <children>
+            <StackPane fx:id="home_deck" onMouseClicked="#draw" prefHeight="1000.0" prefWidth="200.0" styleClass="deck">
+               <VBox.margin>
+                  <Insets bottom="4.0" left="12.0" right="12.0" top="20.0" />
+               </VBox.margin>
+            </StackPane>
+            <Text fx:id="home_deck_count" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="count" text="40" textAlignment="RIGHT">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Text>
+         </children>
+      </VBox>
+      <StackPane alignment="BOTTOM_RIGHT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+         <children>
+            <ImageView fitHeight="75.0" fitWidth="75.0" onMouseClicked="#nextTurn" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../static/icons/end_turn.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+   </children>
+</GridPane>
