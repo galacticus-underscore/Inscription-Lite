@@ -1,125 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&family=Special+Elite&display=swap");
-.chipmunk {
-  background-image: url("../../images/card_fronts/01_chipmunk.png");
-  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
-  background-size: contain;
-  -fx-background-size: contain;
-  background-repeat: no-repeat;
-  -fx-background-repeat: no-repeat;
-  background-position: center;
-  -fx-background-position: center;
-}
-
-.platypus {
-  background-image: url("../../images/card_fronts/01_chipmunk.png");
-  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
-  background-size: contain;
-  -fx-background-size: contain;
-  background-repeat: no-repeat;
-  -fx-background-repeat: no-repeat;
-  background-position: center;
-  -fx-background-position: center;
-}
-
-.medusa {
-  background-image: url("../../images/card_fronts/01_chipmunk.png");
-  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
-  background-size: contain;
-  -fx-background-size: contain;
-  background-repeat: no-repeat;
-  -fx-background-repeat: no-repeat;
-  background-position: center;
-  -fx-background-position: center;
-}
-
-.panther {
-  background-image: url("../../images/card_fronts/01_chipmunk.png");
-  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
-  background-size: contain;
-  -fx-background-size: contain;
-  background-repeat: no-repeat;
-  -fx-background-repeat: no-repeat;
-  background-position: center;
-  -fx-background-position: center;
-}
-
-.black-cat {
-  background-image: url("../../images/card_fronts/01_chipmunk.png");
-  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
-  background-size: contain;
-  -fx-background-size: contain;
-  background-repeat: no-repeat;
-  -fx-background-repeat: no-repeat;
-  background-position: center;
-  -fx-background-position: center;
-}
-
-.stingray {
-  background-image: url("../../images/card_fronts/01_chipmunk.png");
-  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
-  background-size: contain;
-  -fx-background-size: contain;
-  background-repeat: no-repeat;
-  -fx-background-repeat: no-repeat;
-  background-position: center;
-  -fx-background-position: center;
-}
-
-.converge-router {
-  background-image: url("../../images/card_fronts/01_chipmunk.png");
-  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
-  background-size: contain;
-  -fx-background-size: contain;
-  background-repeat: no-repeat;
-  -fx-background-repeat: no-repeat;
-  background-position: center;
-  -fx-background-position: center;
-}
-
-.bio-lab-microscope {
-  background-image: url("../../images/card_fronts/01_chipmunk.png");
-  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
-  background-size: contain;
-  -fx-background-size: contain;
-  background-repeat: no-repeat;
-  -fx-background-repeat: no-repeat;
-  background-position: center;
-  -fx-background-position: center;
-}
-
-.gaming-mouse {
-  background-image: url("../../images/card_fronts/01_chipmunk.png");
-  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
-  background-size: contain;
-  -fx-background-size: contain;
-  background-repeat: no-repeat;
-  -fx-background-repeat: no-repeat;
-  background-position: center;
-  -fx-background-position: center;
-}
-
-.grandmas-flower-vase {
-  background-image: url("../../images/card_fronts/01_chipmunk.png");
-  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
-  background-size: contain;
-  -fx-background-size: contain;
-  background-repeat: no-repeat;
-  -fx-background-repeat: no-repeat;
-  background-position: center;
-  -fx-background-position: center;
-}
-
-.communist-manifesto {
-  background-image: url("../../images/card_fronts/01_chipmunk.png");
-  -fx-background-image: url("../../images/card_fronts/01_chipmunk.png");
-  background-size: contain;
-  -fx-background-size: contain;
-  background-repeat: no-repeat;
-  -fx-background-repeat: no-repeat;
-  background-position: center;
-  -fx-background-position: center;
-}
-
 .body {
   padding: 32px;
   -fx-padding: 32px;
@@ -173,7 +52,7 @@
   -fx-background-position: center;
 }
 
-.count {
+.text {
   fill: #FFF;
   -fx-fill: #FFF;
   font-family: "Special Elite";
@@ -215,6 +94,13 @@
   background-color: #40e081;
   -fx-background-color: #40e081;
   -fx-background-radius: 4px;
+}
+
+.pane {
+  border-width: 8px;
+  -fx-border-color: 8px;
+  border-color: #40e081;
+  -fx-border-color: #40e081;
 }
 
 /*# sourceMappingURL=session.css.map */

@@ -40,9 +40,11 @@ public class SessionController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private Node highlighted;
 
     @FXML private Text home_health;
     @FXML private Text home_blood;
+    @FXML private Text home_error;
     @FXML private StackPane home_deck;
     @FXML private Text home_deck_count;
     @FXML private HBox home_hand;
@@ -55,6 +57,7 @@ public class SessionController implements Initializable {
 
     @FXML private Text away_health;
     @FXML private Text away_blood;
+    @FXML private Text away_error;
     @FXML private StackPane away_deck;
     @FXML private Text away_deck_count;
     @FXML private HBox away_hand;
@@ -73,6 +76,7 @@ public class SessionController implements Initializable {
         if (this.playing_avatar == 'h') {
             home_health.setDisable(false);
             home_blood.setDisable(false);
+            home_error.setDisable(false);
             home_deck.setDisable(false);
             home_deck_count.setDisable(false);
             home_hand.setDisable(false);
@@ -85,6 +89,7 @@ public class SessionController implements Initializable {
 
             away_health.setDisable(true);
             away_blood.setDisable(true);
+            away_error.setDisable(false);
             away_deck.setDisable(true);
             away_deck_count.setDisable(true);
             away_hand.setDisable(true);
@@ -153,7 +158,7 @@ public class SessionController implements Initializable {
             }
         }
         catch (LoadException e) {
-            ;
+            System.out.println("I have no idea what this error is. I swear to god, I checked every corner of this repository, even the images, font files, and even the .vscode directory. If you see this message, please DO NOT touch this portion of the code because it might break everything else because I HAVE NO EFFING IDEA WHAT IS GOING ON :sob:");
         }
     }
 
@@ -177,13 +182,39 @@ public class SessionController implements Initializable {
         });
     }
 
-    // @FXML 
-    // private void highlight(MouseEvent e){
-    //     ((ImageView)e.getSource()).getStyleClass().add("pane");
-    // }
+    public void displayError(Exception e) {
+        try {
+            unhighlight();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
-    // @FXML 
-    // private void unhighlight(MouseEvent e){
-    //     ((ImageView)e.getSource()).getStyleClass().add("pane");
-    // }
+        switch (this.playing_avatar) {
+            case 'h':
+                home_error.setText(e.getMessage());
+            case 'a':
+                away_error.setText(e.getMessage());
+        }
+    }
+
+    public void removeErrors() {
+        home_error.setText("");
+        away_error.setText("");
+    }
+
+    private void highlight(Node n) {
+        this.highlighted = n;
+        this.highlighted.getStyleClass().add("pane");
+    }
+
+    private void unhighlight(){
+        try {
+            this.highlighted.getStyleClass().remove("pane");
+            this.highlighted = null;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

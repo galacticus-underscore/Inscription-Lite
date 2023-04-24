@@ -38,7 +38,7 @@ import models.exceptions.UndeadSacrificeException;
 
 public class Avatar implements Entity {
     private int health = 20;
-    private int blood_count = 0;
+    private int blood_count = 5;
     private ArrayList<SigilCodes> sigils = new ArrayList<SigilCodes>();
     private boolean has_drawn = false;
 
@@ -227,7 +227,7 @@ public class Avatar implements Entity {
 
     public void reset() {
         this.health = 20;
-        this.blood_count = 0;
+        this.blood_count = 5;
         this.sigils = new ArrayList<SigilCodes>();
         
         this.deck = new Stack<Card>();

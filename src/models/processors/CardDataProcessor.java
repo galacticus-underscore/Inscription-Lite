@@ -21,7 +21,6 @@ public class CardDataProcessor {
         try {
             BufferedReader fr = new BufferedReader(new FileReader(csv));
             String line = "";
-            String class_name;
             String[] card_data;
             boolean skipped_headers = false;
 
@@ -35,14 +34,11 @@ public class CardDataProcessor {
                     .filter(x -> !x.isEmpty())
                     .toArray(String[]::new);
 
-                class_name = card_data[1].toLowerCase().replace(' ', '-').replace("\'", "");
-
                 switch (card_data[0].charAt(0)) {
                     case 'C':
                         if (card_data.length == 7) {
                             shuffler.add(new Character(
                                 card_data[1],
-                                class_name,
                                 card_data[2],
                                 Integer.parseInt(card_data[3]),
                                 Integer.parseInt(card_data[4]),
@@ -53,7 +49,6 @@ public class CardDataProcessor {
                         else {
                             shuffler.add(new Character(
                                 card_data[1],
-                                class_name,
                                 card_data[2],
                                 Integer.parseInt(card_data[3]),
                                 Integer.parseInt(card_data[4]),
@@ -64,7 +59,6 @@ public class CardDataProcessor {
                     case 'S':
                         shuffler.add(new Spell(
                             card_data[1],
-                            class_name,
                             card_data[2],
                             Integer.parseInt(card_data[3]),
                             Boolean.parseBoolean(card_data[4]),

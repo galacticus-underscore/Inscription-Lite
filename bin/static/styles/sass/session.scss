@@ -1,4 +1,3 @@
-@use "cards";
 @use "global";
 
 .body {
@@ -21,7 +20,7 @@
     @include global.image("../../icons/blood.png");
 }
 
-.count {
+.text {
     @include global.text-with-font("Special Elite", 1);
 }
 
@@ -45,4 +44,11 @@
     background-color: global.$btn-secondary;
     -fx-background-color: global.$btn-secondary;
     -fx-background-radius: 0.25 * global.$rem;
+}
+
+.pane {
+    border-width: 0.5 * global.$rem;
+    -fx-border-color: 0.5 * global.$rem;;
+    border-color: global.$btn-secondary;
+    -fx-border-color: global.$btn-secondary;
 }
