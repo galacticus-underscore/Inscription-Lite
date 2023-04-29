@@ -128,7 +128,7 @@ public class SessionController implements Initializable {
     }
     
     @FXML 
-    private void nextTurn(MouseEvent e) throws IOException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
+    public void nextTurn(MouseEvent e) throws IOException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
         session.endTurn();
         
         root = FXMLLoader.load(getClass().getResource("../views/Confirmation.fxml"));
@@ -139,12 +139,23 @@ public class SessionController implements Initializable {
     }
 
     @FXML
-    private void draw(MouseEvent e) throws IOException, EmptyDeckException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException, MultipleDrawException {
+    public void draw(MouseEvent e) throws IOException, EmptyDeckException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException, MultipleDrawException {
         Card drawn = session.getPlayingAvatar().draw();
         this.renderCard(drawn, this.playing_avatar);
     }
 
-    private void renderCard(Card c, char avatar) throws IOException {
+    @FXML
+    public void handleClick(MouseEvent e) {
+        if (highlighted == null) {
+            highlight((Node)e.getSource());
+        }
+        else {
+            unhighlight();
+            highlight((Node)e.getSource());
+        }
+    }
+
+    public void renderCard(Card c, char avatar) throws IOException {
         FXMLLoader component = new FXMLLoader(getClass().getResource("../views/Card.fxml"));
         CardController controller = new CardController(c);
         component.setController(controller);
@@ -203,12 +214,12 @@ public class SessionController implements Initializable {
         away_error.setText("");
     }
 
-    private void highlight(Node n) {
+    public void highlight(Node n) {
         this.highlighted = n;
         this.highlighted.getStyleClass().add("pane");
     }
 
-    private void unhighlight(){
+    public void unhighlight(){
         try {
             this.highlighted.getStyleClass().remove("pane");
             this.highlighted = null;

@@ -82,42 +82,42 @@
             <HBox fx:id="home_hand" alignment="CENTER_LEFT" prefHeight="100.0" styleClass="hand" />
          </children>
       </HBox>
-      <StackPane fx:id="away_slot1" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <StackPane fx:id="away_slot1" onMouseClicked="#handleClick" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </GridPane.margin>
       </StackPane>
-      <StackPane fx:id="away_slot2" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <StackPane fx:id="away_slot2" onMouseClicked="#handleClick" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </GridPane.margin>
       </StackPane>
-      <StackPane fx:id="away_slot3" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="3" GridPane.rowIndex="1">
+      <StackPane fx:id="away_slot3" onMouseClicked="#handleClick" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="3" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </GridPane.margin>
       </StackPane>
-      <StackPane fx:id="away_slot4" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="4" GridPane.rowIndex="1">
+      <StackPane fx:id="away_slot4" onMouseClicked="#handleClick" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="4" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </GridPane.margin>
       </StackPane>
-      <StackPane fx:id="home_slot1" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <StackPane fx:id="home_slot1" onMouseClicked="#handleClick" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </GridPane.margin>
       </StackPane>
-      <StackPane fx:id="home_slot2" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="2" GridPane.rowIndex="2">
+      <StackPane fx:id="home_slot2" onMouseClicked="#handleClick" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </GridPane.margin>
       </StackPane>
-      <StackPane fx:id="home_slot3" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="3" GridPane.rowIndex="2">
+      <StackPane fx:id="home_slot3" onMouseClicked="#handleClick" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="3" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </GridPane.margin>
       </StackPane>
-      <StackPane fx:id="home_slot4" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="4" GridPane.rowIndex="2">
+      <StackPane fx:id="home_slot4" onMouseClicked="#handleClick" prefHeight="150.0" prefWidth="200.0" styleClass="slot" GridPane.columnIndex="4" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </GridPane.margin>
