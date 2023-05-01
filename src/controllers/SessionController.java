@@ -181,14 +181,11 @@ public class SessionController implements Initializable {
         EventHandler<MouseEvent> eventHandler = 
             new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent e) {
-                    handleClick(e);       
+                    handleClick(e);
                 } 
             }; 
 
         wrapper.setOnMouseClicked(eventHandler);
-
-        // Card test = (Card)card.getProperties().get("card");
-        // System.out.println(test.getName());
 
         switch (avatar) {
             case 'h':
@@ -259,6 +256,7 @@ public class SessionController implements Initializable {
             unhighlight();
             Card drawn = session.getPlayingAvatar().draw();
             this.renderCard(drawn, this.playing_avatar);
+            System.out.println(drawn.getName());
         }
         catch (Exception ex) {
             displayError(ex);

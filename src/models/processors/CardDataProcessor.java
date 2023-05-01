@@ -39,7 +39,7 @@ public class CardDataProcessor {
                         if (card_data.length == 7) {
                             shuffler.add(new Character(
                                 card_data[1],
-                                card_data[2],
+                                "src/static/images/card_fronts/" + card_data[2],
                                 Integer.parseInt(card_data[3]),
                                 Integer.parseInt(card_data[4]),
                                 Integer.parseInt(card_data[5]),
@@ -49,7 +49,7 @@ public class CardDataProcessor {
                         else {
                             shuffler.add(new Character(
                                 card_data[1],
-                                card_data[2],
+                                "src/static/images/card_fronts/" + card_data[2],
                                 Integer.parseInt(card_data[3]),
                                 Integer.parseInt(card_data[4]),
                                 Integer.parseInt(card_data[5])
@@ -59,7 +59,7 @@ public class CardDataProcessor {
                     case 'S':
                         shuffler.add(new Spell(
                             card_data[1],
-                            card_data[2],
+                            "src/static/images/card_fronts/" + card_data[2],
                             Integer.parseInt(card_data[3]),
                             Boolean.parseBoolean(card_data[4]),
                             Boolean.parseBoolean(card_data[5]),
