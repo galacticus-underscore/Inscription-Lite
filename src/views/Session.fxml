@@ -34,7 +34,7 @@
    <children>
       <HBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="4">
          <children>
-            <Pane prefHeight="200.0" prefWidth="100.0" styleClass="player-2" />
+            <Pane fx:id="away_icon" onMouseClicked="#handleClick" prefHeight="200.0" prefWidth="100.0" styleClass="player-2" />
             <VBox prefHeight="200.0" prefWidth="50.0">
                <children>
                   <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="health">
@@ -59,7 +59,7 @@
       </HBox>
       <HBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="3">
          <children>
-            <Pane prefHeight="200.0" prefWidth="100.0" styleClass="player-1" />
+            <Pane fx:id="home_icon" onMouseClicked="#handleClick" prefHeight="200.0" prefWidth="100.0" styleClass="player-1" />
             <VBox prefHeight="200.0" prefWidth="50.0">
                <children>
                   <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="health">
@@ -132,7 +132,7 @@
                   <Insets />
                </VBox.margin>
             </Text>
-            <StackPane fx:id="away_graveyard" prefHeight="1000.0" prefWidth="200.0" styleClass="graveyard">
+            <StackPane fx:id="away_graveyard" onMouseClicked="#handleClick" prefHeight="1000.0" prefWidth="200.0" styleClass="graveyard">
                <VBox.margin>
                   <Insets bottom="24.0" left="12.0" right="12.0" />
                </VBox.margin>
@@ -141,7 +141,7 @@
       </VBox>
       <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
          <children>
-            <StackPane fx:id="home_graveyard" prefHeight="1000.0" prefWidth="200.0" styleClass="graveyard">
+            <StackPane fx:id="home_graveyard" onMouseClicked="#handleClick" prefHeight="1000.0" prefWidth="200.0" styleClass="graveyard">
                <VBox.margin>
                   <Insets bottom="4.0" left="12.0" right="12.0" top="20.0" />
                </VBox.margin>
@@ -160,7 +160,7 @@
                   <Insets />
                </VBox.margin>
             </Text>
-            <StackPane fx:id="away_deck" onMouseClicked="#draw" prefHeight="1000.0" prefWidth="200.0" styleClass="deck">
+            <StackPane fx:id="away_deck" onMouseClicked="#handleClick" prefHeight="1000.0" prefWidth="200.0" styleClass="deck">
                <VBox.margin>
                   <Insets bottom="24.0" left="12.0" right="12.0" />
                </VBox.margin>
@@ -169,7 +169,7 @@
       </VBox>
       <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
          <children>
-            <StackPane fx:id="home_deck" onMouseClicked="#draw" prefHeight="1000.0" prefWidth="200.0" styleClass="deck">
+            <StackPane fx:id="home_deck" onMouseClicked="#handleClick" prefHeight="1000.0" prefWidth="200.0" styleClass="deck">
                <VBox.margin>
                   <Insets bottom="4.0" left="12.0" right="12.0" top="20.0" />
                </VBox.margin>
@@ -190,12 +190,12 @@
             </ImageView>
          </children>
       </StackPane>
-      <Text fx:id="away_error" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" textAlignment="RIGHT" GridPane.halignment="RIGHT">
+      <Text fx:id="away_error" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" textAlignment="RIGHT" wrappingWidth="150.0" GridPane.halignment="RIGHT">
          <GridPane.margin>
             <Insets right="16.0" />
          </GridPane.margin>
       </Text>
-      <Text fx:id="home_error" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+      <Text fx:id="home_error" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" textAlignment="RIGHT" wrappingWidth="150.0" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets right="16.0" />
          </GridPane.margin>
