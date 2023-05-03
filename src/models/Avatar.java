@@ -38,7 +38,7 @@ import models.exceptions.UndeadSacrificeException;
 
 public class Avatar implements Entity {
     private int health = 20;
-    private int blood_count = 5;
+    private int blood_count = 100;
     private ArrayList<SigilCodes> sigils = new ArrayList<SigilCodes>();
     private boolean has_drawn = false;
 
@@ -46,6 +46,7 @@ public class Avatar implements Entity {
     private Stack<Card> deck = new Stack<Card>();
     private ArrayList<Card> hand = new ArrayList<Card>();
     private Character[] slots = new Character[4];
+    private ArrayList<Integer> taken_slots = new ArrayList<Integer>();
     private Stack<Card> pile = new Stack<Card>();
 
     public Avatar(String d) {
@@ -114,6 +115,10 @@ public class Avatar implements Entity {
         return slots[column];
     }
 
+    public ArrayList<Integer> getTakenSlots() {
+        return this.taken_slots;
+    }
+
     public void flip() {
         this.hand.forEach((c) -> {
             c.flip();
@@ -135,13 +140,15 @@ public class Avatar implements Entity {
 
     public Card summon(int source, Pointers target) throws FullSlotException, BloodCountException, DeadCharacterException, DeadAvatarException, InvalidSummonException, PointerConversionException, ZeroHealthException {
         Card summoned = this.hand.get(source);
+        int target_slot = PointerProcessor.pointerToInt(target) - 1;
 
         if (summoned instanceof Character) {
-            if (this.slots[PointerProcessor.pointerToInt(target) - 1] != null)
+            if (this.slots[target_slot] != null)
                 throw new FullSlotException();
 
             this.changeBloodCount(-summoned.getCost());
-            this.slots[PointerProcessor.pointerToInt(target) - 1] = (Character)summoned;
+            this.slots[target_slot] = (Character)summoned;
+            this.taken_slots.add(target_slot);
             this.hand.remove(source);
             App.getSession().addEvent(new CharSummonEvent(target, summoned.getCost(), summoned.getImage()));
         }
@@ -186,9 +193,10 @@ public class Avatar implements Entity {
     }
 
     public void killChar(Pointers pointer) {
-        int column = PointerProcessor.pointerToInt(pointer);
+        int column = PointerProcessor.pointerToInt(pointer) - 1;
         Character dead_char = this.slots[column];
         this.slots[column] = null;
+        this.taken_slots.remove(column);
         dead_char.reset();
 
         if (dead_char.hasSigil(SigilCodes.RESURRECTION) && !dead_char.hasSigil(SigilCodes.NINE_LIVES))

@@ -88,6 +88,7 @@ public class SessionController implements Initializable {
         setProperties();
         setDisables();
         renderHands();
+        renderSlots();
     }
 
     @FXML
@@ -196,6 +197,30 @@ public class SessionController implements Initializable {
             case AH:
                 away_hand.getChildren().add(card);
                 break;
+            case H1:
+                home_slot1.getChildren().add(card);
+                break;
+            case H2:
+                home_slot2.getChildren().add(card);
+                break;
+            case H3:
+                home_slot3.getChildren().add(card);
+                break;
+            case H4:
+                home_slot4.getChildren().add(card);
+                break;
+            case A1:
+                away_slot1.getChildren().add(card);
+                break;
+            case A2:
+                away_slot2.getChildren().add(card);
+                break;
+            case A3:
+                away_slot3.getChildren().add(card);
+                break;
+            case A4:
+                away_slot4.getChildren().add(card);
+                break;
             default:
                 ;
         }
@@ -218,6 +243,21 @@ public class SessionController implements Initializable {
             catch (Exception e) {
                 e.printStackTrace();
             }
+        });
+    }
+
+    public void renderSlots() {
+
+        home.getTakenSlots().forEach((Integer index) -> {
+            Card c = home.getCharInSlot(index);
+            Locations l = Locations.valueOf("H" + Integer.toString(index + 1));
+            renderCard(c, l);
+        });
+
+        away.getTakenSlots().forEach((Integer index) -> {
+            Card c = home.getCharInSlot(index);
+            Locations l = Locations.valueOf("A" + Integer.toString(index + 1));
+            renderCard(c, l);
         });
     }
 
@@ -299,6 +339,7 @@ public class SessionController implements Initializable {
                     away_hand.getChildren().remove(card);
 
                 ((StackPane)slot).getChildren().add(card);
+                card.setOnMouseClicked(null);
             }
 
             System.out.println(summoned.getName());
