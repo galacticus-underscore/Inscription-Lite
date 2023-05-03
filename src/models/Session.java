@@ -83,7 +83,6 @@ public class Session {
             throw new DeadCharacterException();
     }
 
-    // call after a player finishes their turn
     public void endTurn() throws DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
         if (turn_number > 0)
             this.playing_avatar.attack();
@@ -91,7 +90,6 @@ public class Session {
         this.playing_avatar.flip();
     }
 
-    // call during the start of the next player's turn, after the moves of the last player are replayed
     public char nextPlayer() {
         if (!this.new_init) {
             if (this.playing_avatar == avatars[this.home_index]) {

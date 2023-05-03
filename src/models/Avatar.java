@@ -133,15 +133,15 @@ public class Avatar implements Entity {
         return out;
     }
 
-    public void summon(int source, Pointers target) throws FullSlotException, BloodCountException, DeadCharacterException, DeadAvatarException, InvalidSummonException, PointerConversionException, ZeroHealthException {
+    public Card summon(int source, Pointers target) throws FullSlotException, BloodCountException, DeadCharacterException, DeadAvatarException, InvalidSummonException, PointerConversionException, ZeroHealthException {
         Card summoned = this.hand.get(source);
 
         if (summoned instanceof Character) {
-            if (this.slots[PointerProcessor.pointerToInt(target)] != null)
+            if (this.slots[PointerProcessor.pointerToInt(target) - 1] != null)
                 throw new FullSlotException();
 
             this.changeBloodCount(-summoned.getCost());
-            this.slots[PointerProcessor.pointerToInt(target)] = (Character)summoned;
+            this.slots[PointerProcessor.pointerToInt(target) - 1] = (Character)summoned;
             this.hand.remove(source);
             App.getSession().addEvent(new CharSummonEvent(target, summoned.getCost(), summoned.getImage()));
         }
@@ -176,6 +176,8 @@ public class Avatar implements Entity {
             this.discardSpell(source);
             App.getSession().addEvent(new SpellSummonEvent(target, summoned.getCost(), summoned.getImage()));
         }
+
+        return summoned;
     }
 
     public void discardSpell(int hand_pos) {

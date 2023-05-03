@@ -27,6 +27,10 @@ import models.App;
 import models.Session;
 import models.Avatar;
 import models.Card;
+import models.Character;
+
+import models.enums.Pointers;
+import models.enums.Locations;
 
 import models.exceptions.DeadAvatarException;
 import models.exceptions.DeadCharacterException;
@@ -43,6 +47,12 @@ public class SessionController implements Initializable {
     private Scene scene;
     private Parent root;
     private Node highlighted;
+    private EventHandler<MouseEvent> eventHandler = 
+    new EventHandler<MouseEvent>() {
+        public void handle(MouseEvent e) {
+            handleClick(e);
+        } 
+    }; 
 
     @FXML private Pane home_icon;
     @FXML private Text home_health;
@@ -75,80 +85,14 @@ public class SessionController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         playing_avatar = session.nextPlayer();
+        setProperties();
+        setDisables();
         renderHands();
-
-        if (this.playing_avatar == 'h') {
-            home_icon.setDisable(false);
-            home_health.setDisable(false);
-            home_blood.setDisable(false);
-            home_error.setDisable(false);
-            home_deck.setDisable(false);
-            home_deck_count.setDisable(false);
-            home_hand.setDisable(false);
-            home_slot1.setDisable(false);
-            home_slot2.setDisable(false);
-            home_slot3.setDisable(false);
-            home_slot4.setDisable(false);
-            home_graveyard.setDisable(false);
-            home_graveyard_count.setDisable(false);
-
-            away_icon.setDisable(true);
-            away_health.setDisable(true);
-            away_blood.setDisable(true);
-            away_error.setDisable(false);
-            away_deck.setDisable(true);
-            away_deck_count.setDisable(true);
-            away_hand.setDisable(true);
-            away_slot1.setDisable(true);
-            away_slot2.setDisable(true);
-            away_slot3.setDisable(true);
-            away_slot4.setDisable(true);
-            away_graveyard.setDisable(true);
-            away_graveyard_count.setDisable(true);
-        }
-        else if (this.playing_avatar == 'a') {
-            home_icon.setDisable(true);
-            home_health.setDisable(true);
-            home_blood.setDisable(true);
-            home_deck.setDisable(true);
-            home_deck_count.setDisable(true);
-            home_hand.setDisable(true);
-            home_slot1.setDisable(true);
-            home_slot2.setDisable(true);
-            home_slot3.setDisable(true);
-            home_slot4.setDisable(true);
-            home_graveyard.setDisable(true);
-            home_graveyard_count.setDisable(true);
-
-            away_icon.setDisable(false);
-            away_health.setDisable(false);
-            away_blood.setDisable(false);
-            away_deck.setDisable(false);
-            away_deck_count.setDisable(false);
-            away_hand.setDisable(false);
-            away_slot1.setDisable(false);
-            away_slot2.setDisable(false);
-            away_slot3.setDisable(false);
-            away_slot4.setDisable(false);
-            away_graveyard.setDisable(false);
-            away_graveyard_count.setDisable(false);
-        }
-    }
-    
-    @FXML 
-    public void nextTurn(MouseEvent e) throws IOException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
-        session.endTurn();
-        
-        root = FXMLLoader.load(getClass().getResource("../views/Confirmation.fxml"));
-        stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
     @FXML
-    public void handleClick(MouseEvent e) {
-        Node source = (Node)e.getSource();
+    public void handleClick(MouseEvent event) {
+        Node source = (Node)event.getSource();
         removeErrors();
 
         if (highlighted == null) {
@@ -156,7 +100,13 @@ public class SessionController implements Initializable {
         }
         else {
             if (source.getStyleClass().contains("deck") && source == highlighted) {
-                draw(e);
+                draw(event);
+            }
+            else if (source.getStyleClass().contains("slot") && highlighted.getStyleClass().contains("card")) {
+                play(event, highlighted, source);
+            }
+            else if (source.getStyleClass().contains("card") && highlighted.getStyleClass().contains("slot")) {
+                play(event, source, highlighted);
             }
             else {
                 unhighlight();
@@ -165,7 +115,59 @@ public class SessionController implements Initializable {
         }
     }
 
-    public void renderCard(Card c, char avatar) {
+    @FXML 
+    public void nextTurn(MouseEvent event) throws IOException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
+        session.endTurn();
+        
+        root = FXMLLoader.load(getClass().getResource("../views/Confirmation.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void setProperties() {
+        home_icon.getProperties().put("location", Locations.HA);
+        home_deck.getProperties().put("location", Locations.HD);
+        home_hand.getProperties().put("location", Locations.HH);
+        home_slot1.getProperties().put("location", Locations.H1);
+        home_slot2.getProperties().put("location", Locations.H2);
+        home_slot3.getProperties().put("location", Locations.H3);
+        home_slot4.getProperties().put("location", Locations.H4);
+        home_graveyard.getProperties().put("location", Locations.HG);
+
+        away_icon.getProperties().put("location", Locations.HA);
+        away_deck.getProperties().put("location", Locations.HD);
+        away_hand.getProperties().put("location", Locations.HH);
+        away_slot1.getProperties().put("location", Locations.H1);
+        away_slot2.getProperties().put("location", Locations.H2);
+        away_slot3.getProperties().put("location", Locations.H3);
+        away_slot4.getProperties().put("location", Locations.H4);
+        away_graveyard.getProperties().put("location", Locations.HG);
+    }
+
+    public void setDisables() {
+        if (this.playing_avatar == 'h') {
+            home_deck.setDisable(false);
+            home_hand.setDisable(false);
+            home_graveyard.setDisable(false);
+
+            away_deck.setDisable(true);
+            away_hand.setDisable(true);
+            away_graveyard.setDisable(true);
+        }
+        else if (this.playing_avatar == 'a') {
+            home_deck.setDisable(true);
+            home_hand.setDisable(true);
+            home_graveyard.setDisable(true);
+
+            away_deck.setDisable(false);
+            away_hand.setDisable(false);
+            away_graveyard.setDisable(false);
+        }
+    }
+
+    public StackPane createCard(Card c, Locations l) {
         File file = new File("src/static/images/backing.png");
 
         if (c.isFacingUp())
@@ -175,32 +177,34 @@ public class SessionController implements Initializable {
         ImageView card = new ImageView(image);
         card.setFitWidth(55.6);
         card.setFitHeight(80);
-        card.getProperties().put("card", c);
         StackPane wrapper = new StackPane(card);
-
-        EventHandler<MouseEvent> eventHandler = 
-            new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent e) {
-                    handleClick(e);
-                } 
-            }; 
-
+        wrapper.getStyleClass().add("card");
+        wrapper.getProperties().put("card", c);
+        wrapper.getProperties().put("position", l);
         wrapper.setOnMouseClicked(eventHandler);
 
-        switch (avatar) {
-            case 'h':
-                home_hand.getChildren().add(wrapper);
+        return wrapper;
+    }
+
+    public void renderCard(Card c, Locations l) {
+        StackPane card = createCard(c, l);
+
+        switch ((Locations)card.getProperties().get("position")) {
+            case HH:
+                home_hand.getChildren().add(card);
                 break;
-            case 'a':
-                away_hand.getChildren().add(wrapper);
+            case AH:
+                away_hand.getChildren().add(card);
                 break;
+            default:
+                ;
         }
     }
 
     public void renderHands() {
         home.getHand().forEach((Card c) -> {
             try {
-                this.renderCard(c, 'h');
+                this.renderCard(c, Locations.HH);
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -209,7 +213,7 @@ public class SessionController implements Initializable {
 
         away.getHand().forEach((Card c) -> {
             try {
-                this.renderCard(c, 'a');
+                this.renderCard(c, Locations.AH);
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -236,7 +240,7 @@ public class SessionController implements Initializable {
         if (highlighted != null)
             unhighlight();
 
-        switch (this.playing_avatar) {
+        switch (playing_avatar) {
             case 'h':
                 home_error.setText(e.getMessage());
                 break;
@@ -247,19 +251,61 @@ public class SessionController implements Initializable {
     }
 
     public void removeErrors() {
-        home_error.setText("");
-        away_error.setText("");
+        if (!home_error.getText().isEmpty())
+            home_error.setText("");
+        if (!away_error.getText().isEmpty())
+            away_error.setText("");
     }
 
     public void draw(MouseEvent event) {
         try {
             unhighlight();
             Card drawn = session.getPlayingAvatar().draw();
-            this.renderCard(drawn, this.playing_avatar);
+            String location = (playing_avatar + "h").toUpperCase();
+            this.renderCard(drawn, Locations.valueOf(location));
             System.out.println(drawn.getName());
         }
-        catch (Exception ex) {
-            displayError(ex);
+        catch (Exception e) {
+            displayError(e);
+        }
+    }
+
+    public Pointers locationToPointer(Locations l) {
+        String location = l.name();
+
+        if (playing_avatar == location.charAt(0))
+            return Pointers.valueOf("P" + location.charAt(1));
+        else
+            return Pointers.valueOf("O" + location.charAt(1));
+    }
+
+    public void play(MouseEvent event, Node card, Node slot) {
+        try {
+            unhighlight();
+
+            int source = home.getHand().indexOf(card.getProperties().get("card"));
+            if (playing_avatar == 'a')
+                source = away.getHand().indexOf(card.getProperties().get("card"));
+
+            Locations target_location = (Locations)slot.getProperties().get("location");
+            Pointers target_pointer = locationToPointer(target_location);
+
+            Card summoned = session.getPlayingAvatar().summon(source, target_pointer);
+            
+            if (summoned instanceof Character) {
+                if (playing_avatar == 'h')
+                    home_hand.getChildren().remove(card);
+                else
+                    away_hand.getChildren().remove(card);
+
+                ((StackPane)slot).getChildren().add(card);
+            }
+
+            System.out.println(summoned.getName());
+        }
+        catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
         }
     }
 }
