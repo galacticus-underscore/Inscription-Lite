@@ -71,7 +71,6 @@ public class Avatar implements Entity {
             this.health = 0;
             throw new ZeroHealthException("avatar");
         }
-        // for concedes: use this method with hp = -1000
     }
 
     public void changeHealth(int hp) throws ZeroHealthException {
@@ -140,7 +139,7 @@ public class Avatar implements Entity {
 
     public Card summon(int source, Pointers target) throws FullSlotException, BloodCountException, DeadCharacterException, DeadAvatarException, InvalidSummonException, PointerConversionException, ZeroHealthException {
         Card summoned = this.hand.get(source);
-        int target_slot = PointerProcessor.pointerToInt(target) - 1;
+        int target_slot = PointerProcessor.toInt(target) - 1;
 
         if (summoned instanceof Character) {
             if (this.slots[target_slot] != null)
@@ -193,7 +192,7 @@ public class Avatar implements Entity {
     }
 
     public void killChar(Pointers pointer) {
-        int column = PointerProcessor.pointerToInt(pointer) - 1;
+        int column = PointerProcessor.toInt(pointer) - 1;
         Character dead_char = this.slots[column];
         this.slots[column] = null;
         this.taken_slots.remove(column);

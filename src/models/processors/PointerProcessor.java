@@ -8,10 +8,6 @@ import models.enums.Pointers;
 import models.exceptions.PointerConversionException;
 
 public class PointerProcessor {
-    public static Pointers strToPointer(String str) {
-        return Pointers.valueOf(str);
-    }
-
     public static Pointers entityToPointer(Entity e) throws PointerConversionException {
         Pointers out = null;
 
@@ -25,7 +21,7 @@ public class PointerProcessor {
         return out;
     }
 
-    public static int pointerToInt(Pointers pointer) {
+    public static int toInt(Pointers pointer) {
         return Character.getNumericValue(pointer.name().charAt(1));
     }
 
@@ -68,7 +64,7 @@ public class PointerProcessor {
     public static Pointers getOppositePointer(Pointers pointer) throws PointerConversionException {
         String pointer_name = pointer.name();
         char avatar_code = pointer_name.charAt(0);
-        int slot = pointerToInt(pointer);
+        int slot = toInt(pointer);
 
         if (avatar_code == 'P') {
             Avatar opposite = App.getSession().getObservingAvatar();
