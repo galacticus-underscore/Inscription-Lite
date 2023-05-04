@@ -1,5 +1,8 @@
 package models.engines;
 
+import javafx.scene.text.Text;
+import javafx.scene.layout.VBox;
+
 import models.App;
 import models.enums.Locations;
 import models.processors.LocationProcessor;
@@ -35,5 +38,16 @@ public class BoardEngine {
             location_processor.toNode(Locations.AH).setDisable(false);
             location_processor.toNode(Locations.AG).setDisable(false);
         }
+    }
+
+    public void updateCounts() {
+        // case AD:
+        ((Text)((VBox)this.location_processor.toNode(1, 5)).getChildren().get(0)).setText(App.getSession().getAway().getDeckSize());
+        // case AG:
+        ((Text)((VBox)this.location_processor.toNode(1, 0)).getChildren().get(0)).setText(App.getSession().getAway().getPileSize());
+        // case HD:
+        ((Text)((VBox)this.location_processor.toNode(2, 5)).getChildren().get(1)).setText(App.getSession().getHome().getDeckSize());
+        // case HG:
+        ((Text)((VBox)this.location_processor.toNode(2, 0)).getChildren().get(1)).setText(App.getSession().getHome().getPileSize());
     }
 }

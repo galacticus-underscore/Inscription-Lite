@@ -106,8 +106,16 @@ public class Avatar implements Entity {
         this.sigils.add(c);
     }
 
+    public String getDeckSize() {
+        return Integer.toString(this.deck.size());
+    }
+
     public ArrayList<Card> getHand() {
         return this.hand;
+    }
+
+    public String getPileSize() {
+        return Integer.toString(this.pile.size());
     }
 
     public Character getCharInSlot(int column) {

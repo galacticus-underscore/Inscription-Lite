@@ -73,6 +73,7 @@ public class SessionController implements Initializable {
 
         board_engine.setProperties();
         board_engine.setDisables();
+        board_engine.updateCounts();
         card_engine.renderHands();
         card_engine.renderSlots();
 
@@ -91,6 +92,7 @@ public class SessionController implements Initializable {
             if (source.getStyleClass().contains("deck") && source == this.highlighted) {
                 draw(event);
                 addClickReaction();
+                board_engine.updateCounts();
             }
             else if (source.getStyleClass().contains("slot") && this.highlighted.getStyleClass().contains("card")) {
                 try {
