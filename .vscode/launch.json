@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "EnumValuesTest",
+            "request": "launch",
+            "mainClass": "tests.EnumValuesTest",
+            "projectName": "Inscryption-Lite_a3e81d7a"
+        },
+        {
+            "type": "java",
+            "name": "ArrayEmptySlotTest",
+            "request": "launch",
+            "mainClass": "tests.ArrayEmptySlotTest",
+            "projectName": "Inscryption-Lite_a3e81d7a"
+        },
+        {
+            "type": "java",
             "name": "StyleProcessor",
             "request": "launch",
             "mainClass": "models.processors.StyleProcessor",

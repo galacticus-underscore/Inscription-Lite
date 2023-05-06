@@ -87,6 +87,8 @@ public class Session {
         if (turn_number > 0)
             this.playing_avatar.attack();
 
+        System.out.println("Home health: " + this.getHome().getHealth());
+        System.out.println("Away health: " + this.getAway().getHealth());
         this.playing_avatar.flip();
     }
 

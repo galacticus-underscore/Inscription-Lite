@@ -8,10 +8,15 @@ import models.enums.Pointers;
 import models.exceptions.PointerConversionException;
 
 public class PointerProcessor {
+    private static Pointers[] entity_pointers = {
+        Pointers.PA, Pointers.P1, Pointers.P2, Pointers.P3, Pointers.P4,
+        Pointers.OA, Pointers.O1, Pointers.O2, Pointers.O3, Pointers.O4
+    };
+
     public static Pointers entityToPointer(Entity e) throws PointerConversionException {
         Pointers out = null;
 
-        for (Pointers pointer : Pointers.values()) { 
+        for (Pointers pointer : entity_pointers) { 
             if (pointerToEntity(pointer) == e) {
                 out = pointer;
                 break;
@@ -70,7 +75,7 @@ public class PointerProcessor {
             Avatar opposite = App.getSession().getObservingAvatar();
             
             try {
-                opposite.getCharInSlot(slot);
+                opposite.getCharInSlot(slot - 1);
                 return Pointers.valueOf(pointer_name.replace('P', 'O'));
             }
             catch (NullPointerException e) {
@@ -81,7 +86,7 @@ public class PointerProcessor {
             Avatar opposite = App.getSession().getPlayingAvatar();
 
             try {
-                opposite.getCharInSlot(slot);
+                opposite.getCharInSlot(slot - 1);
                 return Pointers.valueOf(pointer_name.replace('O', 'P'));
             }
             catch (NullPointerException e) {

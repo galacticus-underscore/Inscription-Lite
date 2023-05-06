@@ -157,12 +157,10 @@ public class SessionController implements Initializable {
     public void getSlotCondition(Node source) throws WrongSlotException {
         boolean source_is_slot = source.getStyleClass().contains("slot");
         boolean slot_cond;
-        if (source_is_slot) {
+        if (source_is_slot)
             slot_cond = source.getProperties().get("location").toString().toLowerCase().charAt(0) == playing_avatar;
-        }
-        else {
+        else
             slot_cond = this.highlighted.getProperties().get("location").toString().toLowerCase().charAt(0) == playing_avatar;
-        }
         
         if (!slot_cond)
             throw new WrongSlotException();

@@ -101,17 +101,30 @@ public class CardEngine {
     }
 
     public void renderSlots() {
+        for (int i = 0; i < 4; i++) {
+            try {
+                Card c = home.getCharInSlot(i);
+                Locations l = Locations.valueOf("H" + Integer.toString(i + 1));
+                renderCard(c, l); 
+            }
+            catch (NullPointerException e) {
+                ;
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        home.getTakenSlots().forEach((Integer index) -> {
-            Card c = home.getCharInSlot(index);
-            Locations l = Locations.valueOf("H" + Integer.toString(index + 1));
-            renderCard(c, l);
-        });
-
-        away.getTakenSlots().forEach((Integer index) -> {
-            Card c = home.getCharInSlot(index);
-            Locations l = Locations.valueOf("A" + Integer.toString(index + 1));
-            renderCard(c, l);
-        });
+            try {
+                Card c = away.getCharInSlot(i);
+                Locations l = Locations.valueOf("A" + Integer.toString(i + 1));
+                renderCard(c, l);
+            }
+            catch (NullPointerException e) {
+                ;
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

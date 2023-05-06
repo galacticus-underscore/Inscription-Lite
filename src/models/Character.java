@@ -105,7 +105,7 @@ public class Character extends Card implements Entity {
     }
 
     public boolean hasSigil(SigilCodes c) {
-        return this.hasSigil(c);
+        return this.sigils.contains(c);
     }
 
     public void addSigil(SigilCodes s) {
