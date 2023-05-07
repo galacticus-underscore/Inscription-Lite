@@ -206,7 +206,7 @@ public class Avatar implements Entity {
     }
 
     public void sacrifice(Pointers pointer) throws BloodCountException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException, UndeadSacrificeException {
-        Character sacrifice = (Character)PointerProcessor.pointerToEntity(pointer);
+        Character sacrifice = (Character)PointerProcessor.toEntity(pointer);
 
         if (sacrifice.hasSigil(SigilCodes.WORTHY_SACRIFICE))
             this.changeBloodCount(3);
@@ -222,17 +222,6 @@ public class Avatar implements Entity {
             this.killChar(pointer);
         
         App.getSession().addEvent(new SacrificeEvent(pointer));
-    }
-
-    public void attack() throws DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
-        for (int i = 0; i < 4; i++) {
-            try {
-                this.slots[i].attack();
-            }
-            catch (NullPointerException e) {
-                continue;
-            }
-        }
     }
 
     public void reset() {

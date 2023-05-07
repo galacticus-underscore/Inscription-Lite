@@ -2,7 +2,7 @@ package models.exceptions;
 
 public class DeadAvatarException extends Exception {
     public DeadAvatarException() {
-        super("Error: An avatar has died!");
+        super("You died!");
     }
 }
 

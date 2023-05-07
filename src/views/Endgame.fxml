@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1080.0" styleClass="body" stylesheets="@../static/styles/css/confirmation.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Winner" />
+      <ImageView fx:id="player_icon" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../static/icons/player_1.jpg" />
+         </image>
+      </ImageView>
+      <Text fx:id="winner_side" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="subtitle" text="Home" />
+      <Button mnemonicParsing="false" onMouseClicked="#goHome" styleClass="confirm-button" text="Go Home" />
+   </children>
+</VBox>

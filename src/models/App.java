@@ -14,14 +14,6 @@ public class App {
     public static Session getSession() {
         return session;
     }
-
-    public static void startSession() {
-        session.open(0, 1);
-    }
-
-    public static void endSession() {
-        session.close();
-    }
 }
 
 /*

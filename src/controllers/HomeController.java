@@ -39,7 +39,7 @@ public class HomeController implements Initializable {
     
     @FXML 
     protected void startGame(MouseEvent e) throws IOException {
-        App.startSession();
+        App.getSession().open(0, 1);
         
         root = FXMLLoader.load(getClass().getResource("../views/Confirmation.fxml"));
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();

@@ -24,9 +24,12 @@ import models.Avatar;
 import models.Card;
 import models.Character;
 
-import models.enums.Locations;
+import models.patterns.Event;
 
+import models.enums.Locations;
+import models.enums.Pointers;
 import models.processors.LocationProcessor;
+import models.processors.PointerProcessor;
 
 import models.engines.BoardEngine;
 import models.engines.CardEngine;
@@ -36,7 +39,6 @@ import models.exceptions.DeadAvatarException;
 import models.exceptions.DeadCharacterException;
 import models.exceptions.PointerConversionException;
 import models.exceptions.WrongSlotException;
-import models.exceptions.ZeroHealthException;
 
 public class SessionController implements Initializable {
     private Session session = App.getSession();
@@ -65,6 +67,9 @@ public class SessionController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         playing_avatar = session.nextPlayer();
+
+        System.out.println("Turn number: " + session.getTurnNumber());
+        System.out.println("Playing side: " + (session.getPlayingSide() == 'h' ? "Home" : "Away"));
 
         location_processor = new LocationProcessor(board);
         board_engine = new BoardEngine(location_processor);
@@ -120,14 +125,65 @@ public class SessionController implements Initializable {
     }
 
     @FXML 
-    public void nextTurn(MouseEvent event) throws IOException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
-        session.endTurn();
-        
-        root = FXMLLoader.load(getClass().getResource("../views/Confirmation.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void nextTurn(MouseEvent event) throws IOException, PointerConversionException, InterruptedException {
+        boolean avatar_dead = false;
+        char death_side = 'h';
+
+        if (session.getTurnNumber() > 0) {
+            for (int i = 0; i < 4; i++) {
+                try {
+                    session.getPlayingAvatar().getCharInSlot(i).attack();
+                }
+                catch (NullPointerException e) {
+                    // skip slot if there is no character in it
+                    continue;
+                }
+                catch (DeadCharacterException e) {
+                    Event death_event = session.peekLastEvent();
+                    Pointers target_pointer = death_event.getTarget();
+                    Pointers target_avatar_pointer  = PointerProcessor.getAvatarOfPointer(target_pointer);
+                    Avatar target_avatar = (Avatar)PointerProcessor.toEntity(target_avatar_pointer);
+                    target_avatar.killChar(target_pointer);
+                }
+                catch (DeadAvatarException e) {
+                    avatar_dead = true;
+
+                    Event death_event = session.peekLastEvent();
+                    Pointers target_pointer = death_event.getTarget();
+                    Avatar target_avatar = (Avatar)PointerProcessor.toEntity(target_pointer);
+
+                    if (target_avatar == home)
+                        death_side = 'h';
+                    else
+                        death_side = 'a';
+
+                    break;
+                }
+            }
+        }
+
+        if (!avatar_dead) {
+            System.out.println("Home health: " + home.getHealth());
+            System.out.println("Away health: " + away.getHealth());
+            session.getPlayingAvatar().flip();
+            
+            root = FXMLLoader.load(getClass().getResource("../views/Confirmation.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        else {
+            char winner = death_side == 'h' ? 'a' : 'h';
+            EndgameController controller = new EndgameController(winner);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../views/Endgame.fxml"));
+            fxmlLoader.setController(controller);
+            root = fxmlLoader.load();;
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void addClickReaction() {

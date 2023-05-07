@@ -56,9 +56,9 @@ public class Character extends Card implements Entity {
 
     public void changeHealth(int hp, Pointers source) throws ZeroHealthException, DeadAvatarException, DeadCharacterException, PointerConversionException {
         Pointers target = PointerProcessor.entityToPointer(this);
-        Entity source_ety = PointerProcessor.pointerToEntity(source);
+        Entity source_ety = PointerProcessor.toEntity(source);
         Pointers target_avatar_ptr = PointerProcessor.getAvatarOfPointer(target);
-        Avatar target_avatar_ety = (Avatar)PointerProcessor.pointerToEntity(target_avatar_ptr);
+        Avatar target_avatar_ety = (Avatar)PointerProcessor.toEntity(target_avatar_ptr);
 
         if (source_ety.hasSigil(SigilCodes.TOUCH_OF_DEATH))
             this.health += -1000;
@@ -112,18 +112,22 @@ public class Character extends Card implements Entity {
         this.sigils.add(s);
     }
 
-    public void attack() throws DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
-        Pointers opposite = PointerProcessor.getOppositePointer(PointerProcessor.entityToPointer(this));
-        Entity target = PointerProcessor.pointerToEntity(opposite);
+    public void attack() throws DeadAvatarException, DeadCharacterException, PointerConversionException {
+        Pointers source = PointerProcessor.entityToPointer(this);
+        Pointers opposite = PointerProcessor.getOppositePointer(source);
+        Entity target = PointerProcessor.toEntity(opposite);
+
+        System.out.println("ATTACK: " + source + " to " + opposite);
+
 
         try {
-            target.changeHealth(-this.attack, PointerProcessor.entityToPointer(this));
+            target.changeHealth(-this.attack, source);
         }
         catch (ZeroHealthException e) {
             if (target instanceof Avatar)
-                App.getSession().addEvent(new AvatarDeathEvent(PointerProcessor.entityToPointer(this), opposite));
+                App.getSession().addEvent(new AvatarDeathEvent(source, opposite));
             else if (target instanceof Character)
-                App.getSession().addEvent(new CharDeathEvent(PointerProcessor.entityToPointer(this), opposite));
+                App.getSession().addEvent(new CharDeathEvent(source, opposite));
         }
     }
 

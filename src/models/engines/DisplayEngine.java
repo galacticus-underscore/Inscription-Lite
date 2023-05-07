@@ -51,6 +51,20 @@ public class DisplayEngine {
         }
     }
 
+    public void displayError(Exception e, char side) {
+        if (highlighted != null)
+            unhighlight();
+
+        switch (side) {
+            case 'h':
+                home_error.setText(e.getMessage());
+                break;
+            case 'a':
+                away_error.setText(e.getMessage());
+                break;
+        }
+    }
+
     public void removeErrors() {
         try {
             if (!home_error.getText().isEmpty())

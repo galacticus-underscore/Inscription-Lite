@@ -17,7 +17,6 @@ import models.enums.EventTypes;
 import models.exceptions.DeadAvatarException;
 import models.exceptions.DeadCharacterException;
 import models.exceptions.PointerConversionException;
-import models.exceptions.ZeroHealthException;
 
 public class Session {
     private static Avatar[] avatars = {
@@ -65,15 +64,19 @@ public class Session {
         return avatars[this.away_index];
     }
 
-    public Event peekLastEvent() {
-        return this.event_history.peek();
+    public int getTurnNumber() {
+        return this.turn_number;
     }
 
-    public Event pullLastEvent() {
+    public Event peekLastEvent() {
+        return this.event_history.getLast();
+    }
+
+    public Event pullFirstEvent() {
         return this.event_history.poll();
     }
 
-    public void addEvent(Event e) throws DeadCharacterException, DeadAvatarException, PointerConversionException, ZeroHealthException {
+    public void addEvent(Event e) throws DeadCharacterException, DeadAvatarException, PointerConversionException {
         this.event_history.add(e);
 
         if (e.getType().equals(EventTypes.AVATAR_DEATH))
@@ -81,15 +84,6 @@ public class Session {
         
         if (e.getType().equals(EventTypes.CHAR_DEATH))
             throw new DeadCharacterException();
-    }
-
-    public void endTurn() throws DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException {
-        if (turn_number > 0)
-            this.playing_avatar.attack();
-
-        System.out.println("Home health: " + this.getHome().getHealth());
-        System.out.println("Away health: " + this.getAway().getHealth());
-        this.playing_avatar.flip();
     }
 
     public char nextPlayer() {

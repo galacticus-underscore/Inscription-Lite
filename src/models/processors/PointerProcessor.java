@@ -3,6 +3,8 @@ package models.processors;
 import models.App;
 import models.Avatar;
 import models.Entity;
+
+import models.enums.Locations;
 import models.enums.Pointers;
 
 import models.exceptions.PointerConversionException;
@@ -17,7 +19,7 @@ public class PointerProcessor {
         Pointers out = null;
 
         for (Pointers pointer : entity_pointers) { 
-            if (pointerToEntity(pointer) == e) {
+            if (toEntity(pointer) == e) {
                 out = pointer;
                 break;
             }
@@ -30,7 +32,27 @@ public class PointerProcessor {
         return Character.getNumericValue(pointer.name().charAt(1));
     }
 
-    public static Entity pointerToEntity(Pointers pointer) throws PointerConversionException {
+    public static Locations toLocation(Pointers pointer) {
+        char playing_side = App.getSession().getPlayingSide();
+        Locations out = null;
+
+        if (playing_side == 'h') {
+            if (pointer.toString().charAt(0) == 'P')
+                out = Locations.valueOf("H" + pointer.toString().charAt(1));
+            else
+                out = Locations.valueOf("A" + pointer.toString().charAt(1));
+        }
+        else {
+            if (pointer.toString().charAt(0) == 'P')
+                out = Locations.valueOf("A" + pointer.toString().charAt(1));
+            else
+                out = Locations.valueOf("H" + pointer.toString().charAt(1));
+        }
+
+        return out;
+    }
+
+    public static Entity toEntity(Pointers pointer) throws PointerConversionException {
         switch (pointer) {
             case PA:
                 return App.getSession().getPlayingAvatar();
@@ -66,7 +88,7 @@ public class PointerProcessor {
         }
     }
 
-    public static Pointers getOppositePointer(Pointers pointer) throws PointerConversionException {
+    public static Pointers getOppositePointer(Pointers pointer) {
         String pointer_name = pointer.name();
         char avatar_code = pointer_name.charAt(0);
         int slot = toInt(pointer);
@@ -74,28 +96,22 @@ public class PointerProcessor {
         if (avatar_code == 'P') {
             Avatar opposite = App.getSession().getObservingAvatar();
             
-            try {
-                opposite.getCharInSlot(slot - 1);
-                return Pointers.valueOf(pointer_name.replace('P', 'O'));
-            }
-            catch (NullPointerException e) {
+            if (opposite.getCharInSlot(slot - 1) == null)
                 return Pointers.OA;
-            }
+            else
+                return Pointers.valueOf(pointer_name.replace('P', 'O'));
         }
         else {
             Avatar opposite = App.getSession().getPlayingAvatar();
 
-            try {
-                opposite.getCharInSlot(slot - 1);
-                return Pointers.valueOf(pointer_name.replace('O', 'P'));
-            }
-            catch (NullPointerException e) {
+            if (opposite.getCharInSlot(slot - 1) == null)
                 return Pointers.PA;
-            }
+            else
+                return Pointers.valueOf(pointer_name.replace('O', 'P'));
         }
     }
 
     public static Entity getOppositeEntity(Pointers pointer) throws PointerConversionException {
-        return pointerToEntity(getOppositePointer(pointer));
+        return toEntity(getOppositePointer(pointer));
     }
 }
