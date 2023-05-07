@@ -88,7 +88,7 @@ public class Avatar implements Entity {
     public void changeBloodCount(int b) throws BloodCountException {
         this.blood_count += b;
         if (this.blood_count < 0) {
-            this.health -= b;
+            this.blood_count -= b;
             throw new BloodCountException();
         }
     }
@@ -230,7 +230,7 @@ public class Avatar implements Entity {
                 sacrifice.addSigil(SigilCodes.SACRIFICED);            
                 sacrifice.removeSigil(SigilCodes.RESURRECTION);
             }
-            
+
             this.killChar(pointer);
         }
             
