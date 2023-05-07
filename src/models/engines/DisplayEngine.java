@@ -43,7 +43,7 @@ public class DisplayEngine {
     }
 
     public void switchScreen(String path, MouseEvent trigger, Object controller) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(path));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../views/" + path));
         fxmlLoader.setController(controller);
         root = fxmlLoader.load();
         stage = (Stage)((Node)trigger.getSource()).getScene().getWindow();
