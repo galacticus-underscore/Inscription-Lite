@@ -26,7 +26,7 @@ import models.engines.ActionEngine;
 import models.engines.BoardEngine;
 import models.engines.CardEngine;
 import models.engines.DisplayEngine;
-
+import models.exceptions.BloodCountException;
 import models.exceptions.DeadAvatarException;
 import models.exceptions.DeadCharacterException;
 import models.exceptions.PointerConversionException;
@@ -54,7 +54,9 @@ public class SessionController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        session.nextPlayer();
+        try {
+            session.nextPlayer();
+        } catch (BloodCountException e) {}
 
         System.out.println("=".repeat(80));
         System.out.println("Turn number: " + session.getTurnNumber());

@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import models.patterns.Event;
 import models.enums.EventTypes;
 import models.enums.Pointers;
+import models.exceptions.BloodCountException;
 import models.exceptions.DeadAvatarException;
 import models.exceptions.DeadCharacterException;
 import models.exceptions.PointerConversionException;
@@ -90,7 +91,8 @@ public class Session {
             throw new DeadCharacterException();
     }
 
-    public char nextPlayer() {
+    public char nextPlayer() throws BloodCountException {
+
         if (!this.new_init) {
             if (this.playing_avatar == avatars[this.home_index]) {
                 this.playing_avatar = avatars[this.away_index];
@@ -101,6 +103,8 @@ public class Session {
                 this.playing_avatar = avatars[this.home_index];
                 this.observing_avatar = avatars[this.away_index];
                 this.turn_number += 1;
+                this.playing_avatar.changeBloodCount(1);
+                this.observing_avatar.changeBloodCount(1);
                 this.playing_side = 'h';
             }
 
