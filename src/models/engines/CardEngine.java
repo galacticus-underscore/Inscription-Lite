@@ -42,7 +42,7 @@ public class CardEngine {
         return wrapper;
     }
 
-    public void renderCard(Card c, Locations l) {
+    public StackPane renderCard(Card c, Locations l) {
         StackPane card = createCard(c);
 
         switch (l) {
@@ -78,6 +78,8 @@ public class CardEngine {
             default:
                 ;
         }
+
+        return card;
     }
 
     public void renderHands() {

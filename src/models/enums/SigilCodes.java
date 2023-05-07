@@ -9,6 +9,7 @@ public enum SigilCodes {
     STONE_OCEAN,
     TOUCH_OF_DEATH,
     RESURRECTION,
+    SACRIFICED,
     SHARP_QUILLS,
     NINE_LIVES,
     UNDEAD,

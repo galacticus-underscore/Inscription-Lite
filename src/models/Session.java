@@ -13,7 +13,7 @@ import java.util.LinkedList;
 
 import models.patterns.Event;
 import models.enums.EventTypes;
-
+import models.enums.Pointers;
 import models.exceptions.DeadAvatarException;
 import models.exceptions.DeadCharacterException;
 import models.exceptions.PointerConversionException;
@@ -70,6 +70,10 @@ public class Session {
 
     public Event peekLastEvent() {
         return this.event_history.getLast();
+    }
+
+    public Pointers getLastTarget() {
+        return this.event_history.getLast().getTarget();
     }
 
     public Event pullFirstEvent() {

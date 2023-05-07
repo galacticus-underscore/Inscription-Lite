@@ -57,8 +57,7 @@ public class Character extends Card implements Entity {
     public void changeHealth(int hp, Pointers source) throws ZeroHealthException, DeadAvatarException, DeadCharacterException, PointerConversionException {
         Pointers target = PointerProcessor.entityToPointer(this);
         Entity source_ety = PointerProcessor.toEntity(source);
-        Pointers target_avatar_ptr = PointerProcessor.getAvatarOfPointer(target);
-        Avatar target_avatar_ety = (Avatar)PointerProcessor.toEntity(target_avatar_ptr);
+        Avatar target_avatar = (Avatar)PointerProcessor.getAvatar(target);
 
         if (source_ety.hasSigil(SigilCodes.TOUCH_OF_DEATH))
             this.health += -1000;
@@ -66,7 +65,7 @@ public class Character extends Card implements Entity {
             this.health += hp;
         
         if (source_ety.hasSigil(SigilCodes.SNIPER) && !this.hasSigil(SigilCodes.STONE_OCEAN))
-            target_avatar_ety.changeHealth(hp);
+            target_avatar.changeHealth(hp);
         
         App.getSession().addEvent(new AttackEvent(source, target, -hp));
         
@@ -110,6 +109,10 @@ public class Character extends Card implements Entity {
 
     public void addSigil(SigilCodes s) {
         this.sigils.add(s);
+    }
+
+    public void removeSigil(SigilCodes s) {
+        this.sigils.remove(s);
     }
 
     public void attack() throws DeadAvatarException, DeadCharacterException, PointerConversionException {

@@ -79,13 +79,11 @@ public class PointerProcessor {
         }
     }
 
-    public static Pointers getAvatarOfPointer(Pointers pointer) {
-        if (pointer.name().charAt(0) == 'P') {
-            return Pointers.PA;
-        }
-        else {
-            return Pointers.OA;
-        }
+    public static Avatar getAvatar(Pointers pointer) throws PointerConversionException {
+        if (pointer.name().charAt(0) == 'P')
+            return (Avatar)toEntity(Pointers.PA);
+        else
+            return (Avatar)toEntity(Pointers.OA);
     }
 
     public static Pointers getOppositePointer(Pointers pointer) {

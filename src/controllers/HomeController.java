@@ -1,32 +1,24 @@
 package controllers;
 
-import models.App;
-import models.processors.StyleProcessor;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
 import javafx.application.Platform;
 
-import javafx.stage.Stage;
-
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.Node;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.input.MouseEvent;
 
+import models.App;
+import models.engines.DisplayEngine;
+import models.processors.StyleProcessor;
 
 public class HomeController implements Initializable {
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+    private DisplayEngine display_engine = new DisplayEngine();
 
     @FXML private Text title;
 
@@ -38,14 +30,9 @@ public class HomeController implements Initializable {
     }
     
     @FXML 
-    protected void startGame(MouseEvent e) throws IOException {
+    protected void startGame(MouseEvent event) throws IOException {
         App.getSession().open(0, 1);
-        
-        root = FXMLLoader.load(getClass().getResource("../views/Confirmation.fxml"));
-        stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        display_engine.switchScreen("Confirmation.fxml", event);
     }
 
     @FXML 

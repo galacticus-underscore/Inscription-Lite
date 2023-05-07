@@ -38,7 +38,7 @@ import models.exceptions.UndeadSacrificeException;
 
 public class Avatar implements Entity {
     private int health = 20;
-    private int blood_count = 100;
+    private int blood_count = 5;
     private ArrayList<SigilCodes> sigils = new ArrayList<SigilCodes>();
     private boolean has_drawn = false;
 
@@ -79,6 +79,10 @@ public class Avatar implements Entity {
             this.health = 0;
             throw new ZeroHealthException("avatar");
         }
+    }
+
+    public int getBlood() {
+        return this.blood_count;
     }
 
     public void changeBloodCount(int b) throws BloodCountException {
@@ -199,13 +203,15 @@ public class Avatar implements Entity {
         this.slots[column] = null;
         dead_char.reset();
 
-        if (dead_char.hasSigil(SigilCodes.RESURRECTION) && !dead_char.hasSigil(SigilCodes.NINE_LIVES))
+        if (dead_char.hasSigil(SigilCodes.RESURRECTION) && !dead_char.hasSigil(SigilCodes.SACRIFICED) && !dead_char.hasSigil(SigilCodes.NINE_LIVES)) {
+            dead_char.flip();
             this.hand.add(dead_char);
+        }
         else
             this.pile.push(this.slots[column]);
     }
 
-    public void sacrifice(Pointers pointer) throws BloodCountException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException, UndeadSacrificeException {
+    public Character sacrifice(Pointers pointer) throws BloodCountException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException, UndeadSacrificeException {
         Character sacrifice = (Character)PointerProcessor.toEntity(pointer);
 
         if (sacrifice.hasSigil(SigilCodes.WORTHY_SACRIFICE))
@@ -215,13 +221,22 @@ public class Avatar implements Entity {
 
         if (sacrifice.hasSigil(SigilCodes.UNDEAD))
             throw new UndeadSacrificeException();
-
-        if (sacrifice.hasSigil(SigilCodes.NINE_LIVES))
+        else if (sacrifice.hasSigil(SigilCodes.NINE_LIVES)) {
             sacrifice.addSigil(SigilCodes.UNDEAD);
-        else
+            sacrifice.removeSigil(SigilCodes.NINE_LIVES);
+        }
+        else {
+            if (sacrifice.hasSigil(SigilCodes.RESURRECTION)) {
+                sacrifice.addSigil(SigilCodes.SACRIFICED);            
+                sacrifice.removeSigil(SigilCodes.RESURRECTION);
+            }
+            
             this.killChar(pointer);
+        }
+            
         
         App.getSession().addEvent(new SacrificeEvent(pointer));
+        return sacrifice;
     }
 
     public void reset() {

@@ -6,26 +6,20 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
-import javafx.stage.Stage;
-
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.Node;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.input.MouseEvent;
+
 import models.App;
+import models.engines.DisplayEngine;
 import models.processors.StyleProcessor;
 
 public class ConfirmController implements Initializable {
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+    private DisplayEngine display_engine = new DisplayEngine();
 
     @FXML private Text title;
     @FXML private ImageView player_icon;
@@ -46,11 +40,7 @@ public class ConfirmController implements Initializable {
     }
     
     @FXML 
-    protected void startTurn(MouseEvent e) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("../views/Session.fxml"));
-        stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    protected void startTurn(MouseEvent event) throws IOException {
+        display_engine.switchScreen("Session.fxml", event);
     }
 }

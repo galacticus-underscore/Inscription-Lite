@@ -1,6 +1,13 @@
 package models.engines;
 
+import java.io.IOException;
+
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javafx.scene.text.Text;
 
 import models.App;
@@ -8,6 +15,11 @@ import models.processors.LocationProcessor;
 
 public class DisplayEngine {
     private LocationProcessor location_processor;
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+    
     private Node highlighted;
     private Text home_error;
     private Text away_error;
@@ -16,6 +28,28 @@ public class DisplayEngine {
         this.location_processor = l;
         this.home_error = (Text)this.location_processor.toNode(3, 0);
         this.away_error = (Text)this.location_processor.toNode(0, 0);
+    }
+
+    public DisplayEngine() {
+        ;
+    }
+
+    public void switchScreen(String path, MouseEvent trigger) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("../../views/" + path));
+        stage = (Stage)((Node)trigger.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchScreen(String path, MouseEvent trigger, Object controller) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(path));
+        fxmlLoader.setController(controller);
+        root = fxmlLoader.load();
+        stage = (Stage)((Node)trigger.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public Node getHighlighted() {
