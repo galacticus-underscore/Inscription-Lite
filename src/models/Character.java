@@ -107,12 +107,12 @@ public class Character extends Card implements Entity {
         return this.sigils.contains(c);
     }
 
-    public void addSigil(SigilCodes s) {
-        this.sigils.add(s);
+    public void addSigil(SigilCodes c) {
+        this.sigils.add(c);
     }
 
-    public void removeSigil(SigilCodes s) {
-        this.sigils.remove(s);
+    public void removeSigil(SigilCodes c) {
+        this.sigils.remove(c);
     }
 
     public void attack() throws DeadAvatarException, DeadCharacterException, PointerConversionException {

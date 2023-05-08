@@ -101,9 +101,6 @@ public class Avatar implements Entity {
         return this.sigils.contains(c);
     }
 
-    public void allowDraw() {
-        this.has_drawn = false;
-    }
 
     public void addSigil(SigilCodes c) {
         this.sigils.add(c);
@@ -129,6 +126,10 @@ public class Avatar implements Entity {
         this.hand.forEach((c) -> {
             c.flip();
         });
+    }
+
+    public void allowDraw() {
+        this.has_drawn = false;
     }
 
     public Card draw() throws EmptyDeckException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException, MultipleDrawException {

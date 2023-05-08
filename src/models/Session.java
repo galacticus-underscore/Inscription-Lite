@@ -20,7 +20,7 @@ import models.exceptions.DeadCharacterException;
 import models.exceptions.PointerConversionException;
 
 public class Session {
-    private static Avatar[] avatars = {
+    private Avatar[] avatars = {
         new Avatar("src/static/data/card_data.csv"),
         new Avatar("src/static/data/card_data.csv"),
     };

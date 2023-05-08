@@ -11,7 +11,6 @@ public abstract class Card {
     protected String name, image;
     protected int cost;
     protected boolean is_facing_up = true;
-    protected boolean is_highlighted = false;
 
     public Card(String n, String i, int c) {
         this.name = n;
