@@ -108,7 +108,8 @@ public class BoardEngine {
     }
 
     public void updateCounts() {
-        Text turn_number = (Text)this.location_processor.toNode(0, 5);
+        StackPane turn_number_parent = (StackPane)this.location_processor.toNode(0, 5);
+        Text turn_number = (Text)turn_number_parent.getChildren().get(1);
         turn_number.setText("Turn No. " + session.getTurnNumber());
 
         this.updateDeckCount('h');

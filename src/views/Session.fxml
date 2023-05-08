@@ -200,6 +200,15 @@
             <Insets right="16.0" />
          </GridPane.margin>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" textAlignment="RIGHT" wrappingWidth="150.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+      <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+               <image>
+                  <Image url="@../static/images/loading.gif" />
+               </image>
+            </ImageView>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="test test test" textAlignment="RIGHT" wrappingWidth="150.0" StackPane.alignment="TOP_RIGHT" />
+         </children>
+      </StackPane>
    </children>
 </GridPane>
