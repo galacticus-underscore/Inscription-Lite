@@ -14,6 +14,11 @@ import models.Character;
 import models.Spell;
 
 public class CardDataProcessor {
+    
+    /** 
+     * @param csv
+     * @return Stack<Card>
+     */
     public static Stack<Card> read(File csv) {
         Stack<Card> out = new Stack<Card>();
         ArrayList<Card> shuffler = new ArrayList<Card>();

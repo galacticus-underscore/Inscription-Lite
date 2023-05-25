@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 import models.processors.LogProcessor;
 
 public class Main extends Application {
-
     public static void main(String[] args) {
         launch(args);
     }

@@ -12,6 +12,10 @@ public class AttackEvent extends Event {
         this.health_change = -d;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getHealthChange() {
         return this.health_change;
     }

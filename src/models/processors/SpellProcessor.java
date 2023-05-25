@@ -11,6 +11,11 @@ import models.enums.SigilCodes;
 import models.patterns.SpellEffect;
 
 public class SpellProcessor {
+    
+    /** 
+     * @param e
+     * @return SpellEffect
+     */
     public static SpellEffect assignEffect(String e) {
         SigilCodes effect_code = SigilCodes.valueOf(e);
 

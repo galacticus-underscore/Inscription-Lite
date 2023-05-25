@@ -18,6 +18,10 @@ public abstract class Card {
         this.cost = c;
     }
 
+    
+    /** 
+     * @return String
+     */
     public String getName() {
         return this.name;
     }

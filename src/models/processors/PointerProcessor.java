@@ -15,6 +15,12 @@ public class PointerProcessor {
         Pointers.OA, Pointers.O1, Pointers.O2, Pointers.O3, Pointers.O4
     };
 
+    
+    /** 
+     * @param e
+     * @return Pointers
+     * @throws PointerConversionException
+     */
     public static Pointers entityToPointer(Entity e) throws PointerConversionException {
         Pointers out = null;
 

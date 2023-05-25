@@ -25,6 +25,11 @@ public class CardEngine {
         this.location_processor = l;
     }
     
+    
+    /** 
+     * @param c
+     * @return StackPane
+     */
     public StackPane createCard(Card c) {
         File file = new File("src/static/images/backing.png");
 

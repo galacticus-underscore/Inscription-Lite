@@ -34,6 +34,12 @@ public class DisplayEngine {
         ;
     }
 
+    
+    /** 
+     * @param path
+     * @param trigger
+     * @throws IOException
+     */
     public void switchScreen(String path, MouseEvent trigger) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../../views/" + path));
         stage = (Stage)((Node)trigger.getSource()).getScene().getWindow();

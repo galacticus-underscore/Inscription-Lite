@@ -15,6 +15,10 @@ import java.io.InputStreamReader;
 public class StyleProcessor {
     private static int font_size = 16;
 
+    
+    /** 
+     * @return int
+     */
     public static int getFontSize() {
         return font_size;
     }

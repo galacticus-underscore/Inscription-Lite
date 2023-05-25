@@ -17,6 +17,11 @@ public class LocationProcessor {
         this.grid = g;
     }
 
+    
+    /** 
+     * @param n
+     * @return int
+     */
     public int getNodeRow(Node n) {
         try {
             return GridPane.getRowIndex(n);

@@ -26,6 +26,10 @@ public abstract class Event {
         this.target = p2;
     }
 
+    
+    /** 
+     * @return EventTypes
+     */
     public EventTypes getType() {
         return this.type;
     }

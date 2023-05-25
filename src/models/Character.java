@@ -50,6 +50,10 @@ public class Character extends Card implements Entity {
         this.def_sigils.add(SigilCodes.valueOf(s));
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getHealth() {
         return this.health;
     }

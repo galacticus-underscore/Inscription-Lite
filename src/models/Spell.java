@@ -22,6 +22,10 @@ public class Spell extends Card {
         this.effect = SpellProcessor.assignEffect(e);
     }
 
+    
+    /** 
+     * @return boolean
+     */
     public boolean appliesToChars() {
         return this.atc;
     }

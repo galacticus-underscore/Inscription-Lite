@@ -14,6 +14,10 @@ public class CharSummonEvent extends Event {
         this.card_image = image;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getBloodChange() {
         return this.blood_change;
     }

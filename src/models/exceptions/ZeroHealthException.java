@@ -8,6 +8,10 @@ public class ZeroHealthException extends Exception {
         this.type = t.charAt(0);
     }
 
+    
+    /** 
+     * @return char
+     */
     public char getType() {
         return this.type;
     }

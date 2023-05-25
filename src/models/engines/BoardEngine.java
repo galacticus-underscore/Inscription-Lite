@@ -47,6 +47,10 @@ public class BoardEngine {
         }
     }
 
+    
+    /** 
+     * @param updated_avatar
+     */
     public void updateDeckCount(char updated_avatar) {
         if (updated_avatar == 'h') {
             VBox avatar = (VBox)this.location_processor.toNode(2, 5);

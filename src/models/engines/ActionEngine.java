@@ -41,6 +41,11 @@ public class ActionEngine {
         event_handler = e;
     }
 
+    
+    /** 
+     * @param event
+     * @return boolean
+     */
     public boolean isDraw(MouseEvent event) {
         Node source = (Node)event.getSource();
         boolean source_is_deck = source.getStyleClass().contains("deck");

@@ -7,6 +7,11 @@ public class LogProcessor {
         System.out.println("=".repeat(80));
     }
 
+    
+    /** 
+     * @param className
+     * @param methodName
+     */
     public static void start(String className, String methodName) {
         System.out.println(className + "." + methodName + "()");
         System.out.println("=".repeat(80));

@@ -10,6 +10,10 @@ public class DeadEntityException extends Exception {
         this.location = loc;
     }
 
+    
+    /** 
+     * @return Pointers
+     */
     public Pointers getLocation() {
         return this.location;
     }
