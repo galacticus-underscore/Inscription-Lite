@@ -3,7 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import models.processors.StyleProcessor;
+// import models.processors.StyleProcessor;
 import models.processors.LogProcessor;
 
 public class Main extends Application {
@@ -16,14 +16,14 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         LogProcessor.start();
 
-        LogProcessor.log("Running preprocessing functions");
-        System.out.println();
+        // LogProcessor.log("Running preprocessing functions");
+        // System.out.println();
 
-        StyleProcessor.compile();
+        // StyleProcessor.compile();
 
-        System.out.println();
-        LogProcessor.success("Preprocessing performed successfully");
-        System.out.println();
+        // System.out.println();
+        // LogProcessor.success("Preprocessing performed successfully");
+        // System.out.println();
 
         LogProcessor.start("Main", "start");
         
