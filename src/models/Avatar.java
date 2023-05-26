@@ -28,39 +28,58 @@ import models.exceptions.PointerConversionException;
 import models.exceptions.UndeadSacrificeException;
 
 /*
- * This class represents a player in a game. All actions a player can do are defined here: drawing, playing, discarding, etc.
- * 
- * This class contains:
- * <li>
- *  <ul>Integers representing how much health and blood an avatar has</ul>
- *  <ul>A list containing all sigils an avatar posses</ul>
- *  <ul>A deck, hand, and discard pile</ul>
- *  <ul>Slots on the board</ul>
- * </li>
+ * <code>Avatar</code> represents a player in a game. All actions a player can do are defined here: drawing, playing, discarding, etc.
  */
 public class Avatar implements Entity {
+    /** 
+     * The health of this avatar.
+     */
     private int health = 20;
+    /** 
+     * How much blood this avatar has. Every card requires a certain amount of blood to summon, and a player can only summon a card if their avatar's blood count is greater than or equal to the card's blood cost.
+     */
     private int blood_count = 5;
+    /** 
+     * A list of all sigils affecting this avatar.
+     */
     private ArrayList<SigilCodes> sigils = new ArrayList<SigilCodes>();
+    /** 
+     * States whether this avatar has drawn a card in the current turn or not.
+     */
     private boolean has_drawn = false;
 
+    /** 
+     * References the CSV file that lists the cards in this avatar's deck
+     */
     private File data;
+    /** 
+    * The deck of cards this avatar can draw from.
+    */
     private Stack<Card> deck = new Stack<Card>();
+    /** 
+    * A list containing all the cards in this avatar's hand
+    */
     private ArrayList<Card> hand = new ArrayList<Card>();
+    /** 
+    * An array representing the four slots of an avatar on the playing board.
+    */
     private Character[] slots = new Character[4];
+    /** 
+    * A list containing all the cards of this avatar that died or were sacrificed.
+    */
     private Stack<Card> pile = new Stack<Card>();
 
     /** 
-     * Creates a new avatar with a deck of card listed in a CSV file refereced by a string
+     * Creates a new avatar whose deck of cards is listed in a CSV file refereced by a string.
      * 
-     * @param d     the path to the CSV file which lists the cards in the avatar's deck
+     * @param d             the path to the CSV file which lists the cards in this avatar's deck.
      */
     public Avatar(String d) {
         this.data = new File(d);
     }
 
     /** 
-     * Initializes an avatar at the start of the game by filling its hand with the five cards at the top of their deck.
+     * Initializes an avatar at the start of the game by drawing five cards.
      */
     public void initialize() {
         this.deck = CardDataProcessor.read(this.data);
@@ -69,20 +88,20 @@ public class Avatar implements Entity {
     }
 
     /**
-     * Returns the health of this avatar
+     * Returns the health of this avatar.
      * 
-     * @return      An integer representing the health of this avatar
+     * @return              the value of <code>health</code>.
      */
     public int getHealth() {
         return this.health;
     }
 
     /**
-     * Changes the health of this avatar and logs an <code>AttackEvent</code>
+     * Changes the health of this avatar and adds an <code>AttackEvent</code> to the <code>event_history</code> of the session associated with the running instance of this application.
      * 
-     * @param hp    The amount by which the health of this avatar changes; a positive number indicates regeneration, while a negative number indicates dealt damage
-     * @param source    The card which caused the change in health
-     * @throws      ZeroHealthException     if the health of this avatar becomes less than or equal to zero
+     * @param hp            the amount by which the health of this avatar changes. A positive number indicates regeneration, while a negative number indicates dealt damage.
+     * @param source        the card which caused the change in health.
+     * @throws              ZeroHealthException     if the health of this avatar becomes less than or equal to zero.
      */
     public void changeHealth(int hp, Pointers source) throws ZeroHealthException, DeadAvatarException, DeadCharacterException, PointerConversionException {
         this.health += hp;
@@ -95,10 +114,10 @@ public class Avatar implements Entity {
     }
 
     /**
-     * Changes the health of this avatar
+     * Changes the health of this avatar.
      * 
-     * @param hp    The amount by which the health of this avatar changes; a positive number indicates regeneration, while a negative number indicates dealt damage
-     * @throws      ZeroHealthException     if the health of this avatar becomes less than or equal to zero
+     * @param hp            the amount by which the health of this avatar changes. A positive number indicates regeneration, while a negative number indicates dealt damage.
+     * @throws              ZeroHealthException     if the health of this avatar becomes less than or equal to zero.
      */
     public void changeHealth(int hp) throws ZeroHealthException {
         this.health += hp;
@@ -112,17 +131,17 @@ public class Avatar implements Entity {
     /**
      * Returns the blood count of this avatar
      * 
-     * @return      An integer representing the blood count of this avatar
+     * @return              the value of <code>blood_count</code>.
      */
     public int getBlood() {
         return this.blood_count;
     }
 
     /**
-     * Changes the blood count of this avatar
+     * Changes the blood count of this avatar.
      * 
-     * @param b     The amount by which the blood count of this avatar changes; a positive number indicates blood gained, while a negative number indicates blood lost
-     * @throws      BloodCountException     if this avatar will have a negative blood count as a result of this function
+     * @param b             the amount by which the blood count of this avatar changes. A positive number indicates blood gained, while a negative number indicates blood lost.
+     * @throws              BloodCountException     if this avatar will have a negative blood count as a result of this function.
      */
     public void changeBloodCount(int b) throws BloodCountException {
         this.blood_count += b;
@@ -133,72 +152,72 @@ public class Avatar implements Entity {
     }
 
     /**
-     * Returns a list of all sigils applied on this Avatar
+     * Returns a list of all sigils affecting this avatar.
      * 
-     * @return      An <code>ArrayList</code> containing <code>SigilCodes</code> objects which indicate the sigils which this avatar possesses
+     * @return              the value of <code>sigils</code>.
      */
     public ArrayList<SigilCodes> getSigils() {
         return this.sigils;
     }
 
     /**
-     * Determines whether this avatar has a certain sigil or not
+     * Determines whether this avatar has a certain sigil or not.
      * 
-     * @param c     The code equivalent to the sigil of interest
-     * @return      <code>true</code> if the avatar has the sigil; <code>false</code> otherwise
+     * @param c             the code equivalent to the sigil of interest.
+     * @return              <code>true</code> if the avatar has the sigil; <code>false</code> otherwise.
      */
     public boolean hasSigil(SigilCodes c) {
         return this.sigils.contains(c);
     }
 
     /**
-     * Adds a sigil to the array of sigils of this avatar
+     * Adds a sigil to <code>sigils</code>.
      * 
-     * @param c     The code equivalent to the sigil you want to add
+     * @param c             the code equivalent to the sigil to add.
      */
     public void addSigil(SigilCodes c) {
         this.sigils.add(c);
     }
 
     /**
-     * Returns the number of cards in this avatar's deck
+     * Returns the number of cards in this avatar's deck.
      * 
-     * @return      An integer converted to a string representing the number of cards in this avatar's deck
+     * @return              the size of <code>deck</code> as a string.
      */
     public String getDeckSize() {
         return Integer.toString(this.deck.size());
     }
 
     /**
-     * Returns the cards in this avatar's hand
+     * Returns the cards in this avatar's hand.
      * 
-     * @return      An <code>ArrayList</code> containing <code>Card</code> objects representing the cards in this avatar's hand
+     * @return              the value of <code>hand</code>.
      */
     public ArrayList<Card> getHand() {
         return this.hand;
     }
 
     /**
-     * Returns the number of cards in this avatar's discard pile
+     * Returns the number of cards in this avatar's discard pile.
      * 
-     * @return      An integer converted to a string representing the number of cards in this avatar's discard pile
+     * @return              the size of <code>pile</code> as a string.
      */
     public String getPileSize() {
         return Integer.toString(this.pile.size());
     }
 
     /**
-     * Returns the character stationed in a particular playing slot of this avatar
+     * Returns the character in a slot in the board that belongs to this avatar.
      * 
-     * @params column   The index of the slot of interest, with 0 being leftmost slot and 3 being rightmost slot
-     * @return      A <code>Character</code> object representing the character in the slot selected
+     * @params column       the index of the slot of interest, with 0 being leftmost slot and 3 being rightmost slot.
+     * @return              the <code>Character</code> in index <code>column</code> of <code>slots</code>.
      */
     public Character getCharInSlot(int column) {
         return slots[column];
     }
 
     /**
-     * Flips all the cards in this avatar's hand
+     * Flips all the cards in this avatar's hand.
      */
     public void flip() {
         this.hand.forEach((c) -> {
@@ -207,18 +226,18 @@ public class Avatar implements Entity {
     }
 
     /**
-     * Allows this avatar to draw a card
+     * Allows this avatar to draw a card.
      */
     public void allowDraw() {
         this.has_drawn = false;
     }
 
     /**
-     * Transfers a card from this avatar's deck to its hand
+     * Transfers a card from this avatar's deck to its hand.
      * 
-     * @return  a <code>Card</code> object representing the card drawn
-     * @throws      EmptyDeckException      if the deck is empty
-     * @throws      MultipleDrawException   if the player attempts to draw more than one card in a turn
+     * @return              the <code>Card</code> that was drawn.
+     * @throws              EmptyDeckException      if the deck is empty.
+     * @throws              MultipleDrawException   if a player attempts to draw more than once during their turn.
      */
     public Card draw() throws EmptyDeckException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException, MultipleDrawException {
         if (this.deck.empty())
@@ -234,13 +253,13 @@ public class Avatar implements Entity {
     }
 
     /**
-     * Summons a card
+     * Summons a card.
      * 
-     * @param source    the index of the card in this avatar's <code>hand</code> array
-     * @param target    a <code>Pointer</code> object pointing to where the player wants to play the card
-     * @return  a <code>Card</code> object representing the card summoned
-     * @throws      FullSlotException   if the card to be summoned is a character and the slot where the player tried to play the card is already taken by another character
-     * @throws      InvalidSummonException  if the player attempts to cast a spell to something the spell cannot affect
+     * @param source        the index of the card in this avatar's <code>hand</code> array.
+     * @param target        the <code>Pointer</code> linked to the location where the player wants to play the card.
+     * @return              the summoned <code>Card</code>.
+     * @throws              FullSlotException       if the card to be summoned is a character and the slot where the player tried to play the card is already filled by another character.
+     * @throws              InvalidSummonException  if the player attempts to cast a spell on something the spell cannot affect.
      */
     public Card summon(int source, Pointers target) throws FullSlotException, BloodCountException, DeadCharacterException, DeadAvatarException, InvalidSummonException, PointerConversionException, ZeroHealthException {
         Card summoned = this.hand.get(source);
@@ -291,9 +310,9 @@ public class Avatar implements Entity {
     }
 
     /**
-     * Moves a spell card from this avatar's hand to its discard pile
+     * Moves a spell card from this avatar's hand to its discard pile.
      * 
-     * @param hand_pos  the index of the card in this avatar's <code>hand</code> array
+     * @param hand_pos      the index of the card in this avatar's <code>hand</code>.
      */
     public void discardSpell(int hand_pos) {
         this.pile.push(this.hand.get(hand_pos));
@@ -301,9 +320,9 @@ public class Avatar implements Entity {
     }
 
     /**
-     * Moves a dead character from its slot to the discard pile of this avatar
+     * Moves a dead character from its slot to the discard pile of this avatar.
      * 
-     * @param pointer   A <code>Pointer</code> pointing to the location of the character that died
+     * @param pointer       the <code>Pointer</code> linked to the slot of the character that died.
      */
     public void killChar(Pointers pointer) {
         int column = PointerProcessor.toInt(pointer) - 1;
@@ -320,10 +339,10 @@ public class Avatar implements Entity {
     }
 
     /**
-     * Sacrifies a character
+     * Sacrifies a character.
      * 
-     * @param pointer   A <code>Pointer</code> pointing to the location of the character that died
-     * @throws      UndeadSacrificeException    if the player attempts to sacrifice a character with the "UNDEAD" sigil
+     * @param pointer       the <code>Pointer</code> linked to the slot of the character that shall be sacrificed.
+     * @throws              UndeadSacrificeException    if the player attempts to sacrifice a character with the <code>SigilCodes.UNDEAD</code> sigil.
      */
     public Character sacrifice(Pointers pointer) throws BloodCountException, DeadAvatarException, DeadCharacterException, PointerConversionException, ZeroHealthException, UndeadSacrificeException {
         Character sacrifice = (Character)PointerProcessor.toEntity(pointer);
@@ -354,7 +373,7 @@ public class Avatar implements Entity {
     }
 
     /**
-     * Resets the attributes of this avatar to the default
+     * Resets the attributes of this avatar to the default.
      */
     public void reset() {
         this.health = 20;

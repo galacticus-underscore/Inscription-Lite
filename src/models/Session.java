@@ -11,37 +11,57 @@ import models.exceptions.DeadCharacterException;
 import models.exceptions.PointerConversionException;
 
 /*
- * This class represents all the games the users will play while this application is running. It dictates the general flow of a game by initializing the avatars, logging the players' moves, and facilitating the transfer of turns from one player to another.
+ * <code>Session</code> represents a game being played in the application. It dictates the general flow of a game by initializing the avatars, logging the players' moves, and facilitating the transfer of turns from one player to another.
  * 
- * This class contains:
- * <li>
- *  <ul>An array of all avatars the players can play as</ul>
- *  <ul>An indicator as to whether the session was just initialized or not</ul>
- *  <ul>Integers representing the index of the players' avatars in the avatar array</ul>
- *  <ul>A turn counter</ul>
- *  <ul>A character to determine which side is playing (h - home or a - away)</ul>
- *  <ul>An <code>Avatar</code> variable to store the avatar of the player taking their turn</ul>
- *  <ul>An <code>Avatar</code> variable to store the avatar of the player not taking their turn</ul>
- *  <ul>A linked list of all important events that happened in the game</ul>
- * </li>
+ * A game consists of two avatars: one in the home side (the bottom of the screen) representing player 1, and one in the away side (the top of the screen) representing player 2. At a given point in time, one of these players will be playing and the other will not be playing (observing). A turn is counted when both the home and away sides have played already, in that order.
  */
 public class Session {
+    /** 
+     * An array containing all the Avatars a player can use.
+     */
     private Avatar[] avatars = {
         new Avatar("src/static/data/card_data.csv"),
         new Avatar("src/static/data/card_data.csv"),
     };
 
+    /** 
+     * States whether the game was just opened or not. This field is merely a corrector so that the home side's cards are flipped up and the away side's cards are flipped down, not the other way around.
+     */
     private boolean new_init = true;
-    private int home_index, away_index, turn_number = 0;
+    /** 
+     * The index of the home side's avatar in <code>avatars</code>.
+     */
+    private int home_index;
+    /** 
+     * The index of the away side's avatar in <code>avatars</code>.
+     */
+    private int away_index;
+    /** 
+     * The number of turns that were played in the game so far. The first turn of both players shall not be counted by the turn number since their cards will not attack yet. Hence, this variable is initialized with a value of 0.
+     */
+    private int turn_number = 0;
+    /** 
+     * States which side is currently playing (home, represented by <code>'h'</code>, or away, represented by <code>'a'</code>).
+     */
     private char playing_side = 'h';
-    private Avatar playing_avatar, observing_avatar;
+    /** 
+     * Stores the avatar of the playing side.
+     */
+    private Avatar playing_avatar;
+    /** 
+     * Stores the avatar of the observing side.
+     */
+    private Avatar observing_avatar;
+    /** 
+     * Lists all game events.
+     */
     private LinkedList<Event> event_history = new LinkedList<Event>();
 
     /** 
-     * Starts a new game
+     * Sets up a new game. The values of <code>playing_avatar</code> and <code>observing_avatar</code> are assigned, then the avatars are initialized.
      * 
-     * @param p1    index of the first player's avatar in the avatar array
-     * @param p2    index of the second player's avatar in the avatar array
+     * @param p1            index of the first player's avatar in <code>avatars</code>.
+     * @param p2            index of the second player's avatar in <code>avatars</code>.
      */
     public void open(int p1, int p2) {
         this.home_index = p1;
@@ -54,101 +74,101 @@ public class Session {
     }
 
     /** 
-     * Determines whether the session is newly initialized or not
+     * Determines whether the game was just opened or not.
      * 
-     * @return      <code>true</code> if <code>open()</code> was just called and no moves have been made; <code>false</code> otherwise
+     * @return              the value of <code>new_init</code>.
      */
     public boolean isNewInit() {
         return this.new_init;
     }
 
     /** 
-     * Returns a character corresponding to which side is playing
+     * Returns a character corresponding to which side is playing.
      * 
-     * @return      'h' is the home side (the side at the bottom of the screen) is playing, 'a' otherwise
+     * @return              the value of <code>playing_side</code>.
      */
     public char getPlayingSide() {
         return this.playing_side;
     }
 
     /** 
-     * Returns a reference to the avatar of the currently playing player
+     * Returns a reference to the playing side's avatar.
      * 
-     * @return      An <code>Avatar</code> object representing the avatar of the currently playing player
+     * @return              the value of <code>playing_avatar</code>.
      */
     public Avatar getPlayingAvatar() {
         return this.playing_avatar;
     }
 
     /** 
-     * Returns a reference to the avatar of the currently idling player
+     * Returns a reference to the observing side's avatar.
      * 
-     * @return      An <code>Avatar</code> object representing the avatar of the currently idling player
+     * @return              the value of <code>observing_avatar</code>.
      */
     public Avatar getObservingAvatar() {
         return this.observing_avatar;
     }
 
-    /** 
-     * Returns a reference to the avatar of the player in the home side (the bottom of the screen)
+    /**
+     * Returns a reference to the home side's avatar.
      * 
-     * @return      An <code>Avatar</code> object representing the avatar of the player in the home side
+     * @return              the <code>Avatar</code> at index <code>home_index</code> of <code>avatars</code>.
      */
     public Avatar getHome() {
         return avatars[this.home_index];
     }
 
     /** 
-     * Returns a reference to the avatar of the player in the away side (the top of the screen)
+     * Returns a reference to the away side's avatar.
      * 
-     * @return      An <code>Avatar</code> object representing the avatar of the player in the away side
+     * @return              the <code>Avatar</code> at index <code>away_index</code> of <code>avatars</code>.
      */
     public Avatar getAway() {
         return avatars[this.away_index];
     }
 
     /** 
-     * Returns the current turn number
+     * Returns the current turn number.
      * 
-     * @return      An integer representing the current turn number
+     * @return              the value of <code>turn_number</code>.
      */
     public int getTurnNumber() {
         return this.turn_number;
     }
 
     /** 
-     * Returns the last recorded event that occured in the game
+     * Returns the last recorded game event.
      * 
-     * @return      The last <code>Event</code> object in <code>event_history</code>
+     * @return              the <code>Event</code> object at the last index of <code>event_history</code>.
      */
     public Event peekLastEvent() {
         return this.event_history.getLast();
     }
 
     /** 
-     * Returns the target of the last recorded event that occured in the game
+     * Returns the target of the last recorded game event.
      * 
-     * @return      A <code>Pointer</code> object representing the target of the last recorded event that occured in the game
+     * @return              the value of the <code>target</code> field of the <code>Event</code> object at the last index of <code>event_history</code>.
      */
     public Pointers getLastTarget() {
         return this.event_history.getLast().getTarget();
     }
 
     /** 
-     * Returns the first event in <code>event_history</code> and removes it from the linked list
+     * Returns and removes the first recorded game event.
      * 
-     * @return      The first <code>Event</code> object in <code>event_history</code>
+     * @return              the <code>Event</code> object at index 0 of <code>event_history</code>.
      */
     public Event pullFirstEvent() {
         return this.event_history.poll();
     }
 
     /** 
-     * Adds an event to <code>event_history</code>
+     * Adds an event to <code>event_history</code>.
      * 
-     * @param e     The event to add to <code>event_history</code>
-     * @throws      DeadAvatarException     if the event added is of type <code>EventTypes.AVATAR_DEATH</code>
-     * @throws      DeadCharacterException  if the event added is of type <code>EventTypes.CHAR_DEATH</code>
+     * @param e             the event to add to <code>event_history</code>.
+     * @throws              DeadAvatarException     if value of the <code>type</code> field of <code>e</code> is <code>EventTypes.AVATAR_DEATH</code>.
+     * @throws              DeadCharacterException  if value of the <code>type</code> field of <code>e</code> is <code>EventTypes.CHAR_DEATH</code>.
      */
     public void addEvent(Event e) throws DeadCharacterException, DeadAvatarException, PointerConversionException {
         this.event_history.add(e);
@@ -161,9 +181,9 @@ public class Session {
     }
 
     /** 
-     * Transitions the game from one player to another by switching the values of <code>playing_avatar</code> and <code>observing_avatar</code>
+     * Transitions the game from one player to another by switching the values of <code>playing_avatar</code> and <code>observing_avatar</code>, flipping all cards in the hands of the avatars, and conducting attacks (if both players have played).
      * 
-     * @return      the character representing the playing side (home - h or away - a) <b>after the switch</b>.
+     * @return              the new value of <code>playing_side</code> after <code>playing_avatar</code> and <code>observing_avatar</code> switched values.
      */
     public char nextPlayer() throws BloodCountException {
         if (!this.new_init) {
@@ -193,7 +213,7 @@ public class Session {
     }
 
     /** 
-     * Ends the game and resets all values of this session and the avatars in the avatar array
+     * Ends the game and resets all values of this session and the avatars used in the game.
      */
     public void close() {
         this.playing_avatar.reset();
